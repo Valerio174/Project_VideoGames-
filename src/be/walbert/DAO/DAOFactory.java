@@ -2,6 +2,8 @@ package be.walbert.DAO;
 
 import java.sql.Connection;
 
+import be.walbert.classes.User;
+
 public class DAOFactory extends AbstractDAOFactory{
 	protected static final Connection conn = be.walbert.connection.ProjectConnection.getInstance();
 	
@@ -23,10 +25,10 @@ public class DAOFactory extends AbstractDAOFactory{
 //	public DAO<Player> getPlayerDAO(){
 //	return new PlayerDAO(conn);
 //}
-//	public DAO<User> getUserDAO(){
-//		return new UserDAO(conn);
-//	}
-//		
+	public DAO<User> getUserDAO(){
+		return new UserDAO(conn);
+	}
+		
 //	public DAO<VideoGame> getVideoGameDAO(){
 //	return new VideoGameDAO(conn);
 //}
