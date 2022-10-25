@@ -35,17 +35,21 @@ public class User{
 	}
 	
 	/*Méthodes*/
-	public boolean Login(User u){
+	public int Login(User u){
 		
-		boolean success = false;
+		int success= -1;
 		User user = userDAO.find(u);
 		
-		if(user == null) {
-			success = true;
+		String test = user.getClass().getTypeName();
+		if(user.getClass().getTypeName()=="be.walbert.classes.Player") {
+			success = 1;
 			return success;
-			
+		} 
+		if(user.getClass().getTypeName()=="be.walbert.classes.Administrator"){
+			success = 0;
+			return success;
 		}
-		return success;
 		
+		return success;
 	}	
 }
