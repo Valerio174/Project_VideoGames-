@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import be.walbert.classes.Administrator;
+import be.walbert.classes.Player;
 import be.walbert.classes.User;
 
 public class UserDAO extends DAO<User>{
@@ -34,10 +36,23 @@ public class UserDAO extends DAO<User>{
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Users WHERE username = \"" + newuser.getUsername() +"\"" 
-					+ " AND password = \"" + newuser.getPassword() +"\"");
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT id_users, username, password, "
+							+ "type, credit, pseudo, registrationDate, dateOfBirth "
+							+ "FROM Users u LEFT OUTER JOIN Player p ON u.id_users = p.id_users "
+							+ "WHERE username = \"" + newuser.getUsername() +"\"" 
+							+ " AND password = \"" + newuser.getPassword() +"\"");
 			if(result.first())
-				return newuser;
+				if (result.getString("type").equals("Player")) {
+					Player player = new Player(result.getString("username"),result.getString("password"),
+							result.getInt("credit"),result.getString("pseudo"),
+							result.getDate("registrationDate").toLocalDate(),
+							result.getDate("dateOfBirth").toLocalDate());
+					return player;
+				}
+				else {
+					Administrator admin = new Administrator(result.getString("username"),result.getString("password"));
+					return admin;
+				}
 			else
 				return null;
 		
