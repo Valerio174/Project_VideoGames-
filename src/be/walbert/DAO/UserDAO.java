@@ -30,8 +30,6 @@ public class UserDAO extends DAO<User>{
 	/*Récupérer User correspondant */
 	@Override
 	public User find(User newuser) {
-		User user = new User();
-		user.setUsername(newuser.getUsername());
 		 
 		try{
 			ResultSet result = this.connect.createStatement(
@@ -39,15 +37,15 @@ public class UserDAO extends DAO<User>{
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Users WHERE username = \"" + newuser.getUsername() +"\"" 
 					+ " AND password = \"" + newuser.getPassword() +"\"");
 			if(result.first())
-				user = new User(result.getString("username"), result.getString("password"));
+				return newuser;
 			else
-				user = null;
+				return null;
 		
 		}
 		catch(SQLException e){
 			e.printStackTrace();
 		}
-		return user;
+		return newuser;
 	}
 
 }
