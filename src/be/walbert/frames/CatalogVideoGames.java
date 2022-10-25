@@ -39,7 +39,7 @@ public class CatalogVideoGames extends JFrame {
 	 */
 	public CatalogVideoGames(User user) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 644, 472); 
+		setBounds(0, 0, 998, 582); 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

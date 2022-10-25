@@ -129,13 +129,21 @@ public class LogInPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				User user = new User(tf_username.getText(), tf_password.getText());
 				
-				if (user.Login(user)) {
+				if (user.Login(user) == -1) {
 					lbl_error_users.setText("Not users found ! ");
 				}
 				else {
-					CatalogVideoGames catalog = new CatalogVideoGames(user);
-					catalog.setVisible(true);
-					dispose(); //Efface 1ere fenêtre 
+					if(user.Login(user) == 1) {
+						CatalogVideoGames catalog = new CatalogVideoGames(user);
+						catalog.setVisible(true);
+						dispose(); //Efface 1ere fenêtre 
+					}
+					else {
+						AdministratorPage administratorPage = new AdministratorPage(user);
+						administratorPage.setVisible(true);
+						dispose(); //Efface 1ere fenêtre 
+					}
+
 				}
 			}
 		});
