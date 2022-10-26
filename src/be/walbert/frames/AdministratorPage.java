@@ -2,6 +2,7 @@ package be.walbert.frames;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,10 +11,15 @@ import be.walbert.classes.User;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AdministratorPage extends JFrame {
 
 	private JPanel contentPane;
+	private Image icon_logout = new ImageIcon(this.getClass().getResource("/ressources/icon_logout.png")).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+	
 
 	/**
 	 * Launch the application.
@@ -49,5 +55,18 @@ public class AdministratorPage extends JFrame {
 		contentPane.add(lbl_WelcomeAdmin);
 		
 		lbl_WelcomeAdmin.setText("Welcome admin " + admin.getUsername());
+		
+		JLabel lbl_icon_logout = new JLabel("");
+		lbl_icon_logout.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				HomePage homepage = new HomePage();
+				homepage.setVisible(true);
+				dispose();
+			}
+		});
+		lbl_icon_logout.setBounds(31, 576, 70, 90); 
+		lbl_icon_logout.setIcon(new ImageIcon(icon_logout));
+		contentPane.add(lbl_icon_logout);
 	}
 }
