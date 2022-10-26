@@ -2,6 +2,7 @@ package be.walbert.DAO;
 
 import java.sql.Connection;
 
+import be.walbert.classes.Player;
 import be.walbert.classes.User;
 
 public class DAOFactory extends AbstractDAOFactory{
@@ -22,9 +23,9 @@ public class DAOFactory extends AbstractDAOFactory{
 //	public DAO<Loan> getLoanDAO(){
 //	return new LoanDAO(conn);
 //}
-//	public DAO<Player> getPlayerDAO(){
-//	return new PlayerDAO(conn);
-//}
+	public DAO<Player> getPlayerDAO(){
+	return new PlayerDAO(conn);
+}
 	public DAO<User> getUserDAO(){
 		return new UserDAO(conn);
 	}
