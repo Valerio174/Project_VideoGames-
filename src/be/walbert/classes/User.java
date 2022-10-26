@@ -40,11 +40,11 @@ public class User{
 		int success= -1;
 		User user = userDAO.find(u);
 		if(user != null) {
-			if(user.getClass().getTypeName()=="be.walbert.classes.Player") {
+			if(user instanceof Player) {
 				success = 1;
 				return success;
 			} 
-			if(user.getClass().getTypeName()=="be.walbert.classes.Administrator"){
+			if(user instanceof Administrator){
 				success = 0;
 				return success;
 			}
