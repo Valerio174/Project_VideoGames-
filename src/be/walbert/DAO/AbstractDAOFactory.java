@@ -1,5 +1,6 @@
 package be.walbert.DAO;
 
+import be.walbert.classes.Player;
 import be.walbert.classes.User;
 
 public abstract class AbstractDAOFactory {
@@ -14,7 +15,7 @@ public abstract class AbstractDAOFactory {
 	
 //	public abstract DAO<Loan> getLoanDAO();
 	
-//	public abstract DAO<Player> getPlayerDAO();
+	public abstract DAO<Player> getPlayerDAO();
 	
 	public abstract DAO<User> getUserDAO();
 	
