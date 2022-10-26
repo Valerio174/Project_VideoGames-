@@ -75,6 +75,13 @@ public class HomePage extends JFrame {
 		panel.setLayout(null);
 		
 		JButton btn_Signin = new JButton("Sign in");
+		btn_Signin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SignInPage signinpage = new SignInPage();
+				signinpage.setVisible(true);
+				dispose();
+			}
+		});
 		btn_Signin.setForeground(new Color(255, 255, 255));
 		btn_Signin.setBackground(new Color(92, 92, 92));
 		btn_Signin.setFont(new Font("Sitka Small", Font.PLAIN, 20));
