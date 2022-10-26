@@ -39,16 +39,17 @@ public class User{
 		
 		int success= -1;
 		User user = userDAO.find(u);
-		
-		String test = user.getClass().getTypeName();
-		if(user.getClass().getTypeName()=="be.walbert.classes.Player") {
-			success = 1;
-			return success;
-		} 
-		if(user.getClass().getTypeName()=="be.walbert.classes.Administrator"){
-			success = 0;
-			return success;
+		if(user != null) {
+			if(user.getClass().getTypeName()=="be.walbert.classes.Player") {
+				success = 1;
+				return success;
+			} 
+			if(user.getClass().getTypeName()=="be.walbert.classes.Administrator"){
+				success = 0;
+				return success;
+			}
 		}
+		
 		
 		return success;
 	}	
