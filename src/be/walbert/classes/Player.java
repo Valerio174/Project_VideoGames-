@@ -3,7 +3,11 @@ package be.walbert.classes;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import be.walbert.DAO.AbstractDAOFactory;
+import be.walbert.DAO.DAO;
+
 public class Player extends User{
+	private static final long serialVersionUID = 1920585118455777467L;
 	
 	/*Attributs*/
 	private int credits;
@@ -14,7 +18,8 @@ public class Player extends User{
 	private ArrayList<Loan> borrow_list;
 	private ArrayList<Copy> copy_list;
 	private ArrayList<Booking> booking_list;
-
+	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	DAO<Player> playerDAO = adf.getPlayerDAO();
 	
 	/*Getters/Setters*/
 	public int getCredits() {
@@ -57,6 +62,14 @@ public class Player extends User{
 	}
 
 	/*Méthodes*/
+	public boolean SignIn(Player p) {
+		
+		boolean success= playerDAO.create(p);
+		
+		return success;
+	}
+	
+
 	public boolean LoanAllowed() {
 		boolean success = false;
 				
