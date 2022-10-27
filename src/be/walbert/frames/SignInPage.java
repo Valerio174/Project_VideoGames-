@@ -78,26 +78,26 @@ public class SignInPage extends JFrame {
 		Image background_signin_page = new ImageIcon(this.getClass().getResource("/ressources/Signin_background.jpg")).getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
 		
 		JLabel lbl_Password = new JLabel("Password");
-		lbl_Password.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lbl_Password.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		lbl_Password.setBounds(53, 378, 105, 24);
 		contentPane.add(lbl_Password);
 		
 		JLabel lbl_Username = new JLabel("Username");
-		lbl_Username.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		lbl_Username.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
 		lbl_Username.setBounds(53, 177, 105, 29);
 		contentPane.add(lbl_Username);
 		
 		JLabel lbl_Pseudo = new JLabel("Pseudo");
-		lbl_Pseudo.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lbl_Pseudo.setFont(new Font("Segoe UI Black", Font.BOLD, 20));
 		lbl_Pseudo.setBounds(53, 268, 105, 29);
 		contentPane.add(lbl_Pseudo);
 		
 		JLabel lbl_dateOfBirth = new JLabel("Date of Birth");
-		lbl_dateOfBirth.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lbl_dateOfBirth.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		lbl_dateOfBirth.setBounds(53, 480, 148, 24);
 		contentPane.add(lbl_dateOfBirth);
 		
-		JLabel lbl_TitleSignInForm = new JLabel("WELCOME NEW GAMER");
+		JLabel lbl_TitleSignInForm = new JLabel("WELCOME NEW PLAYER");
 		lbl_TitleSignInForm.setForeground(new Color(0, 0, 0));
 		lbl_TitleSignInForm.setFont(new Font("Segoe UI Black", Font.BOLD, 29));
 		lbl_TitleSignInForm.setBounds(80, 61, 363, 53);
@@ -122,12 +122,31 @@ public class SignInPage extends JFrame {
 		tf_date.setBounds(211, 480, 148, 24);
 		contentPane.add(tf_date);
 		
+		JLabel lbl_ErrorEmpty = new JLabel("");
+		lbl_ErrorEmpty.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lbl_ErrorEmpty.setBounds(53, 536, 234, 29);
+		contentPane.add(lbl_ErrorEmpty);
+		
 		JButton btnNewButton = new JButton("Sign In");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Player p = new Player(tf_Username.getText(),tf_Password.getText(),10,tf_Pseudo.getText(),
-						LocalDate.now(),tf_date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-				p.SignIn(p);
+				if(tf_Username.getText().equals("") || tf_Pseudo.getText().equals("") || tf_Password.getText().equals("") || tf_date.getDate() == null) {
+					lbl_ErrorEmpty.setText("One field is empty !");
+				}
+				else {
+					Player p = new Player(tf_Username.getText(),tf_Password.getText(),10,tf_Pseudo.getText(),
+					LocalDate.now(),tf_date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+					
+					if(p.SignIn()) {
+
+						lbl_ErrorEmpty.setText("Great you are sign in !");
+					}
+					else {
+						lbl_ErrorEmpty.setText("Sorry, an error has occurred !");
+					}
+
+				}
+
 			}
 		});
 		
