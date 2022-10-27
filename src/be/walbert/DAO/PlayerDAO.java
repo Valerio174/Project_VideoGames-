@@ -23,19 +23,20 @@ public class PlayerDAO extends DAO<Player>{
 	@Override
 	public boolean create(Player newplayer) {
 		try{
-			//connect.close();
+			/*Requete pour insérer les données dans la table Users*/
 			PreparedStatement ps = connect.prepareStatement("INSERT INTO Users(username, password,type) VALUES(?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, newplayer.getUsername());
 			ps.setString(2, newplayer.getPassword());
 			ps.setString(3, "Player");
-			ps.execute();
+			ps.execute();	/*Exécuter la requête*/
 			
-			ResultSet rs = ps.getGeneratedKeys();
-			int generatedKey = 0;
-			if (rs.next()) {
-			    generatedKey = rs.getInt(1);
+			ResultSet rs = ps.getGeneratedKeys();	/*Retourne une clé auto-généré lors d'un insertion (la plus récente)*/
+			int generatedKey = 0;	/*Variable Integer initialisé à 0*/
+			if (rs.next()) {	/*Si la PreparedStatement a retourné un enregistrement*/
+			    generatedKey = rs.getInt(1);	 
 			}
 			
+			/*Requete pour insérer les données dans la table Player*/
 			PreparedStatement ps2 = connect.prepareStatement("INSERT INTO Player(id_users,credit, pseudo,registrationDate,dateOfBirth) VALUES(?,?,?,?,?)");
 			ps2.setInt(1, generatedKey);
 			ps2.setInt(2, 10);
@@ -50,8 +51,9 @@ public class PlayerDAO extends DAO<Player>{
 		}
 		catch(SQLException e){
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		
 	}
 
 	@Override
