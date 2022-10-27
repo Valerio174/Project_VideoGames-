@@ -62,9 +62,9 @@ public class Player extends User{
 	}
 
 	/*Méthodes*/
-	public boolean SignIn(Player p) {
+	public boolean SignIn() {
 		
-		boolean success= playerDAO.create(p);
+		boolean success= playerDAO.create(this);
 		
 		return success;
 	}
