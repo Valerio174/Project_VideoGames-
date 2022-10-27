@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
+import be.walbert.classes.Player;
+
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -19,6 +21,7 @@ import java.awt.Toolkit;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -122,7 +125,9 @@ public class SignInPage extends JFrame {
 		JButton btnNewButton = new JButton("Sign In");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				Player p = new Player(tf_Username.getText(),tf_Password.getText(),10,tf_Pseudo.getText(),
+						LocalDate.now(),tf_date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+				p.SignIn(p);
 			}
 		});
 		
@@ -135,6 +140,5 @@ public class SignInPage extends JFrame {
 		lbl_background.setBackground(new Color(255, 128, 128));
 		lbl_background.setBounds(10, 11, this.getWidth(), this.getHeight());
 		contentPane.add(lbl_background);
-		
 	}
 }
