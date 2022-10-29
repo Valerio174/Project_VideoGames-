@@ -124,29 +124,42 @@ public class SignInPage extends JFrame {
 		
 		JLabel lbl_ErrorEmpty = new JLabel("");
 		lbl_ErrorEmpty.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbl_ErrorEmpty.setBounds(53, 536, 234, 29);
+		lbl_ErrorEmpty.setBounds(53, 536, 418, 29);
 		contentPane.add(lbl_ErrorEmpty);
 		
 		JButton btnNewButton = new JButton("Sign In");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				if(tf_Username.getText().equals("") || tf_Pseudo.getText().equals("") || tf_Password.getText().equals("") || tf_date.getDate() == null) {
 					lbl_ErrorEmpty.setText("One field is empty !");
 				}
 				else {
-					Player p = new Player(tf_Username.getText(),tf_Password.getText(),10,tf_Pseudo.getText(),
-					LocalDate.now(),tf_date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+					LocalDate birthOfDate = tf_date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 					
-					if(p.SignIn()) {
-
-						lbl_ErrorEmpty.setText("Great you are sign in !");
+					if(birthOfDate.isAfter(LocalDate.now())){
+						lbl_ErrorEmpty.setText("Date must be not after today!");
+					}
+					else if(birthOfDate.isEqual(LocalDate.now())) {
+						lbl_ErrorEmpty.setText("Date must be different of today!");
 					}
 					else {
-						lbl_ErrorEmpty.setText("Sorry, an error has occurred !");
-					}
-
+						lbl_ErrorEmpty.setText("Great!");
+						
+						Player p = new Player(tf_Username.getText(),tf_Password.getText(),10,tf_Pseudo.getText(),
+						LocalDate.now(),tf_date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+								
+						if(p.SignIn()) {
+							HomePage homepage = new HomePage();
+							homepage.setVisible(true);
+							homepage.lbl_register_succed.setText("Great you have been registered !");
+							dispose();
+						}
+						else {
+							lbl_ErrorEmpty.setText("Sorry, an error has occurred !");
+						}
+					}	
 				}
-
 			}
 		});
 		
