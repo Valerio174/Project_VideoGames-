@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import be.walbert.classes.Administrator;
 import be.walbert.classes.Player;
 
 public class PlayerDAO extends DAO<Player>{
@@ -14,10 +15,30 @@ public class PlayerDAO extends DAO<Player>{
 		super(conn);
 	}
 
-	/*Récupérer Player correspondant */
-	@Override
-	public Player find(Player newplayer) {
-		return newplayer;
+	/*Trouver si un compte existe deja avec un username ou un pseudo donne*/
+	public boolean findAccount(Player newplayer) {
+		try{
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT username FROM Users WHERE username = \"" + newplayer.getUsername() +"\"");
+			
+			ResultSet result2 = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT pseudo FROM Users u LEFT OUTER JOIN Player p ON u.id_users = p.id_users "
+							+ "WHERE pseudo = \"" + newplayer.getPseudo() +"\"");
+			
+			if(result.first() || result2.first()) {
+					return false;
+				}
+			else
+				return true;
+		
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return false;
+		
 	}
 
 	@Override
@@ -55,7 +76,7 @@ public class PlayerDAO extends DAO<Player>{
 		}
 		
 	}
-
+	
 	@Override
 	public boolean delete(Player obj) { 
 		return false;
@@ -63,6 +84,11 @@ public class PlayerDAO extends DAO<Player>{
 
 	@Override
 	public boolean update(Player obj) { 
+		return false;
+	}
+
+	@Override
+	public boolean find(Player obj) { 
 		return false;
 	}
 }
