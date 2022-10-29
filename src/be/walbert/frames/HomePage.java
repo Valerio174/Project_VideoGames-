@@ -111,7 +111,7 @@ public class HomePage extends JFrame {
 		panel.add(btn_Login);
 		
 		lbl_register_succed = new JLabel("");
-		lbl_register_succed.setFont(new Font("Segoe UI Black", Font.ITALIC, 30));
+		lbl_register_succed.setFont(new Font("Segoe UI Black", Font.ITALIC, 25));
 		lbl_register_succed.setForeground(new Color(0, 128, 0));
 		lbl_register_succed.setBounds(25, 541, 468, 71);
 		panel.add(lbl_register_succed);
