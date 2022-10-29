@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import be.walbert.classes.Administrator;
 import be.walbert.classes.Player;
 
 public class PlayerDAO extends DAO<Player>{
