@@ -45,7 +45,7 @@ public class HomePage extends JFrame {
 	 */
 	public HomePage() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1230, 758);
+		setBounds(100, 100, 1277, 804);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(40, 40, 40));
 		contentPane.setForeground(new Color(0, 0, 0));
@@ -70,7 +70,7 @@ public class HomePage extends JFrame {
 		
 		Panel panel = new Panel();
 		panel.setBackground(new Color(192, 192, 192));
-		panel.setBounds(645, 0, 581, 721);
+		panel.setBounds(645, 0, 618, 767);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -85,14 +85,14 @@ public class HomePage extends JFrame {
 		btn_Signin.setForeground(new Color(255, 255, 255));
 		btn_Signin.setBackground(new Color(92, 92, 92));
 		btn_Signin.setFont(new Font("Sitka Small", Font.PLAIN, 20));
-		btn_Signin.setBounds(330, 369, 185, 58);
+		btn_Signin.setBounds(361, 369, 185, 58);
 		panel.add(btn_Signin);
 		
 		JLabel lbl_titleForm = new JLabel("What do you want to do?");
 		lbl_titleForm.setBackground(new Color(234, 234, 234));
 		lbl_titleForm.setFont(new Font("Sitka Small", Font.BOLD | Font.ITALIC, 35));
 		lbl_titleForm.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_titleForm.setBounds(10, 153, 548, 71);
+		lbl_titleForm.setBounds(36, 155, 548, 71);
 		panel.add(lbl_titleForm);
 		lbl_titleForm.setOpaque(true);
 		
@@ -107,13 +107,13 @@ public class HomePage extends JFrame {
 		btn_Login.setForeground(Color.WHITE);
 		btn_Login.setFont(new Font("Sitka Small", Font.PLAIN, 20));
 		btn_Login.setBackground(new Color(92, 92, 92));
-		btn_Login.setBounds(56, 369, 185, 58);
+		btn_Login.setBounds(68, 369, 185, 58);
 		panel.add(btn_Login);
 		
 		lbl_register_succed = new JLabel("");
 		lbl_register_succed.setFont(new Font("Segoe UI Black", Font.ITALIC, 30));
 		lbl_register_succed.setForeground(new Color(0, 128, 0));
-		lbl_register_succed.setBounds(56, 541, 232, 26);
+		lbl_register_succed.setBounds(25, 541, 468, 71);
 		panel.add(lbl_register_succed);
 		
 		JLabel lbl_home_page_title_Welcome2 = new JLabel("on");
