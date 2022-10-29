@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import be.walbert.DAO.AbstractDAOFactory;
 import be.walbert.DAO.DAO;
+import be.walbert.DAO.PlayerDAO;
 
 public class Player extends User{
 	private static final long serialVersionUID = 1920585118455777467L;
@@ -69,6 +70,11 @@ public class Player extends User{
 		return success;
 	}
 	
+	public boolean CheckUsername() {
+		PlayerDAO p =(PlayerDAO)playerDAO;
+		 
+		return p.findAccount(this);
+	}
 
 	public boolean LoanAllowed() {
 		boolean success = false;
