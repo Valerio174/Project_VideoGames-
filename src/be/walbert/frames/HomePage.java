@@ -23,7 +23,7 @@ public class HomePage extends JFrame {
 
 	private JPanel contentPane;
 	private Image img = new ImageIcon(this.getClass().getResource("/ressources/home_page_background.jpg")).getImage().getScaledInstance(644, 472, Image.SCALE_SMOOTH);
-	
+	JLabel lbl_register_succed;
 	/**
 	 * Launch the application.
 	 */
@@ -109,6 +109,12 @@ public class HomePage extends JFrame {
 		btn_Login.setBackground(new Color(92, 92, 92));
 		btn_Login.setBounds(56, 369, 185, 58);
 		panel.add(btn_Login);
+		
+		lbl_register_succed = new JLabel("");
+		lbl_register_succed.setFont(new Font("Segoe UI Black", Font.ITALIC, 30));
+		lbl_register_succed.setForeground(new Color(0, 128, 0));
+		lbl_register_succed.setBounds(56, 541, 232, 26);
+		panel.add(lbl_register_succed);
 		
 		JLabel lbl_home_page_title_Welcome2 = new JLabel("on");
 		lbl_home_page_title_Welcome2.setVerticalAlignment(SwingConstants.TOP);
