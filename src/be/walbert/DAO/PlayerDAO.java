@@ -88,7 +88,7 @@ public class PlayerDAO extends DAO<Player>{
 	}
 
 	@Override
-	public boolean find(Player obj) { 
-		return false;
+	public Player find(Player obj) { 
+		return null;
 	}
 }
