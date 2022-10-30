@@ -73,12 +73,12 @@ public class VideoGame{
 	}
 
 	/*Constructeurs*/
-	public VideoGame( int id_videogame, String name, int creditCost, String console, String version) {
+	public VideoGame( int id_videogame, String name, int creditCost, String version, String console) {
 		this.id_videogame = id_videogame;
 		this.name=name;
 		this.creditCost=creditCost;
-		this.console=console;
 		this.version=version;
+		this.console=console;
 		this.copy_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
 	}
