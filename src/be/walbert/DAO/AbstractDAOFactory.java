@@ -2,6 +2,7 @@ package be.walbert.DAO;
 
 import be.walbert.classes.Player;
 import be.walbert.classes.User;
+import be.walbert.classes.VideoGame;
 
 public abstract class AbstractDAOFactory {
 	public static final int DAO_FACTORY = 0;
@@ -19,7 +20,7 @@ public abstract class AbstractDAOFactory {
 	
 	public abstract DAO<User> getUserDAO();
 	
-//	public abstract DAO<VideoGames> getVideoGamesDAO();
+	public abstract DAO<VideoGame> getVideoGameDAO();
 	
 	
 	public static AbstractDAOFactory getFactory(int type){
