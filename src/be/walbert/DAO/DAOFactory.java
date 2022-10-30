@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import be.walbert.classes.Player;
 import be.walbert.classes.User;
+import be.walbert.classes.VideoGame;
 
 public class DAOFactory extends AbstractDAOFactory{
 	protected static final Connection conn = be.walbert.connection.ProjectConnection.getInstance();
@@ -30,8 +31,8 @@ public class DAOFactory extends AbstractDAOFactory{
 		return new UserDAO(conn);
 	}
 		
-//	public DAO<VideoGame> getVideoGameDAO(){
-//	return new VideoGameDAO(conn);
-//}
+	public DAO<VideoGame> getVideoGameDAO(){
+		return new VideoGameDAO(conn);
+}
 	
 }
