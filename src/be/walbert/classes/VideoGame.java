@@ -3,8 +3,13 @@ package be.walbert.classes;
 
 import java.util.ArrayList;
 
-public class VideoGame{
+import be.walbert.DAO.AbstractDAOFactory;
+import be.walbert.DAO.DAO;
+import be.walbert.DAO.VideoGameDAO;
 
+public class VideoGame{
+	private static final long serialVersionUID = 1120585213455777467L;
+	
 	/*Attributs*/
 	private int id_videogame;
 	private String name;
@@ -13,7 +18,9 @@ public class VideoGame{
 	private String version;
 	private ArrayList<Copy> copy_list;
 	private ArrayList<Booking> booking_list;
-
+	static AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	static DAO<VideoGame> videogameDAO = adf.getVideoGameDAO();
+	
 	
 	/*Getters/Setters*/
 	public int getId_videogame() {
@@ -84,6 +91,10 @@ public class VideoGame{
 	}
 	
 	/*Méthodes*/
+	public static ArrayList<VideoGame> getAll(){
+		VideoGameDAO vgDAO = (VideoGameDAO)(videogameDAO);
+		return vgDAO.findAll();
+	}
 	public void AddCopy(Copy newcopy) {
 		try {
 			copy_list.add(newcopy);
