@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import be.walbert.classes.Player;
+
 public class GamePage extends JFrame {
 
 	private JPanel contentPane;
@@ -30,7 +32,7 @@ public class GamePage extends JFrame {
 	 * Create the frame.
 	 * @param id_videogame 
 	 */
-	public GamePage(int id_videogame) {
+	public GamePage(Player player, int id_videogame) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1161, 769);
 		contentPane = new JPanel();
