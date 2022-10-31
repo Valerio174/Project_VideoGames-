@@ -109,5 +109,12 @@ public class VideoGame{
 			 System.err.println(e.getMessage());
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Id_videogame=" + id_videogame + ", name=" + name + ", creditCost=" + creditCost
+				+ ", console=" + console + ", version=" + version;
+	}
+	
 	
 }
