@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+
+import be.walbert.classes.Player;
 import be.walbert.classes.User;
 import be.walbert.classes.VideoGame;
 
@@ -117,7 +119,7 @@ public class CatalogVideoGames extends JFrame {
 	    	      if (e.getClickCount() == 2){
 	    	    	  int selectedRow = table.getSelectedRow();
 	  					int id_videogame = (int) table.getValueAt(selectedRow, 0);
-	  					GamePage gamepage= new GamePage(id_videogame);
+	  					GamePage gamepage= new GamePage((Player) user,id_videogame);
 	  					gamepage.setVisible(true);
 	  					dispose();
 	    	         }
