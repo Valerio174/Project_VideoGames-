@@ -87,7 +87,7 @@ public class CatalogVideoGames extends JFrame {
 		videogames = VideoGame.getAll();
 		
 			/*Noms des colonnes du tableau*/
-		String[] columnsnames = {"Name", "Console","Version","Credits"};
+		String[] columnsnames = {"Id", "Name", "Console","Version","Credits"};
         
 			/*Model du tableau*/
 		DefaultTableModel tablemodel = new DefaultTableModel() {
@@ -99,8 +99,8 @@ public class CatalogVideoGames extends JFrame {
 			/*Attribuer noms des colonnes au tablemodel*/
 		tablemodel.setColumnIdentifiers(columnsnames);	
 	       for(VideoGame v: videogames){
-	           Object[] data = {v.getId_videogame(), v.getName(), v.getConsole(),v.getVersion(),v.getCreditCost()};
-	           tablemodel.addRow(data);
+	           Object[] datas = {v.getId_videogame(), v.getName(), v.getConsole(),v.getVersion(),v.getCreditCost()};
+	           tablemodel.addRow(datas);
 	       }
 	        
 	       /*Creation du curseur du JTable*/
@@ -119,7 +119,7 @@ public class CatalogVideoGames extends JFrame {
 	    	      if (e.getClickCount() == 2){
 	    	    	  int selectedRow = table.getSelectedRow();
 	  					int id_videogame = (int) table.getValueAt(selectedRow, 0);
-	  					GamePage gamepage= new GamePage((Player) user,id_videogame);
+	  					GamePage gamepage= new GamePage( user,id_videogame);
 	  					gamepage.setVisible(true);
 	  					dispose();
 	    	         }
