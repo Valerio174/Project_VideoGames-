@@ -118,8 +118,9 @@ public class CatalogVideoGames extends JFrame {
 	    	public void mouseClicked(MouseEvent e){
 	    	      if (e.getClickCount() == 2){
 	    	    	  int selectedRow = table.getSelectedRow();
-	  					int id_videogame = (int) table.getValueAt(selectedRow, 0);
-	  					GamePage gamepage= new GamePage( user,id_videogame);
+	  					 VideoGame videogame_selected = new VideoGame((int) table.getValueAt(selectedRow, 0),(String) table.getValueAt(selectedRow, 1),
+	  							(int) table.getValueAt(selectedRow, 4), (String)table.getValueAt(selectedRow, 2),(String) table.getValueAt(selectedRow, 3));
+	  					GamePage gamepage= new GamePage( user,videogame_selected);
 	  					gamepage.setVisible(true);
 	  					dispose();
 	    	         }
