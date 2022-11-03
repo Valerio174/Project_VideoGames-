@@ -1,13 +1,23 @@
 
 package be.walbert.classes;
 
-public class Copy{
+import java.util.ArrayList;
 
+import be.walbert.DAO.AbstractDAOFactory;
+import be.walbert.DAO.CopyDAO;
+import be.walbert.DAO.DAO; 
+
+public class Copy{
+	private static final long serialVersionUID = 1110485213455787467L;
+	
 	/*Attributs*/
 	private int id_copy;
 	private Player owner;
 	private VideoGame game;
 	private Loan lend;
+	static AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	static DAO<Copy> copyDAO = adf.getCopyDAO();
+	
 	
 	/*Getters/Setters*/
 	public int getId_copy() {
@@ -49,5 +59,8 @@ public class Copy{
 	}	
 	
 	/*Méthodes*/
-	
+	public static ArrayList<Copy> getAll(VideoGame videogame){
+		CopyDAO copy = (CopyDAO)(copyDAO);
+		return copy.findAllCopy(videogame);
+	}
 }
