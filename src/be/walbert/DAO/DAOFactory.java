@@ -2,6 +2,7 @@ package be.walbert.DAO;
 
 import java.sql.Connection;
 
+import be.walbert.classes.Copy;
 import be.walbert.classes.Player;
 import be.walbert.classes.User;
 import be.walbert.classes.VideoGame;
@@ -17,9 +18,9 @@ public class DAOFactory extends AbstractDAOFactory{
 //		return new BookingDAO(conn);
 //	}
 //	
-//	public DAO<Copy> getCopyDAO(){
-//		return new CopyDAO(conn);
-//	}
+	public DAO<Copy> getCopyDAO(){
+		return new CopyDAO(conn);
+	}
 	
 //	public DAO<Loan> getLoanDAO(){
 //	return new LoanDAO(conn);
