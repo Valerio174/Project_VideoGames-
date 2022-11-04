@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import be.walbert.DAO.DAO;
 import be.walbert.DAO.UserDAO;
+import be.walbert.classes.Player;
 import be.walbert.classes.User;
 
 import javax.swing.JMenu;
@@ -134,7 +135,7 @@ public class LogInPage extends JFrame {
 				}
 				else {
 					if(user.Login(user) == 1) {
-						CatalogVideoGames catalog = new CatalogVideoGames(user);
+						CatalogVideoGames catalog = new CatalogVideoGames(new Player(user.getUsername(),user.getPassword()));
 						catalog.setVisible(true);
 						dispose(); //Efface 1ere fenêtre 
 					}
