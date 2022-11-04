@@ -62,15 +62,20 @@ public class CopyDAO extends DAO<Copy> {
 		return list_copy;
 	}
 		
-	public ArrayList<Copy> CopyAvailable(Player player, VideoGame videogame) {
+	public ArrayList<Copy> CopyAvailable(VideoGame videogame) {
 		ArrayList<Copy> all_copy = new ArrayList<>();
 		
 		try {
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Copy LEFT JOIN Loan ON Copy.id_copy = Loan.id_copy WHERE Copy.id_videogame="+videogame.getId_videogame()+" AND (Loan.id_loan IS NULL OR Loan.ongoing = false)");
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Player.pseudo, Player.credit, Player.registrationDate, Player.dateOfBirth, Users.username, Users.password, *\r\n"
+							+ "FROM ((Copy LEFT JOIN Loan ON Copy.id_copy = Loan.id_copy) LEFT JOIN Player ON Copy.id_users_lender = Player.id_users) LEFT JOIN Users ON Player.id_users = Users.id_users\r\n"
+							+ "WHERE (((Loan.id_loan) Is Null) AND ((Copy.id_videogame)="+videogame.getId_videogame()+")) OR (((Copy.id_videogame)="+videogame.getId_videogame()+") AND ((Loan.ongoing)=False))");
 			while(result.next()){
-				Copy newcopy = new Copy(result.getInt("id_copy"), player, videogame);
+				Copy newcopy = new Copy(result.getInt("id_copy"), new Player(result.getString("username"),result.getString("password"),
+						result.getInt("credit"),result.getString("pseudo"),
+						result.getDate("registrationDate").toLocalDate(),
+						result.getDate("dateOfBirth").toLocalDate()) , videogame);
 				all_copy.add(newcopy);
 			}
 		} 
