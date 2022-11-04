@@ -61,6 +61,13 @@ public class Player extends User{
 		this.booking_list = new ArrayList<>();
 		this.copy_list = new ArrayList<>();
 	}
+	public Player(String username, String password) {
+		super(username, password);
+		this.lender_list = new ArrayList<>();
+		this.borrow_list = new ArrayList<>();
+		this.booking_list = new ArrayList<>();
+		this.copy_list = new ArrayList<>();
+	}
 
 	/*Méthodes*/
 	public boolean SignIn() {
