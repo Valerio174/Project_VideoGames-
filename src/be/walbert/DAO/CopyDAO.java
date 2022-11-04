@@ -3,7 +3,6 @@ package be.walbert.DAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import be.walbert.classes.Copy;
@@ -60,8 +59,5 @@ public class CopyDAO extends DAO<Copy> {
 		}
 		
 		return list_copy;
-		
 	}
-
-	
 }
