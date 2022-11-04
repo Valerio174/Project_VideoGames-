@@ -119,7 +119,7 @@ public class CatalogVideoGames extends JFrame {
 	    	      if (e.getClickCount() == 2){
 	    	    	  int selectedRow = table.getSelectedRow();
 	  					 VideoGame videogame_selected = new VideoGame((int) table.getValueAt(selectedRow, 0),(String) table.getValueAt(selectedRow, 1),
-	  							(int) table.getValueAt(selectedRow, 4), (String)table.getValueAt(selectedRow, 2),(String) table.getValueAt(selectedRow, 3));
+	  							(int) table.getValueAt(selectedRow, 4), (String)table.getValueAt(selectedRow, 3),(String) table.getValueAt(selectedRow, 2));
 	  					GamePage gamepage= new GamePage( player,videogame_selected);
 	  					gamepage.setVisible(true);
 	  					dispose();
