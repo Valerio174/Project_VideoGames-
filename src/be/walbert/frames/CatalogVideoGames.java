@@ -61,7 +61,7 @@ public class CatalogVideoGames extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CatalogVideoGames(User user) {
+	public CatalogVideoGames(Player player) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1169, 765); 
 		contentPane = new JPanel();
@@ -74,7 +74,7 @@ public class CatalogVideoGames extends JFrame {
 		lbl_Username.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lbl_Username.setBounds(47, 33, 1074, 49);
 		contentPane.add(lbl_Username);
-		lbl_Username.setText("Welcome on the catalog of VideoGames " + user.getUsername());
+		lbl_Username.setText("Welcome on the catalog of VideoGames " + player.getUsername());
 		
 		/*Label de test*/
 		JLabel lbl_TEST = new JLabel("");
@@ -120,7 +120,7 @@ public class CatalogVideoGames extends JFrame {
 	    	    	  int selectedRow = table.getSelectedRow();
 	  					 VideoGame videogame_selected = new VideoGame((int) table.getValueAt(selectedRow, 0),(String) table.getValueAt(selectedRow, 1),
 	  							(int) table.getValueAt(selectedRow, 4), (String)table.getValueAt(selectedRow, 2),(String) table.getValueAt(selectedRow, 3));
-	  					GamePage gamepage= new GamePage( user,videogame_selected);
+	  					GamePage gamepage= new GamePage( player,videogame_selected);
 	  					gamepage.setVisible(true);
 	  					dispose();
 	    	         }
