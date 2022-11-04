@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import be.walbert.classes.Copy;
 import be.walbert.classes.Player;
+import be.walbert.classes.User;
 import be.walbert.classes.VideoGame;
 
 public class CopyDAO extends DAO<Copy> {
@@ -59,5 +60,25 @@ public class CopyDAO extends DAO<Copy> {
 		}
 		
 		return list_copy;
+	}
+		
+	public ArrayList<Copy> CopyAvailable(Player player, VideoGame videogame) {
+		ArrayList<Copy> all_copy = new ArrayList<>();
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Copy LEFT JOIN Loan ON Copy.id_copy = Loan.id_copy WHERE Copy.id_videogame="+videogame.getId_videogame()+" AND (Loan.id_loan IS NULL OR Loan.ongoing = false)");
+			while(result.next()){
+				Copy newcopy = new Copy(result.getInt("id_copy"), player, videogame);
+				all_copy.add(newcopy);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return all_copy;
+
 	}
 }
