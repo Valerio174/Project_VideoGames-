@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import be.walbert.DAO.AbstractDAOFactory;
+import be.walbert.DAO.CopyDAO;
 import be.walbert.DAO.DAO;
 import be.walbert.DAO.PlayerDAO;
 
@@ -21,6 +22,7 @@ public class Player extends User{
 	private ArrayList<Booking> booking_list;
 	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	DAO<Player> playerDAO = adf.getPlayerDAO();
+	DAO<Copy> copyDAO = adf.getCopyDAO();
 	
 	/*Getters/Setters*/
 	public int getCredits() {
@@ -60,6 +62,7 @@ public class Player extends User{
 		this.borrow_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
 		this.copy_list = new ArrayList<>();
+		this.copy_list = ((CopyDAO) copyDAO).OwnCopy(this);
 	}
 	public Player(String username, String password) {
 		super(username, password);
@@ -67,6 +70,7 @@ public class Player extends User{
 		this.borrow_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
 		this.copy_list = new ArrayList<>();
+		this.copy_list = ((CopyDAO) copyDAO).OwnCopy(this);
 	}
 
 	/*Méthodes*/
