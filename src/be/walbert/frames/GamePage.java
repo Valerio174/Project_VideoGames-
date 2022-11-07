@@ -23,6 +23,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GamePage extends JFrame {
 
@@ -52,7 +54,7 @@ public class GamePage extends JFrame {
 	 */
 	public GamePage(Player player, VideoGame videogame_selected) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 1241, 694); 
+		setBounds(0, 0, 1079, 694); 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -114,13 +116,13 @@ public class GamePage extends JFrame {
 		
 		JButton btn_LoanGame = new JButton("Loan game");
 		btn_LoanGame.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_LoanGame.setBounds(341, 572, 136, 32);
+		btn_LoanGame.setBounds(341, 511, 148, 50);
 		contentPane.add(btn_LoanGame);
 		btn_LoanGame.setVisible(false);
 		
 		JButton btn_BookingGame = new JButton("Book game");
 		btn_BookingGame.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_BookingGame.setBounds(341, 572, 136, 32);
+		btn_BookingGame.setBounds(534, 511, 137, 50);
 		contentPane.add(btn_BookingGame);
 		btn_BookingGame.setVisible(false);
 		
@@ -140,22 +142,35 @@ public class GamePage extends JFrame {
 		lbl_Loan_Or_Book.setBounds(21, 396, 633, 38);
 		contentPane.add(lbl_Loan_Or_Book);
 		
-		Copy copy = new Copy(player,videogame_selected);	
-    	   if(copy.IsAvailable()) {
-    		   lbl_Loan_Or_Book.setText("Great, you can loan a copy");
-    		   btn_LoanGame.setVisible(true);
-    	   	}
-    	 	else {
-    	 		lbl_Loan_Or_Book.setText("Sorry there are no more copies. You can make a booking");
-    	   		btn_BookingGame.setVisible(true);
-    	    }		
+		JLabel lbl_test = new JLabel("");
+		lbl_test.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		lbl_test.setBounds(21, 498, 999, 38);
+		contentPane.add(lbl_test);
+		
+		Copy current_copy = videogame_selected.CopyAvailable(player);
+    	   
+		if(current_copy != null) {
+    	   lbl_Loan_Or_Book.setText("Great, you can loan a copy");
+    	   btn_LoanGame.setVisible(true);
+    	 }
+    	 else {
+    	 	lbl_Loan_Or_Book.setText("Sorry there are no more copies. You can make a booking");
+    	  	btn_BookingGame.setVisible(true);
+    	  }		
     
+		/*Ajout d'un evenement lors du click sur Loan Game*/
+		btn_LoanGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					LoanPage loanpage = new LoanPage(player, current_copy);
+					loanpage.setVisible(true);
+					dispose();
+			}
+		});
 		/*Attribuer les infos du jeux aux différents labels*/
 		lbl_GameName.setText(videogame_selected.getName());
 		lbl_GameConsole.setText(videogame_selected.getConsole());
 		lbl_GameVersion.setText(videogame_selected.getVersion());
 		lbl_GameCredits.setText(videogame_selected.getCreditCost()+ " Credits");
-
 		
 	}
 }
