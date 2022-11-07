@@ -2,6 +2,9 @@
 package be.walbert.classes;
 
 import java.util.ArrayList;
+import java.util.Random;
+
+import javax.swing.JOptionPane;
 
 import be.walbert.DAO.AbstractDAOFactory;
 import be.walbert.DAO.CopyDAO;
@@ -46,7 +49,7 @@ public class Copy{
 	}
 
 	/*Constructeurs*/
-	public Copy( Player owner, VideoGame game) {
+	public Copy(Player owner, VideoGame game) {
 		this.owner = owner;
 		this.game = game;
 	}	
@@ -67,16 +70,33 @@ public class Copy{
 		CopyDAO copy = (CopyDAO)copyDAO;
 		return copy.findAllCopy(videogame);
 	}
-	public boolean Isvailable() {
-		CopyDAO copy = (CopyDAO)copyDAO;
-		 
-		if(copy.CopyAvailable(owner, game).size() == 0) {
-			return false;
-		}
-		else {
-			return true;
-		}
+	public boolean IsAvailable(VideoGame game) {
+//		CopyDAO copy = (CopyDAO)copyDAO;
+//		 
+//		if(copy.CopyAvailable(game).size() == 0) {
+//			return false;
+//		}
+//		else {
+//			return true;
+//		}
+		return false;
+	}
+	
+	public void Borrow() {
+//		CopyDAO copy = (CopyDAO)copyDAO;
+//		ArrayList<Copy> list_copies_available = copy.CopyAvailable(game);
+//		
+//		Random random = new Random();
+//		int nb;
+//		nb = random.nextInt(list_copies_available.size());
+		
 		
 	}
+	@Override
+	public String toString() {
+		return "Copy [id_copy=" + id_copy + ", owner=" + owner.getPseudo() + ", game=" + game + ", lend=" + lend + "]";
+	}
+	
+	
 }
 
