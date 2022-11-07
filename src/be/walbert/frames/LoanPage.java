@@ -141,7 +141,7 @@ public class LoanPage extends JFrame {
 		JButton btn_SendLoan = new JButton("Send Loan");
 		btn_SendLoan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_SendLoan.setBounds(208, 554, 137, 34);
-		contentPane.add(btn_SendLoan);
+		contentPane.add(btn_SendLoan); 
 		
 	}
 }
