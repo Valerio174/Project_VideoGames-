@@ -2,8 +2,10 @@
 package be.walbert.classes;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import be.walbert.DAO.AbstractDAOFactory;
+import be.walbert.DAO.CopyDAO;
 import be.walbert.DAO.DAO;
 import be.walbert.DAO.VideoGameDAO;
 
@@ -20,7 +22,7 @@ public class VideoGame{
 	private ArrayList<Booking> booking_list;
 	static AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	static DAO<VideoGame> videogameDAO = adf.getVideoGameDAO();
-	
+	DAO<Copy> copyDAO = adf.getCopyDAO();
 	
 	/*Getters/Setters*/
 	public int getId_videogame() {
@@ -110,11 +112,25 @@ public class VideoGame{
 		}
 	}
 
+	public Copy CopyAvailable(Player borrower) {
+		
+		CopyDAO copy = (CopyDAO)copyDAO;
+		
+		if(copy.CopyAvailable(this,borrower).size() != 0) {
+			Random random = new Random();
+			int nb;
+			nb = random.nextInt(copy.CopyAvailable(this,borrower).size());
+			
+			Copy current_copy = copy.CopyAvailable(this,borrower).get(nb);
+			return current_copy;
+		}
+		
+		return null;
+	}
 	@Override
 	public String toString() {
 		return "Id_videogame=" + id_videogame + ", name=" + name + ", creditCost=" + creditCost
 				+ ", console=" + console + ", version=" + version;
 	}
-	
 	
 }
