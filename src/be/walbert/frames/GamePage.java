@@ -147,7 +147,7 @@ public class GamePage extends JFrame {
 		lbl_test.setBounds(21, 498, 999, 38);
 		contentPane.add(lbl_test);
 		
-		Copy current_copy = videogame_selected.CopyAvailable(player);
+		Copy current_copy = videogame_selected.createCopy(player);
     	   
 		if(current_copy != null) {
     	   lbl_Loan_Or_Book.setText("Great, you can loan a copy");
