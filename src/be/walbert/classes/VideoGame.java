@@ -117,21 +117,30 @@ public class VideoGame{
 		}
 	}
 
-	public Copy CopyAvailable(Player borrower) {
+	public Copy CopyAvailable() {
 		
-		CopyDAO copy = (CopyDAO)copyDAO;
-		
-		if(copy.CopyAvailable(this,borrower).size() != 0) {
-			Random random = new Random();
-			int nb;
-			nb = random.nextInt(copy.CopyAvailable(this,borrower).size());
-			
-			Copy current_copy = copy.CopyAvailable(this,borrower).get(nb);
-			return current_copy;
-		}
+		 
 		
 		return null;
 	}
+	
+	public Copy createCopy(Player borrower) {
+		CopyDAO copy = (CopyDAO)copyDAO;
+			
+		if(copy.CopyAvailable(this,borrower).size() != 0) {
+		Random random = new Random();
+		int nb;
+		nb = random.nextInt(copy.CopyAvailable(this,borrower).size());
+				
+		Copy current_copy = copy.CopyAvailable(this,borrower).get(nb);
+			
+			return current_copy;
+		}
+			
+		return null;
+		
+	}
+	
 	@Override
 	public String toString() {
 		return "Id_videogame=" + id_videogame + ", name=" + name + ", creditCost=" + creditCost

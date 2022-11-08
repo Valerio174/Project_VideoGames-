@@ -49,10 +49,6 @@ public class Copy{
 	}
 
 	/*Constructeurs*/
-	public Copy(Player owner, VideoGame game) {
-		this.owner = owner;
-		this.game = game;
-	}	
 	public Copy(int id_copy, Player owner, VideoGame game, Loan lend) {
 		this.id_copy = id_copy;
 		this.owner = owner;
@@ -66,10 +62,7 @@ public class Copy{
 	}	
 	
 	/*Méthodes*/
-	public static ArrayList<Copy> getAll(VideoGame videogame){
-		CopyDAO copy = (CopyDAO)copyDAO;
-		return copy.findAllCopy(videogame);
-	}
+
 	public boolean IsAvailable(VideoGame game) {
 //		CopyDAO copy = (CopyDAO)copyDAO;
 //		 
