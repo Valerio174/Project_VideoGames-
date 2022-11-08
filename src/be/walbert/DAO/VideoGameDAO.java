@@ -33,6 +33,7 @@ public class VideoGameDAO extends DAO<VideoGame>{
 		return all_videogames;
 		
 	}
+	
 	@Override
 	public boolean create(VideoGame obj) { 
 		return false;
@@ -52,5 +53,28 @@ public class VideoGameDAO extends DAO<VideoGame>{
 	public VideoGame find(VideoGame obj) { 
 		return null;
 	}
+	
+	public VideoGame GetVideoGame(String name, String version) {
+		ArrayList<VideoGame> all_videogames = new ArrayList<>();
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT VideoGame.id_VideoGame, VideoGame.name, VideoGame.creditCost, Console.name_console, Version.name_version\r\n"
+							+ "FROM Console INNER JOIN (Version INNER JOIN VideoGame ON Version.id_version = VideoGame.id_version) ON Console.id_console = Version.id_console\r\n"
+							+ "WHERE (((VideoGame.name)=\""+name+"\") AND ((Version.name_version)=\""+version+"\"));\r\n"
+							+ "");
+			if(result.first()) {
+				VideoGame game = new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console"));
+				return game;
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
 
 }
