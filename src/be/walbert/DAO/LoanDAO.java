@@ -1,0 +1,52 @@
+package be.walbert.DAO;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import be.walbert.classes.Loan;
+
+public class LoanDAO extends DAO<Loan>{
+	public LoanDAO(Connection conn) {
+		super(conn); 
+	} 
+
+	@Override
+	public boolean create(Loan loan) {
+		try{
+			/*Requete pour insérer les données dans la table Loan*/
+			PreparedStatement ps = connect.prepareStatement("INSERT INTO Loan(startDate, endDate,ongoing,id_users_borrower,id_copy) VALUES(?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+			ps.setDate(1, Date.valueOf(loan.getStartDate()));
+			ps.setDate(2,Date.valueOf(loan.getEndDate()));
+			ps.setBoolean(3, false);
+			//ps.setString(4,);	//Ajouter un champ id_users dans la classe Users 
+			ps.setInt(5,loan.getCopy().getId_copy());
+			ps.execute();	/*Exécuter la requête*/
+			ps.close(); 
+			
+			return true;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean delete(Loan obj) { 
+		return false;
+	}
+
+	@Override
+	public boolean update(Loan obj) { 
+		return false;
+	}
+
+	@Override
+	public Loan find(Loan obj) { 
+		return null;
+	}
+}
