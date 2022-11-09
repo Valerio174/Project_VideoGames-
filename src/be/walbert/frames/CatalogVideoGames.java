@@ -42,6 +42,7 @@ public class CatalogVideoGames extends JFrame {
 	private JPanel contentPane;  
 	private ArrayList<VideoGame> videogames;
 	private JTable table;
+	JLabel lbl_register_succed;
 	/**
 	 * Launch the application.
 	 */
@@ -113,6 +114,11 @@ public class CatalogVideoGames extends JFrame {
         table = new JTable(tablemodel);
         scrollPane.setViewportView(table);
         
+        JLabel lblNewLabel = new JLabel("");
+        lblNewLabel.setFont(new Font("Segoe UI Black", Font.ITALIC, 15));
+        lblNewLabel.setBounds(47, 612, 603, 40);
+        contentPane.add(lblNewLabel);
+        
         /*Ajouter evenement lors du clique sur une ligne*/
 	    table.addMouseListener(new MouseAdapter() {
 	    	public void mouseClicked(MouseEvent e){
@@ -126,5 +132,10 @@ public class CatalogVideoGames extends JFrame {
 	    	      }
 	    });
         
+	    lbl_register_succed = new JLabel("");
+		lbl_register_succed.setFont(new Font("Segoe UI Black", Font.ITALIC, 25));
+		lbl_register_succed.setForeground(new Color(0, 128, 0));
+		lbl_register_succed.setBounds(25, 541, 468, 71);
+		contentPane.add(lbl_register_succed);
 	}
 }
