@@ -9,8 +9,8 @@ public class Administrator extends User {
 	
 
 	/*Constructeurs*/
-	public Administrator(String username, String password) {
-		super(username, password);
+	public Administrator(int id_users, String username, String password) {
+		super(id_users, username, password);
 	}
 	
 	
