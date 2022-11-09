@@ -6,8 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.walbert.classes.Copy;
-import be.walbert.classes.Player;
-import be.walbert.classes.User;
+import be.walbert.classes.Player; 
 import be.walbert.classes.VideoGame;
 
 public class CopyDAO extends DAO<Copy> {
