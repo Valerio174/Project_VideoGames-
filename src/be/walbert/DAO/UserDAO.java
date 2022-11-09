@@ -50,7 +50,7 @@ public class UserDAO extends DAO<User>{
 					return player;
 				}
 				else {
-					Administrator admin = new Administrator(result.getInt("id_users"), result.getString("username"),result.getString("password"));
+					Administrator admin = new Administrator(result.getInt("id_users"),result.getString("username"),result.getString("password"));
 					return admin;
 				}
 			else
@@ -63,4 +63,35 @@ public class UserDAO extends DAO<User>{
 		return newuser;
 	}
 
+	public User GetUser(String username, String password) {
+		 
+		try{
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT id_users, username, password, "
+							+ "type, credit, pseudo, registrationDate, dateOfBirth "
+							+ "FROM Users u LEFT OUTER JOIN Player p ON u.id_users = p.id_users "
+							+ "WHERE username = \"" + username +"\"" 
+							+ " AND password = \"" + password +"\"");
+			if(result.first())
+				if (result.getString("type").equals("Player")) {
+					Player player = new Player(result.getInt("id_users"), result.getString("username"),result.getString("password"),
+							result.getInt("credit"),result.getString("pseudo"),
+							result.getDate("registrationDate").toLocalDate(),
+							result.getDate("dateOfBirth").toLocalDate());
+					return player;
+				}
+				else {
+					Administrator admin = new Administrator(result.getInt("id_users"),result.getString("username"),result.getString("password"));
+					return admin;
+				}
+			else
+				return null;
+		
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
