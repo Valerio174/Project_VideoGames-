@@ -21,8 +21,8 @@ public class LoanDAO extends DAO<Loan>{
 			PreparedStatement ps = connect.prepareStatement("INSERT INTO Loan(startDate, endDate,ongoing,id_users_borrower,id_copy) VALUES(?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setDate(1, Date.valueOf(loan.getStartDate()));
 			ps.setDate(2,Date.valueOf(loan.getEndDate()));
-			ps.setBoolean(3, false);
-			//ps.setString(4,);	//Ajouter un champ id_users dans la classe Users 
+			ps.setBoolean(3, true);
+			ps.setInt(4, loan.getBorrower().getId_users());	//Ajouter un champ id_users dans la classe Users 
 			ps.setInt(5,loan.getCopy().getId_copy());
 			ps.execute();	/*Exécuter la requête*/
 			ps.close(); 
