@@ -43,6 +43,7 @@ public class CatalogVideoGames extends JFrame {
 	private ArrayList<VideoGame> videogames;
 	private JTable table;
 	JLabel lbl_register_succed;
+	
 	/**
 	 * Launch the application.
 	 */
