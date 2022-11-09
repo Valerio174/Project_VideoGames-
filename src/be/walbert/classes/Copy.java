@@ -8,7 +8,8 @@ import javax.swing.JOptionPane;
 
 import be.walbert.DAO.AbstractDAOFactory;
 import be.walbert.DAO.CopyDAO;
-import be.walbert.DAO.DAO; 
+import be.walbert.DAO.DAO;
+import be.walbert.DAO.LoanDAO; 
 
 public class Copy{
 	private static final long serialVersionUID = 1110485213455787467L;
@@ -20,6 +21,7 @@ public class Copy{
 	private Loan lend;
 	static AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	static DAO<Copy> copyDAO = adf.getCopyDAO();
+	DAO<Loan> loanDAO = adf.getLoanDAO();
 	
 	
 	/*Getters/Setters*/
@@ -75,14 +77,10 @@ public class Copy{
 		return false;
 	}
 	
-	public void Borrow() {
-//		CopyDAO copy = (CopyDAO)copyDAO;
-//		ArrayList<Copy> list_copies_available = copy.CopyAvailable(game);
-//		
-//		Random random = new Random();
-//		int nb;
-//		nb = random.nextInt(list_copies_available.size());
+	public void Borrow(Loan currentloan) {
+		DAO<Loan> loan = (LoanDAO)loanDAO;
 		
+		loan.create(currentloan);
 		
 	}
 	@Override
