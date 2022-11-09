@@ -43,14 +43,14 @@ public class UserDAO extends DAO<User>{
 							+ " AND password = \"" + newuser.getPassword() +"\"");
 			if(result.first())
 				if (result.getString("type").equals("Player")) {
-					Player player = new Player(result.getString("username"),result.getString("password"),
+					Player player = new Player(result.getInt("id_users"), result.getString("username"),result.getString("password"),
 							result.getInt("credit"),result.getString("pseudo"),
 							result.getDate("registrationDate").toLocalDate(),
 							result.getDate("dateOfBirth").toLocalDate());
 					return player;
 				}
 				else {
-					Administrator admin = new Administrator(result.getString("username"),result.getString("password"));
+					Administrator admin = new Administrator(result.getInt("id_users"), result.getString("username"),result.getString("password"));
 					return admin;
 				}
 			else
