@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 
 import be.walbert.classes.Copy;
+import be.walbert.classes.Loan;
 import be.walbert.classes.Player;
 import be.walbert.classes.VideoGame;
 
@@ -18,6 +19,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
@@ -113,6 +116,7 @@ public class LoanPage extends JFrame {
 		lbl_Game.setText(lbl_Game.getText() + " " + current_copy.getGame().getName());
 		lbl_Lender.setText(lbl_Lender.getText() + " " + current_copy.getOwner().getPseudo());
 		lbl_Credits.setText(lbl_Credits.getText() + " " + current_copy.getGame().getCreditCost());
+		
 		JDateChooser tf_enddate = new JDateChooser();
 		tf_enddate.setBounds(232, 405, 161, 34);
 		contentPane.add(tf_enddate);
@@ -129,10 +133,36 @@ public class LoanPage extends JFrame {
 		lbl_EndDate.setBounds(31, 403, 169, 36);
 		contentPane.add(lbl_EndDate);
 		
+		JLabel lbl_ErrorEmpty = new JLabel("");
+		lbl_ErrorEmpty.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lbl_ErrorEmpty.setBounds(53, 536, 418, 29);
+		contentPane.add(lbl_ErrorEmpty);
+		
 		JButton btn_SendLoan = new JButton("Send Loan");
 		btn_SendLoan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				 
+				if(tf_enddate.getDate() == null) {
+					lbl_ErrorEmpty.setText("End date is empty !");
+				}
+				else {
+					LocalDate end_date = tf_enddate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					
+					if(end_date.isEqual(LocalDate.now())) {
+						lbl_ErrorEmpty.setText("Date must be different of today!");
+					}
+					else if(end_date.isBefore(LocalDate.now())){
+						lbl_ErrorEmpty.setText("Date must be after today!");
+					}
+					else {
+						Loan new_loan = new Loan(LocalDate.now(), tf_enddate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), true, player, current_copy.getOwner(), current_copy );
+						 
+						current_copy.Borrow(new_loan);
+						CatalogVideoGames catalog = new CatalogVideoGames(player);
+						catalog.setVisible(true);
+						catalog.lbl_register_succed.setText("Good, you have successfully completed a loan !");
+						dispose();
+					}
+				}
 			}
 		});
 		btn_SendLoan.setFont(new Font("Tahoma", Font.PLAIN, 20));
