@@ -2,6 +2,7 @@ package be.walbert.classes;
 
 import be.walbert.DAO.AbstractDAOFactory;
 import be.walbert.DAO.DAO;
+import be.walbert.DAO.UserDAO;
 
 public abstract class User{
 	private static final long serialVersionUID = 1900585338455777467L;
@@ -10,8 +11,8 @@ public abstract class User{
 	private int id_users;
 	private String username;
 	private String password;
-	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-	DAO<User> userDAO = adf.getUserDAO();
+	static AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	static DAO<User> userDAO = adf.getUserDAO();
 	
 
 	/*Constructeurs*/
@@ -20,7 +21,11 @@ public abstract class User{
 		this.username = username;
 		this.password = password;
 	}
-	public User() {}
+	public User( String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+
 	
 	/*Getters/Setters*/
 	public int getId_users() {
@@ -43,10 +48,19 @@ public abstract class User{
 	}
 	
 	/*Méthodes*/
-	public int Login(User u){
+	public static User GetUser(String username, String password) {
+		UserDAO user =(UserDAO)userDAO;
+		
+		if(user.GetUser(username, password) != null) {
+			return (user.GetUser(username, password));
+		}
+		return null;
+	}
+	public int Login(){
 		
 		int success= -1;
-		User user = userDAO.find(u);
+		User user = userDAO.find(this);
+		
 		if(user != null) {
 			if(user instanceof Player) {
 				success = 1;
@@ -57,7 +71,6 @@ public abstract class User{
 				return success;
 			}
 		}
-		
 		
 		return success;
 	}	
