@@ -3,10 +3,11 @@ package be.walbert.classes;
 import be.walbert.DAO.AbstractDAOFactory;
 import be.walbert.DAO.DAO;
 
-public class User{
+public abstract class User{
 	private static final long serialVersionUID = 1900585338455777467L;
 	
 	/*Attributs*/
+	private int id_users;
 	private String username;
 	private String password;
 	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
@@ -14,13 +15,20 @@ public class User{
 	
 
 	/*Constructeurs*/
-	public User(String username, String password) {
+	public User(int id_users, String username, String password) {
+		this.id_users = id_users;
 		this.username = username;
 		this.password = password;
 	}
 	public User() {}
 	
 	/*Getters/Setters*/
+	public int getId_users() {
+		return id_users;
+	}
+	public void setId_users(int id_users) {
+		this.id_users = id_users;
+	}
 	public String getUsername() {
 		return username;
 	}
