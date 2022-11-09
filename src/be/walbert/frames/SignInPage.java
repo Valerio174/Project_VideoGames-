@@ -148,10 +148,7 @@ public class SignInPage extends JFrame {
 						
 						Player p = new Player(tf_Username.getText(),tf_Password.getText(),10,tf_Pseudo.getText(),
 						LocalDate.now(),tf_date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-						if(p.CheckUsername()) {
-							
-						}
-								
+
 						if(p.CheckUsername()) {
 							if(p.SignIn()) {
 								HomePage homepage = new HomePage();

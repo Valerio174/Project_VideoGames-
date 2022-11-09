@@ -24,6 +24,7 @@ import be.walbert.classes.Player;
 import be.walbert.classes.User;
 
 import javax.swing.JMenu;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -128,24 +129,24 @@ public class LogInPage extends JFrame {
 		JButton btn_Login = new JButton("Log In");
 		btn_Login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				User user = new User(tf_username.getText(), tf_password.getText());
+				User user = User.GetUser(tf_username.getText(), tf_password.getText());
 				
-				if (user.Login(user) == -1) {
-					lbl_error_users.setText("Not users found ! ");
-				}
-				else {
-					if(user.Login(user) == 1) {
-						CatalogVideoGames catalog = new CatalogVideoGames(new Player(user.getUsername(),user.getPassword()));
-						catalog.setVisible(true);
-						dispose(); //Efface 1ere fenêtre 
+				if(user != null) {
+					if(user.Login() == 1) {
+							CatalogVideoGames catalog = new CatalogVideoGames(new Player(user.getId_users(), user.getUsername(),user.getPassword()));
+							catalog.setVisible(true);
+							dispose(); //Efface 1ere fenêtre 
 					}
 					else {
 						AdministratorPage administratorPage = new AdministratorPage(user);
 						administratorPage.setVisible(true);
 						dispose(); //Efface 1ere fenêtre 
 					}
-
 				}
+				else {
+					lbl_error_users.setText("Not users found ! ");
+				}
+				
 			}
 		});
 		btn_Login.setForeground(new Color(255, 255, 255));

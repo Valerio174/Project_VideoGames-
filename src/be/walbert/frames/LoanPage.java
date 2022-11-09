@@ -21,12 +21,13 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LoanPage extends JFrame {
 
 	private JPanel contentPane;
 	private Image img = new ImageIcon(this.getClass().getResource("/ressources/icon_back.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-	private JDateChooser tf_startdate;
 	/**
 	 * Launch the application.
 	 */
@@ -107,17 +108,13 @@ public class LoanPage extends JFrame {
 		lbl_Credits.setBounds(31, 262, 194, 61);
 		contentPane.add(lbl_Credits);
 		
-		tf_startdate = new JDateChooser();
-		tf_startdate.setBounds(208, 389, 161, 34);
-		contentPane.add(tf_startdate);
-		
 		/*Attributions des valeurs de la copy choisie*/
 		lbl_IdCopy.setText(lbl_IdCopy.getText() + " " + current_copy.getId_copy());
 		lbl_Game.setText(lbl_Game.getText() + " " + current_copy.getGame().getName());
 		lbl_Lender.setText(lbl_Lender.getText() + " " + current_copy.getOwner().getPseudo());
 		lbl_Credits.setText(lbl_Credits.getText() + " " + current_copy.getGame().getCreditCost());
 		JDateChooser tf_enddate = new JDateChooser();
-		tf_enddate.setBounds(208, 451, 161, 34);
+		tf_enddate.setBounds(232, 405, 161, 34);
 		contentPane.add(tf_enddate);
 		
 		JLabel lbl_TitleChooseDate = new JLabel("Choose the dates:");
@@ -126,21 +123,20 @@ public class LoanPage extends JFrame {
 		lbl_TitleChooseDate.setBounds(31, 317, 295, 61);
 		contentPane.add(lbl_TitleChooseDate);
 		
-		JLabel lbl_StartDate = new JLabel("Start Date:");
-		lbl_StartDate.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_StartDate.setFont(new Font("Segoe UI Semibold", Font.ITALIC, 20));
-		lbl_StartDate.setBounds(31, 387, 169, 36);
-		contentPane.add(lbl_StartDate);
-		
 		JLabel lbl_EndDate = new JLabel("End Date:");
 		lbl_EndDate.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_EndDate.setFont(new Font("Segoe UI Semibold", Font.ITALIC, 20));
-		lbl_EndDate.setBounds(31, 449, 169, 36);
+		lbl_EndDate.setBounds(31, 403, 169, 36);
 		contentPane.add(lbl_EndDate);
 		
 		JButton btn_SendLoan = new JButton("Send Loan");
+		btn_SendLoan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				 
+			}
+		});
 		btn_SendLoan.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_SendLoan.setBounds(208, 554, 137, 34);
+		btn_SendLoan.setBounds(232, 508, 137, 34);
 		contentPane.add(btn_SendLoan); 
 		
 	}
