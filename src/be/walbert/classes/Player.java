@@ -51,9 +51,9 @@ public class Player extends User{
 	}
 	
 	/*Constructeurs*/
-	public Player(String username, String password, int credits, String pseudo, LocalDate registrationDate,
+	public Player(int id_users, String username, String password, int credits, String pseudo, LocalDate registrationDate,
 			LocalDate dateOfBirth) {
-		super(username, password);
+		super(id_users, username, password);
 		this.credits = credits;
 		this.pseudo = pseudo;
 		this.registrationDate = registrationDate;
@@ -64,8 +64,8 @@ public class Player extends User{
 		this.copy_list = new ArrayList<>();
 		this.copy_list = ((CopyDAO) copyDAO).OwnCopy(this);
 	}
-	public Player(String username, String password) {
-		super(username, password);
+	public Player(int id_users, String username, String password) {
+		super(id_users, username, password);
 		this.lender_list = new ArrayList<>();
 		this.borrow_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
