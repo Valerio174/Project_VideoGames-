@@ -160,7 +160,7 @@ public class SetCreditsPage extends JFrame {
 					if(videogame_selected.ModifyCredits()) {
 						AdministratorPage adminpage = new AdministratorPage(admin);
 						adminpage.setVisible(true);
-						adminpage.lbl_SuccessUpdate.setText("Great you have updated the credits !");
+						adminpage.lbl_Success.setText("Great you have updated the credits !");
 						dispose();
 					}
 					else {
