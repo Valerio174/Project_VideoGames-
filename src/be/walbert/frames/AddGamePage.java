@@ -200,7 +200,16 @@ public class AddGamePage extends JFrame {
 					lbl_ErrorEmpty.setText("A field is missing");
 				}
 				else {
-					JOptionPane.showMessageDialog(contentPane, "Great !");
+					VideoGame game = new VideoGame(tf_Name.getText(), Integer.valueOf(tf_Credits.getText()), list_version.getSelectedValue() , list_consoles.getSelectedValue());
+					if(game.CreateVideoGame()) {
+						 AdministratorPage adminpage = new AdministratorPage(admin);
+						 adminpage.setVisible(true);
+						 adminpage.lbl_Success.setText("Great, you have successfully added a video game");
+						 dispose();
+					}
+					else {
+						JOptionPane.showMessageDialog(contentPane, "Sorry an error");
+					}
 				}
 			}
 		});
