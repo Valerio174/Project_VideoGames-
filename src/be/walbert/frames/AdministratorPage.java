@@ -54,6 +54,7 @@ public class AdministratorPage extends JFrame {
 	 * Create the frame.
 	 */
 	public AdministratorPage(Administrator admin) {
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1145, 738);
 		contentPane = new JPanel();
@@ -62,7 +63,13 @@ public class AdministratorPage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		/*Image de fond*/
+		Image background_admin_page = new ImageIcon(this.getClass().getResource("/ressources/admin_background.jpg")).getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+		
+		/*Definir attributs du fond d'ecran*/
+		
 		JLabel lbl_WelcomeAdmin = new JLabel("New label");
+		lbl_WelcomeAdmin.setForeground(new Color(192, 192, 192));
 		lbl_WelcomeAdmin.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
 		lbl_WelcomeAdmin.setBounds(45, 48, 888, 81);
 		contentPane.add(lbl_WelcomeAdmin);
@@ -116,7 +123,7 @@ public class AdministratorPage extends JFrame {
 	    /*Bouton deconnexion(Log Out)*/
 		JLabel lbl_icon_logout = new JLabel("");
 		
-		/*Ajout de l'eveneptn sur le bouton deconnexion*/
+		/*Ajout de l'evenement sur le bouton deconnexion*/
 		lbl_icon_logout.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -136,6 +143,7 @@ public class AdministratorPage extends JFrame {
 		contentPane.add(lbl_LogOut);
 		
 		JLabel lbl_WelcomeAdmin_1 = new JLabel("Please choose game to modify his credits:");
+		lbl_WelcomeAdmin_1.setForeground(new Color(192, 192, 192));
 		lbl_WelcomeAdmin_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
 		lbl_WelcomeAdmin_1.setBounds(45, 140, 780, 81);
 		contentPane.add(lbl_WelcomeAdmin_1);
@@ -157,5 +165,11 @@ public class AdministratorPage extends JFrame {
 		lbl_Success.setForeground(new Color(0, 128, 0));
 		lbl_Success.setBounds(45, 601, 580, 71);
 		contentPane.add(lbl_Success);
+		
+		JLabel lbl_background = new JLabel("");
+		lbl_background.setIcon(new ImageIcon(background_admin_page));
+		lbl_background.setBackground(new Color(255, 128, 128));
+		lbl_background.setBounds(10, 11, this.getWidth(), this.getHeight());
+		contentPane.add(lbl_background);
 	}
 }
