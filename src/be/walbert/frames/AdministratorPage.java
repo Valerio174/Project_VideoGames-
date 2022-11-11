@@ -1,5 +1,6 @@
 package be.walbert.frames;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
@@ -10,6 +11,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import be.walbert.classes.Administrator;
 import be.walbert.classes.User;
 import be.walbert.classes.VideoGame;
 
@@ -28,6 +30,7 @@ public class AdministratorPage extends JFrame {
 	private Image icon_logout = new ImageIcon(this.getClass().getResource("/ressources/icon_logout.png")).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
 	private ArrayList<VideoGame> videogames;
 	private JTable table;
+	JLabel lbl_SuccessUpdate;
 
 	/**
 	 * Launch the application.
@@ -48,7 +51,7 @@ public class AdministratorPage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AdministratorPage(User admin) {
+	public AdministratorPage(Administrator admin) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1145, 738);
 		contentPane = new JPanel();
@@ -101,7 +104,7 @@ public class AdministratorPage extends JFrame {
 	    	      if (e.getClickCount() == 2){
 	    	    	  int selectedRow = table.getSelectedRow();
 	    	    	  	VideoGame videogame_selected = VideoGame.GetVideoGame((String) table.getValueAt(selectedRow, 0), (String)table.getValueAt(selectedRow, 2));
-	  					SetCreditsPage creditspage = new SetCreditsPage(videogame_selected);
+	  					SetCreditsPage creditspage = new SetCreditsPage(admin, videogame_selected);
 	  					creditspage.setVisible(true);
 	  					dispose();
 	    	         }
@@ -139,5 +142,11 @@ public class AdministratorPage extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnNewButton.setBounds(913, 270, 130, 33);
 		contentPane.add(btnNewButton);
+		
+		lbl_SuccessUpdate = new JLabel("");
+		lbl_SuccessUpdate.setFont(new Font("Segoe UI Black", Font.ITALIC, 20));
+		lbl_SuccessUpdate.setForeground(new Color(0, 128, 0));
+		lbl_SuccessUpdate.setBounds(45, 619, 580, 71);
+		contentPane.add(lbl_SuccessUpdate);
 	}
 }
