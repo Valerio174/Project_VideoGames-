@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import be.walbert.DAO.DAO;
 import be.walbert.DAO.UserDAO;
+import be.walbert.classes.Administrator;
 import be.walbert.classes.Player;
 import be.walbert.classes.User;
 
@@ -138,7 +139,7 @@ public class LogInPage extends JFrame {
 							dispose(); //Efface 1ere fenêtre 
 					}
 					else {
-						AdministratorPage administratorPage = new AdministratorPage(user);
+						AdministratorPage administratorPage = new AdministratorPage(new Administrator(user.getId_users(), user.getUsername(),user.getPassword()));
 						administratorPage.setVisible(true);
 						dispose(); //Efface 1ere fenêtre 
 					}
