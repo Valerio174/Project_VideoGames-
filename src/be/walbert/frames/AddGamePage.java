@@ -21,13 +21,11 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import be.walbert.classes.Administrator;
-import be.walbert.classes.Loan;
 import be.walbert.classes.VideoGame;
 import javax.swing.JButton;
 
@@ -39,6 +37,8 @@ public class AddGamePage extends JFrame {
 	private ArrayList<String> all_consoles;
 	private ArrayList<String> all_versions;
 	private JList<String> list_version; 
+	private Image img = new ImageIcon(this.getClass().getResource("/ressources/icon_back.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
 	/**
 	 * Launch the application.
 	 */
@@ -65,6 +65,22 @@ public class AddGamePage extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		
+		/*Icon de retour (vers la page Admin)*/
+		JLabel lbl_icon_back = new JLabel("");
+		
+		/*Ajout de l'evenement lors du click*/
+		lbl_icon_back.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				AdministratorPage adminpage = new AdministratorPage(admin);
+				adminpage.setVisible(true);
+				dispose();
+			}
+		});
+		lbl_icon_back.setBounds(21, 589, 50, 50); 
+		lbl_icon_back.setIcon(new ImageIcon(img));
+		contentPane.add(lbl_icon_back);
 		
 		 /*Bouton deconnexion(Log Out)*/
 		JLabel lbl_icon_logout = new JLabel("");
