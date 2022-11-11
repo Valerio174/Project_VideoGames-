@@ -94,4 +94,49 @@ public class VideoGameDAO extends DAO<VideoGame>{
 		return null;
 	}
 
+	public ArrayList<String> AllConsoles(){
+		ArrayList<String> all_consoles = new ArrayList<>();
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Console");
+			while(result.next()){
+ 				all_consoles.add(result.getString("name_console"));
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return all_consoles;
+		
+	}
+	public ArrayList<String> AllVersion(String console){
+		ArrayList<String> all_versions = new ArrayList<>();
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Version.name_version\r\n"
+							+ "FROM Console INNER JOIN Version ON Console.id_console = Version.id_console\r\n"
+							+ "WHERE (((Console.name_console)=\""+console+"\"))");
+			while(result.next()){
+				all_versions.add(result.getString("name_version"));
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return all_versions;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }
