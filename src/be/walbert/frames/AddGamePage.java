@@ -149,39 +149,39 @@ public class AddGamePage extends JFrame {
 		contentPane.add(tf_Name);
 		tf_Name.setColumns(10);
 		
-//		/*Creation du curseur du JList pour Consoles*/
-//        JScrollPane scrollPane = new JScrollPane();
-//        scrollPane.setSize(244, 40);
-//        scrollPane.setLocation(224, 280);
-//        contentPane.add(scrollPane);
-//        
-//		all_consoles = VideoGame.GetAllConsoles();
-//		JList<String> list_consoles = new JList(all_consoles.toArray());
-//		list_consoles.setBounds(224, 280, 244, 40);
-//		contentPane.add(list_consoles);
-//		  
-//		scrollPane.setViewportView(list_consoles);
-//		
-//		/*Creation du curseur du JList pour Version*/
-//        JScrollPane scrollPane2 = new JScrollPane();
-//        scrollPane2.setSize(244, 40);
-//        scrollPane2.setLocation(224, 360);
-//        contentPane.add(scrollPane2);
-//        
-//		/*Ajout d'un evenement lors du clic sur la JList des Consoles*/
-//		list_consoles.addMouseListener(new MouseAdapter() {
-//	    	public void mouseClicked(MouseEvent e){
-//	    	      if (e.getClickCount() == 1){
-//	    	    	String console_name = list_consoles.getSelectedValue();	/*Récupérer la console choisie*/
-//	    	    	all_versions = VideoGame.GetAllVersions(console_name);	/*Récupérer toutes les versions correspondantes*/
-//	    	    	list_version = new JList(all_versions.toArray());	/*Attribuer les versions à la liste pour affichage*/
-//	    	  		list_version.setBounds(224, 360, 244, 40);
-//	    			contentPane.add(list_version);
-//	    			  
-//	    			scrollPane2.setViewportView(list_version);
-//	    	      }
-//	    	}
-//	    });
+		/*Creation du curseur du JList pour Consoles*/
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setSize(244, 40);
+        scrollPane.setLocation(224, 280);
+        contentPane.add(scrollPane);
+        
+		all_consoles = VideoGame.GetAllConsoles();
+		JList<String> list_consoles = new JList(all_consoles.toArray());
+		list_consoles.setBounds(224, 280, 244, 40);
+		contentPane.add(list_consoles);
+		  
+		scrollPane.setViewportView(list_consoles);
+		
+		/*Creation du curseur du JList pour Version*/
+        JScrollPane scrollPane2 = new JScrollPane();
+        scrollPane2.setSize(244, 40);
+        scrollPane2.setLocation(224, 360);
+        contentPane.add(scrollPane2);
+        
+		/*Ajout d'un evenement lors du clic sur la JList des Consoles*/
+		list_consoles.addMouseListener(new MouseAdapter() {
+	    	public void mouseClicked(MouseEvent e){
+	    	      if (e.getClickCount() == 1){
+	    	    	String console_name = list_consoles.getSelectedValue();	/*Récupérer la console choisie*/
+	    	    	all_versions = VideoGame.GetAllVersions(console_name);	/*Récupérer toutes les versions correspondantes*/
+	    	    	list_version = new JList(all_versions.toArray());	/*Attribuer les versions à la liste pour affichage*/
+	    	  		list_version.setBounds(224, 360, 244, 40);
+	    			contentPane.add(list_version);
+	    			  
+	    			scrollPane2.setViewportView(list_version);
+	    	      }
+	    	}
+	    });
    
 		/*JLabel pour afficher si un champ est manquant*/
 		JLabel lbl_ErrorEmpty = new JLabel("");
@@ -196,11 +196,11 @@ public class AddGamePage extends JFrame {
 		btn_Add.setBounds(237, 589, 106, 40);
 		btn_Add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				if(tf_Name.getText().equals("") /*|| list_consoles.getSelectedValue() == null || list_version.getSelectedValue() == null ||*/|| tf_Credits.getText().equals("")) { 
-					lbl_ErrorEmpty.setText("Sorry, a field is missing");
+				if(tf_Name.getText().equals("") || list_consoles.getSelectedValue() == null || list_version.getSelectedValue() == null || tf_Credits.getText().equals("")) { 
+					lbl_ErrorEmpty.setText("A field is missing");
 				}
 				else {
-					
+					JOptionPane.showMessageDialog(contentPane, "Great !");
 				}
 			}
 		});
