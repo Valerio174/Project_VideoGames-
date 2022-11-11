@@ -38,8 +38,22 @@ public class VideoGameDAO extends DAO<VideoGame>{
 	}
 	
 	@Override
-	public boolean create(VideoGame obj) { 
-		return false;
+	public boolean create(VideoGame videogame) { 
+		try{
+			/*Requete pour insérer les données dans la table VideoGame*/
+			PreparedStatement ps = connect.prepareStatement("INSERT INTO VideoGame(name, creditCost,id_version) VALUES(?,?,?)");
+			ps.setString(1, videogame.getName() );
+			ps.setInt(2, videogame.getCreditCost()); 
+			ps.setInt(3, this.GetVersion(videogame.getVersion()));
+			ps.execute();	/*Exécuter la requête*/
+			
+			ps.close();
+			return true;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -134,7 +148,22 @@ public class VideoGameDAO extends DAO<VideoGame>{
 	}
 	
 	
-	
+	public int GetVersion(String version) {
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Version WHERE name_version=\""+version+"\"");
+			while(result.next()){
+				return result.getInt("id_version");
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
 	
 	
 	
