@@ -32,7 +32,7 @@ public class AdministratorPage extends JFrame {
 	private Image icon_logout = new ImageIcon(this.getClass().getResource("/ressources/icon_logout.png")).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
 	private ArrayList<VideoGame> videogames;
 	private JTable table;
-	JLabel lbl_SuccessUpdate;
+	JLabel lbl_Success;
 
 	/**
 	 * Launch the application.
@@ -152,10 +152,10 @@ public class AdministratorPage extends JFrame {
 		btnNewButton.setBounds(913, 270, 130, 33);
 		contentPane.add(btnNewButton);
 		
-		lbl_SuccessUpdate = new JLabel("");
-		lbl_SuccessUpdate.setFont(new Font("Segoe UI Black", Font.ITALIC, 20));
-		lbl_SuccessUpdate.setForeground(new Color(0, 128, 0));
-		lbl_SuccessUpdate.setBounds(45, 619, 580, 71);
-		contentPane.add(lbl_SuccessUpdate);
+		lbl_Success = new JLabel("");
+		lbl_Success.setFont(new Font("Segoe UI Black", Font.ITALIC, 20));
+		lbl_Success.setForeground(new Color(0, 128, 0));
+		lbl_Success.setBounds(45, 601, 580, 71);
+		contentPane.add(lbl_Success);
 	}
 }
