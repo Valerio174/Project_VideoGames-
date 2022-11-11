@@ -91,6 +91,14 @@ public class VideoGame{
 		this.copy_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
 	}
+	public VideoGame(String name, int creditCost, String version, String console) {
+		this.name=name;
+		this.creditCost=creditCost;
+		this.version=version;
+		this.console=console;
+		this.copy_list = new ArrayList<>();
+		this.booking_list = new ArrayList<>();
+	}
 	
 	/*Méthodes*/
 	public static ArrayList<VideoGame> getAll(){
@@ -154,6 +162,12 @@ public class VideoGame{
 		
 		return videogame.AllVersion(console);
 		
+	}
+	
+	public boolean CreateVideoGame() {
+		
+		return videogameDAO.create(this);
+
 	}
 	@Override
 	public String toString() {
