@@ -119,8 +119,6 @@ public class VideoGame{
 
 	public Copy CopyAvailable() {
 		
-		 
-		
 		return null;
 	}
 	
@@ -139,6 +137,10 @@ public class VideoGame{
 			
 		return null;
 		
+	}
+	public boolean ModifyCredits() {
+		
+		return videogameDAO.update(this);
 	}
 	
 	@Override
