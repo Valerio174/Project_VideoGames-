@@ -1,8 +1,11 @@
 package be.walbert.DAO;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import be.walbert.classes.VideoGame;
@@ -45,10 +48,25 @@ public class VideoGameDAO extends DAO<VideoGame>{
 	}
 
 	@Override
-	public boolean update(VideoGame obj) { 
-		return false;
+	public boolean update(VideoGame videogame) { 
+		try{
+			/*Requete pour mettre à jour les données dans la table VideoGame*/
+			PreparedStatement ps = connect.prepareStatement("UPDATE VideoGame SET creditCost = ? WHERE id_videogame = ?");
+			ps.setInt(1, videogame.getCreditCost());
+			ps.setInt(2, videogame.getId_videogame());
+			
+			ps.execute();	/*Exécuter la requête*/
+			
+			ps.close(); 
+			return true;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
+	
 	@Override
 	public VideoGame find(VideoGame obj) { 
 		return null;
@@ -75,6 +93,5 @@ public class VideoGameDAO extends DAO<VideoGame>{
 		
 		return null;
 	}
-
 
 }
