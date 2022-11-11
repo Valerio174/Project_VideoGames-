@@ -23,6 +23,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AdministratorPage extends JFrame {
 
@@ -139,6 +141,13 @@ public class AdministratorPage extends JFrame {
 		contentPane.add(lbl_WelcomeAdmin_1);
 		
 		JButton btnNewButton = new JButton("Add Game");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddGamePage addgame_page = new AddGamePage(admin);
+				addgame_page.setVisible(true);
+				dispose();
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnNewButton.setBounds(913, 270, 130, 33);
 		contentPane.add(btnNewButton);
