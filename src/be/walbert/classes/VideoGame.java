@@ -143,6 +143,18 @@ public class VideoGame{
 		return videogameDAO.update(this);
 	}
 	
+	public static ArrayList<String> GetAllConsoles(){
+		VideoGameDAO videogame = (VideoGameDAO) videogameDAO;
+		
+		return videogame.AllConsoles();
+		
+	}
+	public static ArrayList<String> GetAllVersions(String console){
+		VideoGameDAO videogame = (VideoGameDAO) videogameDAO;
+		
+		return videogame.AllVersion(console);
+		
+	}
 	@Override
 	public String toString() {
 		return "Id_videogame=" + id_videogame + ", name=" + name + ", creditCost=" + creditCost
