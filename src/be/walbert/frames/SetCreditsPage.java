@@ -30,8 +30,8 @@ public class SetCreditsPage extends JFrame {
 
 	private JPanel contentPane;
 	private Image icon_logout = new ImageIcon(this.getClass().getResource("/ressources/icon_logout.png")).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
-	JList b;
 	private JTextField tf_NewCredits;
+	private Image img = new ImageIcon(this.getClass().getResource("/ressources/icon_back.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
 	/**
 	 * Launch the application.
@@ -61,7 +61,24 @@ public class SetCreditsPage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lbl_TitleModify = new JLabel("Modify units of a game");
+		/*Icon de retour (vers la page Admin)*/
+		JLabel lbl_icon_back = new JLabel("");
+		
+		/*Ajout de l'evenement lors du click*/
+		lbl_icon_back.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				AdministratorPage adminpage = new AdministratorPage(admin);
+				adminpage.setVisible(true);
+				dispose();
+			}
+		});
+		lbl_icon_back.setBounds(21, 589, 50, 50); 
+		lbl_icon_back.setIcon(new ImageIcon(img));
+		contentPane.add(lbl_icon_back);
+		
+		
+		JLabel lbl_TitleModify = new JLabel("Modify credits of a game");
 		lbl_TitleModify.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_TitleModify.setFont(new Font("Segoe UI Black", Font.PLAIN, 25));
 		lbl_TitleModify.setBounds(349, 11, 395, 97);
