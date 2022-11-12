@@ -164,11 +164,44 @@ public class VideoGameDAO extends DAO<VideoGame>{
 		return 0;
 	}
 	
+	public int GetConsole(String name_console) {
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Console WHERE name_console=\""+name_console+"\"");
+			while(result.next()){
+				return result.getInt("id_console");
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+	
 	public boolean CreateConsole(String name_console) {
 		try{
 			/*Requete pour insérer les données dans la table VideoGame*/
 			PreparedStatement ps = connect.prepareStatement("INSERT INTO Console(name_console) VALUES(?)");
 			ps.setString(1, name_console); 
+			ps.execute();	/*Exécuter la requête*/
+			
+			ps.close();
+			return true;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public boolean CreateVersion(String name_console, String name_version) {
+		try{
+			/*Requete pour insérer les données dans la table VideoGame*/
+			PreparedStatement ps = connect.prepareStatement("INSERT INTO Version(name_version,id_console) VALUES(?,?)");
+			ps.setString(1, name_version); 
+			ps.setInt(2, this.GetConsole(name_console));
 			ps.execute();	/*Exécuter la requête*/
 			
 			ps.close();
