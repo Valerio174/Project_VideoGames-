@@ -79,7 +79,6 @@ public class VideoGameDAO extends DAO<VideoGame>{
 			return false;
 		}
 	}
-
 	
 	@Override
 	public VideoGame find(VideoGame obj) { 
@@ -165,7 +164,21 @@ public class VideoGameDAO extends DAO<VideoGame>{
 		return 0;
 	}
 	
-	
+	public boolean CreateConsole(String name_console) {
+		try{
+			/*Requete pour insérer les données dans la table VideoGame*/
+			PreparedStatement ps = connect.prepareStatement("INSERT INTO Console(name_console) VALUES(?)");
+			ps.setString(1, name_console); 
+			ps.execute();	/*Exécuter la requête*/
+			
+			ps.close();
+			return true;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+	}
 	
 	
 }
