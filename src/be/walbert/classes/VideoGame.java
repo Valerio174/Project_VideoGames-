@@ -168,7 +168,11 @@ public class VideoGame{
 		
 		return videogame.CreateConsole(name_console)?true:false;
 	}
-	
+	public static boolean CreateVersion(String name_console, String name_version) {
+		VideoGameDAO videogame = (VideoGameDAO) videogameDAO;
+		
+		return videogame.CreateVersion(name_console, name_version)?true:false;
+	}
 	public boolean CreateVideoGame() {
 		
 		return videogameDAO.create(this);
