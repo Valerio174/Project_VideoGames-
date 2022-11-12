@@ -157,7 +157,7 @@ public class AdministratorPage extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewButton.setBounds(913, 270, 130, 33);
+		btnNewButton.setBounds(913, 270, 160, 33);
 		contentPane.add(btnNewButton);
 		
 		lbl_Success = new JLabel("");
@@ -165,6 +165,30 @@ public class AdministratorPage extends JFrame {
 		lbl_Success.setForeground(new Color(0, 128, 0));
 		lbl_Success.setBounds(45, 601, 580, 71);
 		contentPane.add(lbl_Success);
+		
+		JButton btn_AddConsole = new JButton("Add Console");
+		btn_AddConsole.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddConsolePage add_consolepage = new AddConsolePage(admin);
+				add_consolepage.setVisible(true);
+				dispose();
+			}
+		});
+		btn_AddConsole.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btn_AddConsole.setBounds(913, 344, 160, 33);
+		contentPane.add(btn_AddConsole);
+		
+		JButton btn_AddVersion = new JButton("Add Version");
+		btn_AddVersion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddVersionPage add_versionpage = new AddVersionPage(admin);
+				add_versionpage.setVisible(true);
+				dispose();
+			}
+		});
+		btn_AddVersion.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btn_AddVersion.setBounds(913, 419, 160, 33);
+		contentPane.add(btn_AddVersion);
 		
 		JLabel lbl_background = new JLabel("");
 		lbl_background.setIcon(new ImageIcon(background_admin_page));
