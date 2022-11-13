@@ -2,6 +2,7 @@ package be.walbert.frames;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -16,8 +17,11 @@ import be.walbert.classes.Administrator;
 import be.walbert.classes.VideoGame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class AddConsolePage extends JFrame {
@@ -25,6 +29,8 @@ public class AddConsolePage extends JFrame {
 	private JPanel contentPane;
 	private JTextField tf_NameNewConsole;
 	private ArrayList<String> all_consoles;
+	private Image icon_logout = new ImageIcon(this.getClass().getResource("/ressources/icon_logout.png")).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+	private Image img = new ImageIcon(this.getClass().getResource("/ressources/icon_back.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
 	/**
 	 * Launch the application.
@@ -53,6 +59,45 @@ public class AddConsolePage extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		/*Icon de retour (vers la page Admin)*/
+		JLabel lbl_icon_back = new JLabel("");
+		
+		/*Ajout de l'evenement lors du click*/
+		lbl_icon_back.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				AdministratorPage adminpage = new AdministratorPage(admin);
+				adminpage.setVisible(true);
+				dispose();
+			}
+		});
+		lbl_icon_back.setBounds(21, 620, 50, 50); 
+		lbl_icon_back.setIcon(new ImageIcon(img));
+		contentPane.add(lbl_icon_back);
+		
+		 /*Bouton deconnexion(Log Out)*/
+		JLabel lbl_icon_logout = new JLabel("");
+		
+		/*Ajout de l'eveneptn sur le bouton deconnexion*/
+		lbl_icon_logout.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				HomePage homepage = new HomePage();	/*Redirection vers la HomePage*/
+				homepage.setVisible(true);
+				dispose();
+			}
+		});
+		contentPane.setLayout(null);
+		lbl_icon_logout.setBounds(1031, 38, 64, 64); 
+		lbl_icon_logout.setIcon(new ImageIcon(icon_logout));
+		contentPane.add(lbl_icon_logout);
+		
+		JLabel lbl_LogOut = new JLabel("Log Out");
+		lbl_LogOut.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_LogOut.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lbl_LogOut.setBounds(1025, 11, 70, 25);
+		contentPane.add(lbl_LogOut);
 		 
 		JLabel lbl_TitleAddConsole= new JLabel("Add a new console");
 		lbl_TitleAddConsole.setFont(new Font("Segoe UI Black", Font.ITALIC, 25));
