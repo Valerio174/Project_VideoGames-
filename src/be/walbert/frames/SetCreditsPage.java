@@ -2,7 +2,6 @@ package be.walbert.frames;
 
 import java.awt.EventQueue;
 
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,7 +16,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.SwingConstants;
-import javax.swing.JList;
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -28,6 +26,7 @@ import java.awt.Color;
 
 public class SetCreditsPage extends JFrame {
 
+	/*Variables*/
 	private JPanel contentPane;
 	private Image icon_logout = new ImageIcon(this.getClass().getResource("/ressources/icon_logout.png")).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
 	private JTextField tf_NewCredits;
@@ -93,7 +92,7 @@ public class SetCreditsPage extends JFrame {
 		/*Bouton deconnexion(Log Out)*/
 		JLabel lbl_icon_logout = new JLabel("");
 		
-		/*Ajout de l'eveneptn sur le bouton deconnexion*/
+		/*Ajout de l'evenement sur le bouton deconnexion*/
 		lbl_icon_logout.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -149,12 +148,13 @@ public class SetCreditsPage extends JFrame {
 		
 		tf_NewCredits = new JTextField();
 		tf_NewCredits.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		//Ajout de l'evenement lors de la saisie des nouveau credits
 		tf_NewCredits.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
+				char c = e.getKeyChar();	/*Attribuer le caractere saisit a une variable de type char*/
 				
-				/*Si le caractère choisit est différent d'un nombre OU non compris entre 1 et 5 OU un nombre à 2 chiffres */
+				/*Si le caractère choisit est différent d'un nombre OU non compris entre 1 et 5 OU un nombre à 2 chiffres=>IMPOSSIBLE d'ecrire */
 				if(!Character.isDigit(c) || c==KeyEvent.VK_DELETE || c=='0' || c> '5' || tf_NewCredits.getText().length() > 0) {
 					e.consume();
 				}
@@ -174,13 +174,13 @@ public class SetCreditsPage extends JFrame {
 				else {
 					videogame_selected.setCreditCost((Integer.parseInt(tf_NewCredits.getText())));
 					
-					if(videogame_selected.ModifyCredits()) {
+					if(videogame_selected.ModifyCredits()) {	/*Si la mise à jour des credits s'est faite correctement*/
 						AdministratorPage adminpage = new AdministratorPage(admin);
 						adminpage.setVisible(true);
 						adminpage.lbl_Success.setText("Great you have updated the credits !");
 						dispose();
 					}
-					else {
+					else {	/*Si une erreur a eu lieu lors de la maj(si la methode renvoie false)*/
 						lbl_ErrorUpdate.setText("Sorry an error occurred during the update");
 					}
 				}

@@ -29,6 +29,7 @@ import javax.swing.JButton;
 
 public class AddGamePage extends JFrame {
 
+	/*Variables*/
 	private JPanel contentPane;
 	private Image icon_logout = new ImageIcon(this.getClass().getResource("/ressources/icon_logout.png")).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
 	private JTextField tf_Name; 

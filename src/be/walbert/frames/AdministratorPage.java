@@ -12,7 +12,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import be.walbert.classes.Administrator;
-import be.walbert.classes.User;
 import be.walbert.classes.VideoGame;
 
 import javax.swing.JLabel;
@@ -28,6 +27,7 @@ import java.awt.event.ActionEvent;
 
 public class AdministratorPage extends JFrame {
 
+	/*Variables*/
 	private JPanel contentPane;
 	private Image icon_logout = new ImageIcon(this.getClass().getResource("/ressources/icon_logout.png")).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
 	private ArrayList<VideoGame> videogames;
@@ -53,6 +53,7 @@ public class AdministratorPage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	//Passer l'objet Administrator en parametre de la frame pour récupérer les infos (ici afficher le pseudo de l'admin)
 	public AdministratorPage(Administrator admin) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

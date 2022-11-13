@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 
 public class AddConsolePage extends JFrame {
 
+	/*Variables*/
 	private JPanel contentPane;
 	private JTextField tf_NameNewConsole;
 	private ArrayList<String> all_consoles;
@@ -132,12 +133,11 @@ public class AddConsolePage extends JFrame {
 		JButton btn_AddNewConsole = new JButton("Add");
 		btn_AddNewConsole.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(tf_NameNewConsole.getText().equals("")) {
+				if(tf_NameNewConsole.getText().equals("")) {	/*Le TexField ne doit pas etre null*/
 					JOptionPane.showMessageDialog(contentPane, "Field must be not null !");
 				}
 				else {
-					if(VideoGame.CreateConsole(tf_NameNewConsole.getText())) {
-
+					if(VideoGame.CreateConsole(tf_NameNewConsole.getText())) {	/*Si la methode(static) de VideoGame renvoie true, la console s'est ajouté sans erreurs*/
 						JOptionPane.showMessageDialog(contentPane, "Great, you have successfully added a new console !");
 						AdministratorPage adminpage = new AdministratorPage(admin);
 						adminpage.setVisible(true);
@@ -156,6 +156,7 @@ public class AddConsolePage extends JFrame {
 	     scrollPane.setLocation(10, 180);
 	     contentPane.add(scrollPane);
 	        
+	     /*Récupérer TOUTES les consoles de la DB(avec methode static)*/
 	     all_consoles = VideoGame.GetAllConsoles();
 		 JList<String> list_consoles = new JList(all_consoles.toArray());
 		 list_consoles.setBounds(10, 180, 512, 100);

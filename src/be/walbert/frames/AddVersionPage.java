@@ -26,6 +26,7 @@ import be.walbert.classes.VideoGame;
 
 public class AddVersionPage extends JFrame {
 
+	/*Variables*/
 	private JPanel contentPane;
 	private JTextField tf_NameNewVersion;
 	private ArrayList<String> all_consoles;
@@ -135,6 +136,7 @@ public class AddVersionPage extends JFrame {
         scrollPane.setLocation(10, 200);
         contentPane.add(scrollPane);
         
+        /*Récupérer TOUTES les Consoles de la DB*/
 		all_consoles = VideoGame.GetAllConsoles();
 		JList<String> list_consoles = new JList(all_consoles.toArray());
 		list_consoles.setBounds(10, 200, 512, 250);
@@ -145,11 +147,11 @@ public class AddVersionPage extends JFrame {
 		JButton btn_AddNewConsole = new JButton("Add");
 		btn_AddNewConsole.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(tf_NameNewVersion.getText().equals("")) {
+				if(tf_NameNewVersion.getText().equals("")) {	/*Si le TextField est vide*/
 					 JOptionPane.showMessageDialog(contentPane, "Sorry, the field is empty. Enter a new version !");
 				}
 				else {
-					 if(list_consoles.getSelectedValue() == null) {
+					 if(list_consoles.getSelectedValue() == null) {	/*Si on a pas choisi de console à laquelle on veut ajouter une version*/
 						 JOptionPane.showMessageDialog(contentPane, "Please, choose a console to add a version to it !");
 					 }
 					 else {
