@@ -113,8 +113,8 @@ public class AdministratorPage extends JFrame {
 	    	public void mouseClicked(MouseEvent e){
 	    	      if (e.getClickCount() == 2){
 	    	    	  int selectedRow = table.getSelectedRow();
-	    	    	  	VideoGame videogame_selected = VideoGame.GetVideoGame((String) table.getValueAt(selectedRow, 0), (String)table.getValueAt(selectedRow, 2));
-	  					SetCreditsPage creditspage = new SetCreditsPage(admin, videogame_selected);
+	  					VideoGame game_selected = videogames.get(table.getSelectedRow());
+	    	    	  	SetCreditsPage creditspage = new SetCreditsPage(admin, game_selected);
 	  					creditspage.setVisible(true);
 	  					dispose();
 	    	         }
