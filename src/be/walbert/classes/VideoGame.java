@@ -105,11 +105,7 @@ public class VideoGame{
 		VideoGameDAO vgDAO = (VideoGameDAO)(videogameDAO);
 		return vgDAO.findAll();
 	}
-	public static VideoGame GetVideoGame(String name, String version) {
-		VideoGameDAO vgDAO = (VideoGameDAO)(videogameDAO);
-		return vgDAO.GetVideoGame(name, version);
-		
-	}
+ 
 	public void AddCopy(Copy newcopy) {
 		try {
 			copy_list.add(newcopy);
