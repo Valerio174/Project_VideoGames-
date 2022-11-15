@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 import be.walbert.classes.VideoGame;
@@ -72,7 +74,11 @@ public class VideoGameDAO extends DAO<VideoGame>{
 			ps.execute();	/*Exécuter la requête*/
 			
 			ps.close(); 
-			return true;
+			if(createHistoryCredits(videogame)) {
+
+				return true;
+			}
+			return false;
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -213,5 +219,22 @@ public class VideoGameDAO extends DAO<VideoGame>{
 		}
 	}
 	
+	public boolean createHistoryCredits(VideoGame videogame) {
+		try{
+			/*Requete pour insérer les données dans la table VideoGame*/
+			PreparedStatement ps = connect.prepareStatement("INSERT INTO HistoryCredits(modification_date, new_creditCost, id_videogame) VALUES(?,?,?)");
+			ps.setDate(1, Date.valueOf(LocalDate.now()));
+			ps.setInt(2, videogame.getCreditCost());
+			ps.setInt(3, videogame.getId_videogame()); 
+			ps.execute();	/*Exécuter la requête*/
+			
+			ps.close();
+			return true;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+	}
 	
 }
