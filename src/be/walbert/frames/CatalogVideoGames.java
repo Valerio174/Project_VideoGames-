@@ -123,10 +123,9 @@ public class CatalogVideoGames extends JFrame {
         /*Ajouter evenement lors du clique sur une ligne*/
 	    table.addMouseListener(new MouseAdapter() {
 	    	public void mouseClicked(MouseEvent e){
-	    	      if (e.getClickCount() == 2){
-	    	    	  int selectedRow = table.getSelectedRow();
-	    	    	  	VideoGame videogame_selected = VideoGame.GetVideoGame((String) table.getValueAt(selectedRow, 0), (String)table.getValueAt(selectedRow, 2));
-	  					GamePage gamepage= new GamePage( player,videogame_selected);
+	    	      if (e.getClickCount() == 2){ 
+ 	  					VideoGame game_selected = videogames.get(table.getSelectedRow());
+	    	    	  	GamePage gamepage= new GamePage( player,game_selected);
 	  					gamepage.setVisible(true);
 	  					dispose();
 	    	         }
