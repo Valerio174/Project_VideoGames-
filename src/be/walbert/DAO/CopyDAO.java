@@ -31,7 +31,7 @@ public class CopyDAO extends DAO<Copy> {
 	}
 
 	@Override
-	public Copy find(Copy obj) { 
+	public Copy find(int id) { 
 		return null;
 	}
 	

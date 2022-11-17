@@ -30,8 +30,7 @@ public class UserDAO extends DAO<User>{
 	}
 
 	/*Récupérer User correspondant */
-	@Override
-	public User find(User newuser) {
+	public User GetUser(User newuser) {
 		 
 		try{
 			ResultSet result = this.connect.createStatement(
@@ -92,6 +91,11 @@ public class UserDAO extends DAO<User>{
 		catch(SQLException e){
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	@Override
+	public User find(int id) { 
 		return null;
 	}
 }

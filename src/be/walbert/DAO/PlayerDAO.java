@@ -87,7 +87,28 @@ public class PlayerDAO extends DAO<Player>{
 	}
 
 	@Override
-	public Player find(Player obj) { 
+	public Player find(int id_users) { 
+		try{
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Users.id_users, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
+							+ "FROM Users INNER JOIN Player ON Users.id_users = Player.id_users\r\n"
+							+ "WHERE (((Users.id_users)=\""+id_users+"\"));\r\n"
+							+ "");
+			 
+			if(result.first()) {
+				Player p = new Player(result.getInt("id_users"),result.getString("username"), result.getString("password"), result.getInt("id_users"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(),
+						result.getDate("dateOfBirth").toLocalDate());
+				
+				return p;
+			}
+			else
+				return null;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
 		return null;
+		
 	}
 }

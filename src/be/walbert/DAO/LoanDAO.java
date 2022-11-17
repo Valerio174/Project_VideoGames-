@@ -46,7 +46,7 @@ public class LoanDAO extends DAO<Loan>{
 	}
 
 	@Override
-	public Loan find(Loan obj) { 
+	public Loan find(int id) { 
 		return null;
 	}
 }

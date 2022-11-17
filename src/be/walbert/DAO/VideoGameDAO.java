@@ -87,7 +87,7 @@ public class VideoGameDAO extends DAO<VideoGame>{
 	}
 	
 	@Override
-	public VideoGame find(VideoGame obj) { 
+	public VideoGame find(int id) { 
 		return null;
 	}
 	
