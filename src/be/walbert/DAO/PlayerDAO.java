@@ -139,25 +139,5 @@ public class PlayerDAO extends DAO<Player>{
 		return all_copy;
 	}
 	
-//	public ArrayList<Loan> GetAll(Player player){
-//		ArrayList<Loan> all_loan = new ArrayList<>();
-//		
-//		try {
-//			ResultSet result = this.connect.createStatement(
-//					ResultSet.TYPE_SCROLL_INSENSITIVE,
-//					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, VideoGame.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Copy.id_users_lender\r\n"
-//							+ "FROM (Console INNER JOIN Version ON Console.id_console = Version.id_console) INNER JOIN (VideoGame INNER JOIN Copy ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version\r\n"
-//							+ "WHERE (((Copy.id_users_lender)="+player.getId_users()+"));\r\n"
-//							+ "");
-//			while(result.next()){
-//				Loan newloan = new Loan(LocalDate startDate, LocalDate endDate, boolean ongoing, Player borrower, Player lender, Copy copy);
-//				all_loan.add(newloan);
-//			}
-//		} 
-//		catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return all_loan;
-//	}
+
 }
