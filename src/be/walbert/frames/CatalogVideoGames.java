@@ -3,6 +3,7 @@ package be.walbert.frames;
 import java.awt.EventQueue;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,6 +15,7 @@ import be.walbert.classes.VideoGame;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -23,6 +25,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.JScrollBar;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -36,10 +39,14 @@ import java.awt.List;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CatalogVideoGames extends JFrame {
 
 	private JPanel contentPane;  
+	private Image icon_logout = new ImageIcon(this.getClass().getResource("/ressources/icon_logout.png")).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
 	private ArrayList<VideoGame> videogames;
 	private JTable table;
 	JLabel lbl_register_succed;
@@ -78,12 +85,27 @@ public class CatalogVideoGames extends JFrame {
 		contentPane.add(lbl_Username);
 		lbl_Username.setText("Welcome on the catalog of VideoGames " + player.getUsername());
 		
-		/*Label de test*/
-		JLabel lbl_TEST = new JLabel("");
-		lbl_TEST.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbl_TEST.setBounds(96, 663, 252, 54);
-		contentPane.add(lbl_TEST);
+		/*Bouton deconnexion(Log Out)*/
+		JLabel lbl_icon_logout = new JLabel("");
 		
+		/*Ajout de l'evenement sur le bouton deconnexion*/
+		lbl_icon_logout.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				HomePage homepage = new HomePage();	/*Redirection vers la HomePage*/
+				homepage.setVisible(true);
+				dispose();
+			}
+		});
+		lbl_icon_logout.setBounds(1051, 48, 70, 90); 
+		lbl_icon_logout.setIcon(new ImageIcon(icon_logout));
+		contentPane.add(lbl_icon_logout);
+		
+		JLabel lbl_LogOut = new JLabel("Log Out");
+		lbl_LogOut.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_LogOut.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lbl_LogOut.setBounds(1022, 11, 99, 50);
+		contentPane.add(lbl_LogOut);
 		
 		/*Liste des jeux videos*/
 		videogames = VideoGame.getAll();
@@ -137,5 +159,17 @@ public class CatalogVideoGames extends JFrame {
 		lbl_register_succed.setForeground(new Color(0, 128, 0));
 		lbl_register_succed.setBounds(25, 541, 468, 71);
 		contentPane.add(lbl_register_succed);
+		
+		JButton btn_MyCopies = new JButton("My Copies");
+		btn_MyCopies.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MyCopiesPage copies_page = new MyCopiesPage(player);
+				copies_page.setVisible(true);
+				dispose();
+			}
+		});
+		btn_MyCopies.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btn_MyCopies.setBounds(877, 209, 107, 35);
+		contentPane.add(btn_MyCopies);
 	}
 }
