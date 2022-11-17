@@ -6,8 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
+import be.walbert.classes.Copy;
+import be.walbert.classes.Loan;
 import be.walbert.classes.Player;
+import be.walbert.classes.VideoGame;
 
 public class PlayerDAO extends DAO<Player>{
 	public PlayerDAO(Connection conn) {
@@ -99,7 +104,7 @@ public class PlayerDAO extends DAO<Player>{
 			if(result.first()) {
 				Player p = new Player(result.getInt("id_users"),result.getString("username"), result.getString("password"), result.getInt("id_users"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(),
 						result.getDate("dateOfBirth").toLocalDate());
-				
+				p.setCopy_list(GetAllCopy(p));
 				return p;
 			}
 			else
@@ -111,4 +116,48 @@ public class PlayerDAO extends DAO<Player>{
 		return null;
 		
 	}
+	
+	public ArrayList<Copy> GetAllCopy(Player player){
+		ArrayList<Copy> all_copy = new ArrayList<>();
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, VideoGame.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Copy.id_users_lender\r\n"
+							+ "FROM (Console INNER JOIN Version ON Console.id_console = Version.id_console) INNER JOIN (VideoGame INNER JOIN Copy ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version\r\n"
+							+ "WHERE (((Copy.id_users_lender)="+player.getId_users()+"));\r\n"
+							+ "");
+			while(result.next()){
+				Copy newcopy = new Copy(result.getInt("id_copy"),player, new VideoGame(result.getInt("id_VideoGame"),result.getString("name"), result.getInt("creditCost"), result.getString("name_version"), result.getString("name_console")));
+				all_copy.add(newcopy);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return all_copy;
+	}
+	
+//	public ArrayList<Loan> GetAll(Player player){
+//		ArrayList<Loan> all_loan = new ArrayList<>();
+//		
+//		try {
+//			ResultSet result = this.connect.createStatement(
+//					ResultSet.TYPE_SCROLL_INSENSITIVE,
+//					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, VideoGame.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Copy.id_users_lender\r\n"
+//							+ "FROM (Console INNER JOIN Version ON Console.id_console = Version.id_console) INNER JOIN (VideoGame INNER JOIN Copy ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version\r\n"
+//							+ "WHERE (((Copy.id_users_lender)="+player.getId_users()+"));\r\n"
+//							+ "");
+//			while(result.next()){
+//				Loan newloan = new Loan(LocalDate startDate, LocalDate endDate, boolean ongoing, Player borrower, Player lender, Copy copy);
+//				all_loan.add(newloan);
+//			}
+//		} 
+//		catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return all_loan;
+//	}
 }
