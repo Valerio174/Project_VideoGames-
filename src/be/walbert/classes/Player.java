@@ -20,8 +20,8 @@ public class Player extends User{
 	private ArrayList<Loan> borrow_list;
 	private ArrayList<Copy> copy_list;
 	private ArrayList<Booking> booking_list;
-	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-	DAO<Player> playerDAO = adf.getPlayerDAO();
+	static AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	static DAO<Player> playerDAO = adf.getPlayerDAO();
 	DAO<Copy> copyDAO = adf.getCopyDAO();
 	
 	/*Getters/Setters*/
@@ -50,6 +50,24 @@ public class Player extends User{
 		this.dateOfBirth = dateOfBirth;
 	}
 	
+	public ArrayList<Loan> getBorrow_list() {
+		return borrow_list;
+	}
+	public void setBorrow_list(ArrayList<Loan> borrow_list) {
+		this.borrow_list = borrow_list;
+	}
+	public ArrayList<Copy> getCopy_list() {
+		return copy_list;
+	}
+	public void setCopy_list(ArrayList<Copy> copy_list) {
+		this.copy_list = copy_list;
+	}
+	public ArrayList<Booking> getBooking_list() {
+		return booking_list;
+	}
+	public void setBooking_list(ArrayList<Booking> booking_list) {
+		this.booking_list = booking_list;
+	}
 	/*Constructeurs*/
 	public Player(int id_users, String username, String password, int credits, String pseudo, LocalDate registrationDate,
 			LocalDate dateOfBirth) {
@@ -104,6 +122,11 @@ public class Player extends User{
 		boolean success = false;
 				
 		return success;
+	}
+	public static Player GetPlayer(int id_users) {
+		PlayerDAO p =(PlayerDAO)playerDAO;
+		
+		return p.find(id_users);
 	}
 	
 	public void AddBirthdayBonus() {}
