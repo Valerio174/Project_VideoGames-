@@ -57,16 +57,15 @@ public abstract class User{
 		return null;
 	}
 	public int Login(){
-		
+		UserDAO user =(UserDAO)userDAO;
 		int success= -1;
-		User user = userDAO.find(this);
 		
-		if(user != null) {
-			if(user instanceof Player) {
+		if(user.GetUser(this) != null) {
+			if(user.GetUser(this) instanceof Player) {
 				success = 1;
 				return success;
 			} 
-			if(user instanceof Administrator){
+			if(user.GetUser(this) instanceof Administrator){
 				success = 0;
 				return success;
 			}
