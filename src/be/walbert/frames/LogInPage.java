@@ -126,7 +126,7 @@ public class LogInPage extends JFrame {
 		lbl_error_users.setBounds(26, 449, 446, 48);
 		panel.add(lbl_error_users);
 		
-		/*Bouton Sign In pour se connecter*/
+		/*Bouton Login pour se connecter*/
 		JButton btn_Login = new JButton("Log In");
 		btn_Login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,7 +134,7 @@ public class LogInPage extends JFrame {
 				
 				if(user != null) {
 					if(user.Login() == 1) {
-							CatalogVideoGames catalog = new CatalogVideoGames(new Player(user.getId_users(), user.getUsername(),user.getPassword()));
+							CatalogVideoGames catalog = new CatalogVideoGames(Player.GetPlayer(user.getId_users()));
 							catalog.setVisible(true);
 							dispose(); //Efface 1ere fenêtre 
 					}
