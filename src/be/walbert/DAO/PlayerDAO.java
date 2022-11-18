@@ -106,6 +106,7 @@ public class PlayerDAO extends DAO<Player>{
 						result.getDate("dateOfBirth").toLocalDate());
 				p.setCopy_list(GetAllCopy(p));
 				p.setBorrow_list(GetAllBorrows(p));
+				p.setLender_list(GetAllLoans(p));
 				return p;
 			}
 			else
@@ -141,7 +142,7 @@ public class PlayerDAO extends DAO<Player>{
 	}
 	
 	public ArrayList<Loan> GetAllBorrows(Player borrower){
-		ArrayList<Loan> all_loans = new ArrayList<>();
+		ArrayList<Loan> all_borrows = new ArrayList<>();
 		
 		try {
 			ResultSet result = this.connect.createStatement(
@@ -159,7 +160,44 @@ public class PlayerDAO extends DAO<Player>{
 			while(result.next() && result2.next()){
 				Player lender = new Player(result2.getInt("id_users_lender"), result2.getString("username") , result2.getString("password"), result2.getInt("credit"), result2.getString("pseudo"), result2.getDate("registrationDate").toLocalDate(),
 						result2.getDate("dateOfBirth").toLocalDate());
-				Copy copy = new Copy(1,lender,new VideoGame(result2.getInt("id_VideoGame"), result2.getString("name") ,  result2.getInt("creditCost"),  result2.getString("name_version"), result2.getString("name_console")));
+				Copy copy = new Copy(result2.getInt("id_copy"),lender,new VideoGame(result2.getInt("id_VideoGame"), result2.getString("name") ,  result2.getInt("creditCost"),  result2.getString("name_version"), result2.getString("name_console")));
+				Loan newloan = new Loan(result.getDate("startDate").toLocalDate(), result.getDate("endDate").toLocalDate(), result.getBoolean("ongoing"), borrower, lender, copy);
+				all_borrows.add(newloan);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return all_borrows;
+	}
+	
+	public ArrayList<Loan> GetAllLoans(Player lender){
+		ArrayList<Loan> all_loans = new ArrayList<>();
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Loan.startDate, Loan.endDate, Loan.ongoing, Loan.id_copy,"
+							+ " Copy.id_users_lender, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, "
+							+ "Player.dateOfBirth, Copy.id_VideoGame, VideoGame.name, VideoGame.creditCost, "
+							+ "Version.name_version, Console.name_console\r\n"
+							+ "FROM Console INNER JOIN (Version INNER JOIN (VideoGame INNER JOIN "
+							+ "(Users INNER JOIN (Player INNER JOIN (Copy INNER JOIN Loan ON Copy.id_copy = Loan.id_copy) "
+							+ "ON Player.id_users = Copy.id_users_lender) ON Users.id_users = Player.id_users) "
+							+ "ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version)"
+							+ " ON Console.id_console = Version.id_console\r\n"
+							+ "WHERE (((Copy.id_users_lender)="+lender.getId_users()+"))");
+			ResultSet result2 = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Copy.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Copy.id_users_lender, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
+							+ "	FROM Users INNER JOIN ((Console INNER JOIN Version ON Console.id_console = Version.id_console) INNER JOIN (VideoGame INNER JOIN (Player INNER JOIN (Copy INNER JOIN Loan ON Copy.id_copy = Loan.id_copy) ON Player.id_users = Copy.id_users_lender) ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version) ON Users.id_users = Player.id_users\r\n"
+							+ "	WHERE Loan.id_users_borrower ="+lender.getId_users());
+			
+			while(result.next() && result2.next()){
+				Player borrower = new Player(result2.getInt("id_users_lender"), result2.getString("username") , result2.getString("password"), result2.getInt("credit"), result2.getString("pseudo"), result2.getDate("registrationDate").toLocalDate(),
+						result2.getDate("dateOfBirth").toLocalDate());
+				Copy copy = new Copy(result2.getInt("id_copy"),lender,new VideoGame(result2.getInt("id_VideoGame"), result2.getString("name") ,  result2.getInt("creditCost"),  result2.getString("name_version"), result2.getString("name_console")));
 				Loan newloan = new Loan(result.getDate("startDate").toLocalDate(), result.getDate("endDate").toLocalDate(), result.getBoolean("ongoing"), borrower, lender, copy);
 				all_loans.add(newloan);
 			}
