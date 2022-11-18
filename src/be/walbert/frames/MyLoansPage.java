@@ -93,7 +93,7 @@ public class MyLoansPage extends JFrame {
 		contentPane.add(lbl_LogOut);
 		
 		/*Noms des colonnes du tableau*/
-		String[] columnsnames = { "Start Date","End Date","Ongoing","Game","Version","Console"};
+		String[] columnsnames = { "Start Date","End Date","Ongoing","Game","Version","Console", "Borrower"};
         
 			/*Model du tableau*/
 		DefaultTableModel tablemodel = new DefaultTableModel() {
@@ -105,7 +105,7 @@ public class MyLoansPage extends JFrame {
 			/*Attribuer noms des colonnes au tablemodel*/
 		tablemodel.setColumnIdentifiers(columnsnames);	
 	       for(Loan l: player.getLender_list()){
-	           Object[] datas = {l.getStartDate(), l.getEndDate(), l.isOngoing(), l.getCopy().getGame().getName(),l.getCopy().getGame().getVersion(), l.getCopy().getGame().getConsole()};
+	           Object[] datas = {l.getStartDate(), l.getEndDate(), l.isOngoing(), l.getCopy().getGame().getName(),l.getCopy().getGame().getVersion(), l.getCopy().getGame().getConsole(), l.getBorrower().getPseudo()};
 	           tablemodel.addRow(datas);
 	       }
 	        
