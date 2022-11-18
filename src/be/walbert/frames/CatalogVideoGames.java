@@ -169,7 +169,19 @@ public class CatalogVideoGames extends JFrame {
 			}
 		});
 		btn_MyCopies.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btn_MyCopies.setBounds(877, 209, 107, 35);
+		btn_MyCopies.setBounds(860, 209, 127, 40);
 		contentPane.add(btn_MyCopies);
+		
+		JButton btn_MyBorrows = new JButton("My Borrows");
+		btn_MyBorrows.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MyBorrowsPage borrowspage = new MyBorrowsPage(player);
+				borrowspage.setVisible(true);
+				dispose();
+			}
+		});
+		btn_MyBorrows.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btn_MyBorrows.setBounds(1010, 209, 135, 40);
+		contentPane.add(btn_MyBorrows);
 	}
 }
