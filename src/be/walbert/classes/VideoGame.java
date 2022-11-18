@@ -121,14 +121,9 @@ public class VideoGame{
 		}
 	}
 
-	public Copy CopyAvailable() {
-		
-		return null;
-	}
-	
-	public Copy createCopy(Player borrower) {
+	public Copy CopyAvailable(Player borrower) {
 		CopyDAO copy = (CopyDAO)copyDAO;
-			
+		
 		if(copy.CopyAvailable(this,borrower).size() != 0) {
 		Random random = new Random();
 		int nb;
@@ -140,8 +135,9 @@ public class VideoGame{
 		}
 			
 		return null;
-		
 	}
+	
+	 
 	public boolean ModifyCredits() {
 		
 		return videogameDAO.update(this);
