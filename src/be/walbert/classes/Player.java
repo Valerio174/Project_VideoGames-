@@ -22,7 +22,6 @@ public class Player extends User{
 	private ArrayList<Booking> booking_list;
 	static AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	static DAO<Player> playerDAO = adf.getPlayerDAO();
-	DAO<Copy> copyDAO = adf.getCopyDAO();
 	
 	/*Getters/Setters*/
 	public int getCredits() {
@@ -86,7 +85,6 @@ public class Player extends User{
 		this.borrow_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
 		this.copy_list = new ArrayList<>();
-		this.copy_list = ((CopyDAO) copyDAO).OwnCopy(this);
 	}
 	public Player(  String username, String password, int credits, String pseudo, LocalDate registrationDate,
 			LocalDate dateOfBirth) {
@@ -99,7 +97,6 @@ public class Player extends User{
 		this.borrow_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
 		this.copy_list = new ArrayList<>();
-		this.copy_list = ((CopyDAO) copyDAO).OwnCopy(this);
 	}
 	public Player(int id_users, String username, String password) {
 		super(id_users, username, password);
@@ -107,7 +104,6 @@ public class Player extends User{
 		this.borrow_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
 		this.copy_list = new ArrayList<>();
-		this.copy_list = ((CopyDAO) copyDAO).OwnCopy(this);
 	}
 
 	/*Méthodes*/
