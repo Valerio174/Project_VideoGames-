@@ -73,6 +73,7 @@ public class Player extends User{
 	public void setBooking_list(ArrayList<Booking> booking_list) {
 		this.booking_list = booking_list;
 	}
+	
 	/*Constructeurs*/
 	public Player(int id_users, String username, String password, int credits, String pseudo, LocalDate registrationDate,
 			LocalDate dateOfBirth) {
@@ -97,14 +98,7 @@ public class Player extends User{
 		this.borrow_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
 		this.copy_list = new ArrayList<>();
-	}
-	public Player(int id_users, String username, String password) {
-		super(id_users, username, password);
-		this.lender_list = new ArrayList<>();
-		this.borrow_list = new ArrayList<>();
-		this.booking_list = new ArrayList<>();
-		this.copy_list = new ArrayList<>();
-	}
+	} 
 
 	/*Méthodes*/
 	public boolean SignIn() {
