@@ -157,6 +157,7 @@ public class LoanPage extends JFrame {
 						Loan new_loan = new Loan(LocalDate.now(), tf_enddate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), true, player, current_copy.getOwner(), current_copy );
 						 
 						current_copy.Borrow(new_loan);
+						player.AddBorrow(new_loan);	/*Ajout de la location pour l'afficher dans sa liste*/
 						CatalogVideoGames catalog = new CatalogVideoGames(player);
 						catalog.setVisible(true);
 						catalog.lbl_register_succed.setText("Good, you have successfully completed a loan !");
