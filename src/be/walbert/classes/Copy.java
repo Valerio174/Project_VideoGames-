@@ -51,12 +51,6 @@ public class Copy{
 	}
 
 	/*Constructeurs*/
-	public Copy(int id_copy, Player owner, VideoGame game, Loan lend) {
-		this.id_copy = id_copy;
-		this.owner = owner;
-		this.game = game;
-		this.lend = lend;
-	}	
 	public Copy(int id_copy, Player owner, VideoGame game) {
 		this.id_copy = id_copy;
 		this.owner = owner;
