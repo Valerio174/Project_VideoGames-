@@ -56,6 +56,12 @@ public class Player extends User{
 	public void setBorrow_list(ArrayList<Loan> borrow_list) {
 		this.borrow_list = borrow_list;
 	}
+	public ArrayList<Loan> getLender_list() {
+		return lender_list;
+	}
+	public void setLender_list(ArrayList<Loan> lender_list) {
+		this.lender_list = lender_list;
+	}
 	public ArrayList<Copy> getCopy_list() {
 		return copy_list;
 	}
