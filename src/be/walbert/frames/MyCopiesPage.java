@@ -18,7 +18,9 @@ import javax.swing.table.DefaultTableModel;
 
 import be.walbert.classes.Copy;
 import be.walbert.classes.Player;
-import be.walbert.classes.VideoGame;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MyCopiesPage extends JFrame {
 
@@ -124,6 +126,18 @@ public class MyCopiesPage extends JFrame {
         lbl_Title_ListCopies.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 18));
         lbl_Title_ListCopies.setBounds(22, 77, 452, 47);
         contentPane.add(lbl_Title_ListCopies);
+        
+        JButton btn_AddCopy = new JButton("Add New Copy");
+        btn_AddCopy.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		AddCopyPage copypage = new AddCopyPage(player);
+        		copypage.setVisible(true);
+        		dispose();
+        	}
+        });
+        btn_AddCopy.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        btn_AddCopy.setBounds(502, 378, 129, 29);
+        contentPane.add(btn_AddCopy);
         
 	}
 }
