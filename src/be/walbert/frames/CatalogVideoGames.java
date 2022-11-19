@@ -146,12 +146,17 @@ public class CatalogVideoGames extends JFrame {
 	    table.addMouseListener(new MouseAdapter() {
 	    	public void mouseClicked(MouseEvent e){
 	    	      if (e.getClickCount() == 2){ 
- 	  					VideoGame game_selected = videogames.get(table.getSelectedRow());
-	    	    	  	GamePage gamepage= new GamePage( player,game_selected);
-	  					gamepage.setVisible(true);
-	  					dispose();
-	    	         }
+	    	    	  if(player.LoanAllowed()) {
+	 	  				VideoGame game_selected = videogames.get(table.getSelectedRow());
+		    	      	GamePage gamepage= new GamePage( player,game_selected);
+		  				gamepage.setVisible(true);
+		  				dispose();
+	    	    	  }
+	    	    	  else {
+	    	    		  JOptionPane.showMessageDialog(contentPane, "Sorry, you can't make loan because you have a balance of credits less than 0");
+	    	    	  }
 	    	      }
+	    	}
 	    });
         
 	    lbl_register_succed = new JLabel("");
