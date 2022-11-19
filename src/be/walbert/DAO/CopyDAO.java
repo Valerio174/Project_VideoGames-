@@ -1,6 +1,7 @@
 package be.walbert.DAO;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,8 +17,21 @@ public class CopyDAO extends DAO<Copy> {
 	}
 
 	@Override
-	public boolean create(Copy obj) { 
-		return false;
+	public boolean create(Copy copy) { 
+		try{
+			/*Requete pour insérer les données dans la table Copy*/
+			PreparedStatement ps = connect.prepareStatement("INSERT INTO Copy(id_VideoGame,id_users_lender) VALUES(?,?)");
+			ps.setInt(1,  copy.getGame().getId_videogame());
+			ps.setInt(2, copy.getOwner().getId_users());  
+			ps.execute();	/*Exécuter la requête*/
+			
+			ps.close();
+			return true;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
