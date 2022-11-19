@@ -56,9 +56,16 @@ public class Copy{
 		this.owner = owner;
 		this.game = game;
 	}	
+	public Copy( Player owner, VideoGame game) {
+		this.owner = owner;
+		this.game = game;
+	}	
 	
 	/*Méthodes*/
 
+	public boolean CreateCopy() {
+		return copyDAO.create(this);
+	}
 	public boolean IsAvailable(VideoGame game) {
 //		CopyDAO copy = (CopyDAO)copyDAO;
 //		 
