@@ -102,7 +102,7 @@ public class PlayerDAO extends DAO<Player>{
 							+ "");
 			 
 			if(result.first()) {
-				Player p = new Player(result.getInt("id_users"),result.getString("username"), result.getString("password"), result.getInt("id_users"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(),
+				Player p = new Player(result.getInt("id_users"),result.getString("username"), result.getString("password"), result.getInt("credit"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(),
 						result.getDate("dateOfBirth").toLocalDate());
 				p.setCopy_list(GetAllCopy(p));
 				p.setBorrow_list(GetAllBorrows(p));
