@@ -115,9 +115,12 @@ public class Player extends User{
 	}
 
 	public boolean LoanAllowed() {
-		boolean success = false;
-				
-		return success;
+		
+		if(getCredits() > 0) {
+			return true;
+		}
+		return false;
+
 	}
 	public static Player GetPlayer(int id_users) {
 		PlayerDAO p =(PlayerDAO)playerDAO;
