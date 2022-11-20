@@ -81,16 +81,24 @@ public class CopyDAO extends DAO<Copy> {
 		try {
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Player.pseudo, Player.credit, Player.registrationDate, Player.dateOfBirth, Users.id_users, Users.username, Users.password\r\n"
-							+ "FROM ((Copy LEFT JOIN Player ON Copy.id_users_lender = Player.id_users) LEFT JOIN Users ON Player.id_users = Users.id_users) LEFT JOIN Loan ON Copy.id_copy = Loan.id_copy\r\n"
-							+ "WHERE ((Not (Users.username)=\""+borrower.getUsername()+"\") AND ((Loan.id_loan) Is Null) AND ((Copy.id_videogame)="+videogame.getId_videogame()+")) OR (((Copy.id_videogame)="+videogame.getId_videogame()+") AND ((Loan.ongoing)=False));\r\n"
-							+ "");
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Loan.id_Loan, Loan.ongoing, Copy.id_users_lender, Player.credit, Player.pseudo, Player.dateOfBirth, Player.registrationDate, Users.username, Users.password\r\n"
+							+ "FROM Users INNER JOIN (Player INNER JOIN ((Console INNER JOIN Version ON Console.id_console = Version.id_console) INNER JOIN (VideoGame INNER JOIN (Copy LEFT JOIN Loan ON Copy.id_copy = Loan.id_copy) ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version) ON Player.id_users = Copy.id_users_lender) ON Users.id_users = Player.id_users\r\n"
+							+ "WHERE (((VideoGame.id_VideoGame)="+videogame.getId_videogame()+") AND ((Loan.id_Loan) Is Null)) OR (((VideoGame.id_VideoGame)="+videogame.getId_videogame()+") AND ((Loan.ongoing)=False) AND (Not (Copy.id_users_lender)="+borrower.getId_users()+"));\r\n");
 			while(result.next()){
-				Copy newcopy = new Copy(result.getInt("id_copy"), new Player(result.getInt("id_users"), result.getString("username"),result.getString("password"),
-						result.getInt("credit"),result.getString("pseudo"),
-						result.getDate("registrationDate").toLocalDate(),
-						result.getDate("dateOfBirth").toLocalDate()) , videogame);
-				all_copy.add(newcopy);
+				ResultSet result2 = this.connect.createStatement(
+						ResultSet.TYPE_SCROLL_INSENSITIVE,
+						ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT DISTINCT Copy.id_copy, Copy.id_VideoGame, Loan.id_Loan, Loan.ongoing\r\n"
+								+ "FROM Copy INNER JOIN Loan ON Copy.id_copy = Loan.id_copy\r\n"
+								+ "WHERE (((Copy.id_copy)="+result.getInt("id_copy")+") AND ((Loan.ongoing)=True) AND ((Exists (SELECT id_copy FROM Loan WHERE Loan.id_copy = Copy.id_copy AND ongoing= false))<>False));\r\n"
+								+ "");
+				if(!result2.next()) {
+					Copy newcopy = new Copy(result.getInt("id_copy"), new Player(result.getInt("id_users_lender"), result.getString("username"),result.getString("password"),
+							result.getInt("credit"),result.getString("pseudo"),
+							result.getDate("registrationDate").toLocalDate(),
+							result.getDate("dateOfBirth").toLocalDate()) , videogame);
+					all_copy.add(newcopy);
+				}
+				
 			}
 		} 
 		catch (SQLException e) {
