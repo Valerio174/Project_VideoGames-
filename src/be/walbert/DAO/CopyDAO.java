@@ -81,7 +81,7 @@ public class CopyDAO extends DAO<Copy> {
 		try {
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Loan.id_Loan, Loan.ongoing, Copy.id_users_lender, Player.credit, Player.pseudo, Player.dateOfBirth, Player.registrationDate, Users.username, Users.password\r\n"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT DISTINCT Copy.id_copy, Copy.id_users_lender, Player.credit, Player.pseudo, Player.dateOfBirth, Player.registrationDate, Users.username, Users.password\r\n"
 							+ "FROM Users INNER JOIN (Player INNER JOIN ((Console INNER JOIN Version ON Console.id_console = Version.id_console) INNER JOIN (VideoGame INNER JOIN (Copy LEFT JOIN Loan ON Copy.id_copy = Loan.id_copy) ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version) ON Player.id_users = Copy.id_users_lender) ON Users.id_users = Player.id_users\r\n"
 							+ "WHERE (((VideoGame.id_VideoGame)="+videogame.getId_videogame()+") AND ((Loan.id_Loan) Is Null)) OR (((VideoGame.id_VideoGame)="+videogame.getId_videogame()+") AND ((Loan.ongoing)=False) AND (Not (Copy.id_users_lender)="+borrower.getId_users()+"));\r\n");
 			while(result.next()){
