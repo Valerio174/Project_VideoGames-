@@ -5,10 +5,12 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,6 +21,11 @@ import javax.swing.table.DefaultTableModel;
 import be.walbert.classes.Copy;
 import be.walbert.classes.Loan;
 import be.walbert.classes.Player;
+import be.walbert.classes.VideoGame;
+
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MyLoansPage extends JFrame {
 
@@ -26,7 +33,7 @@ public class MyLoansPage extends JFrame {
 	private JTable table;
 	private Image icon_logout = new ImageIcon(this.getClass().getResource("/ressources/icon_logout.png")).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
 	private Image icon_back = new ImageIcon(this.getClass().getResource("/ressources/icon_back.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-
+	private ArrayList<Loan> loans;
 	/**
 	 * Launch the application.
 	 */
@@ -92,6 +99,12 @@ public class MyLoansPage extends JFrame {
 		lbl_LogOut.setBounds(1022, 11, 99, 50);
 		contentPane.add(lbl_LogOut);
 		
+        JButton btn_EndLoan = new JButton("End Loan");
+        btn_EndLoan.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+        btn_EndLoan.setBounds(630, 342, 121, 29);
+        btn_EndLoan.setVisible(false);
+        contentPane.add(btn_EndLoan);
+        
 		/*Noms des colonnes du tableau*/
 		String[] columnsnames = { "Start Date","End Date","Ongoing","Game","Version","Console", "Borrower"};
         
@@ -102,10 +115,12 @@ public class MyLoansPage extends JFrame {
 				return false;
 			}
 		};
+		
+		loans = player.getLender_list();
 			/*Attribuer noms des colonnes au tablemodel*/
 		tablemodel.setColumnIdentifiers(columnsnames);	
-	       for(Loan l: player.getLender_list()){
-	           Object[] datas = {l.getStartDate(), l.getEndDate(), l.isOngoing(), l.getCopy().getGame().getName(),l.getCopy().getGame().getVersion(), l.getCopy().getGame().getConsole(), l.getBorrower().getPseudo()};
+	       for(Loan l: loans){
+	           Object[] datas = {l.getStartDate(), l.getStartDate(), l.getEndDate(), l.isOngoing(), l.getCopy().getGame().getName(),l.getCopy().getGame().getVersion(), l.getCopy().getGame().getConsole(), l.getBorrower().getPseudo()};
 	           tablemodel.addRow(datas);
 	       }
 	        
@@ -120,10 +135,37 @@ public class MyLoansPage extends JFrame {
         table = new JTable(tablemodel);
         scrollPane.setViewportView(table);
         
+        /*Ajouter evenement lors du clique sur une ligne*/
+	    table.addMouseListener(new MouseAdapter() {
+	    	public void mouseClicked(MouseEvent e){
+	    	      if (e.getClickCount() == 1){ 
+	    	          btn_EndLoan.setVisible(true);
+	    	      }
+	    	}
+	    });
+	    
+	    btn_EndLoan.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Loan loan_selected = loans.get(table.getSelectedRow());
+        		
+        		if(loan_selected.EndLoan()) {	//Mise a jour de la location dans la base de donnees
+         			JOptionPane.showMessageDialog(contentPane, "Loan ended ! " );
+         			player.UpdateLoan(loan_selected);	//mise à jour de la location pour l'objet courant
+        			CatalogVideoGames catalog = new CatalogVideoGames(player);
+        			catalog.setVisible(true);
+        			dispose();
+        		}
+        		else {
+        			JOptionPane.showMessageDialog(contentPane, "An error has been occured ! " );
+        		}
+        		
+        	}
+        });
+	    
         JLabel lbl_Title_ListCopies = new JLabel("The list of your loans:");
         lbl_Title_ListCopies.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 18));
         lbl_Title_ListCopies.setBounds(22, 77, 452, 47);
         contentPane.add(lbl_Title_ListCopies);
+        
 	}
-
 }
