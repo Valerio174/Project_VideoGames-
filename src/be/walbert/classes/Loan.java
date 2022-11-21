@@ -1,19 +1,33 @@
 package be.walbert.classes;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Loan{
+import be.walbert.DAO.AbstractDAOFactory;
+import be.walbert.DAO.DAO;
 
+public class Loan implements Serializable{
+
+	private static final long serialVersionUID = 7637435341275591831L;
+	
 	/*Attributs*/
+	private int id_loan;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private boolean ongoing;
 	private Player borrower;
 	private Player lender;
 	private Copy copy;
-	
+	static AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	static DAO<Loan> loanDAO = adf.getLoanDAO(); 
 	
 	/*Getters/Setters*/
+	public int getId_loan() {
+		return id_loan;
+	}
+	public void setId_loan(int id_loan) {
+		this.id_loan = id_loan;
+	}
 	public LocalDate getStartDate() {
 		return startDate;
 	}
@@ -51,7 +65,16 @@ public class Loan{
 		this.copy = copy;
 	}
 	/*Constructeurs*/
-	public Loan(LocalDate startDate, LocalDate endDate, boolean ongoing, Player borrower, Player lender, Copy copy) {
+	public Loan(int id_loan, LocalDate startDate, LocalDate endDate, boolean ongoing, Player borrower, Player lender, Copy copy) {
+		this.id_loan = id_loan;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.ongoing = ongoing;
+		this.borrower  = borrower;
+		this.lender = lender;
+		this.copy = copy;
+	}
+	public Loan( LocalDate startDate, LocalDate endDate, boolean ongoing, Player borrower, Player lender, Copy copy) {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.ongoing = ongoing;
@@ -63,6 +86,15 @@ public class Loan{
 	/*Méthodes*/
 	public void CalculateBalance() {}
 	
-	public void EndLoan() {}
+
+	public boolean EndLoan() {
+		
+		return loanDAO.update(this);
+	}
 	
+	@Override
+	public String toString() {
+		return "Loan [id_loan=" + id_loan + ", startDate=" + startDate + ", endDate=" + endDate + ", ongoing=" + ongoing
+				+ ", borrower=" + borrower + ", lender=" + lender + ", copy=" + copy + "]";
+	}
 }
