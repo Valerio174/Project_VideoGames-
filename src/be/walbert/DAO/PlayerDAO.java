@@ -178,7 +178,7 @@ public class PlayerDAO extends DAO<Player>{
 		try {
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Loan.startDate, Loan.endDate, Loan.ongoing, Loan.id_copy,"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Loan.id_loan, Loan.startDate, Loan.endDate, Loan.ongoing, Loan.id_copy,"
 							+ " Copy.id_users_lender, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, "
 							+ "Player.dateOfBirth, Copy.id_VideoGame, VideoGame.name, VideoGame.creditCost, "
 							+ "Version.name_version, Console.name_console\r\n"
@@ -198,7 +198,7 @@ public class PlayerDAO extends DAO<Player>{
 				Player borrower = new Player(result2.getInt("id_users_lender"), result2.getString("username") , result2.getString("password"), result2.getInt("credit"), result2.getString("pseudo"), result2.getDate("registrationDate").toLocalDate(),
 						result2.getDate("dateOfBirth").toLocalDate());
 				Copy copy = new Copy(result2.getInt("id_copy"),lender,new VideoGame(result2.getInt("id_VideoGame"), result2.getString("name") ,  result2.getInt("creditCost"),  result2.getString("name_version"), result2.getString("name_console")));
-				Loan newloan = new Loan(result.getDate("startDate").toLocalDate(), result.getDate("endDate").toLocalDate(), result.getBoolean("ongoing"), borrower, lender, copy);
+				Loan newloan = new Loan(result.getInt("id_loan"), result.getDate("startDate").toLocalDate(), result.getDate("endDate").toLocalDate(), result.getBoolean("ongoing"), borrower, lender, copy);
 				all_loans.add(newloan);
 			}
 		} 
