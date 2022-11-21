@@ -41,8 +41,22 @@ public class LoanDAO extends DAO<Loan>{
 	}
 
 	@Override
-	public boolean update(Loan obj) { 
-		return false;
+	public boolean update(Loan loan) { 
+		try{
+			/*Requete pour mettre à jour les données dans la table Loan*/
+			PreparedStatement ps = connect.prepareStatement("UPDATE Loan SET ongoing = ? WHERE id_loan = ?");
+			ps.setBoolean(1, false);
+			ps.setInt(2, loan.getId_loan());
+			
+			ps.execute();	/*Exécuter la requête*/
+			ps.close(); 
+			 
+			return true;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
