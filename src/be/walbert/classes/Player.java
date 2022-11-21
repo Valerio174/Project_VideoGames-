@@ -137,7 +137,13 @@ public class Player extends User{
 			 System.err.println(e.getMessage());
 		}
 	}
-	
+	public void UpdateLoan(Loan new_loan) {
+		for (Loan loan : lender_list) {
+			if (loan.getId_loan() == new_loan.getId_loan()) {
+				loan.setOngoing(false);
+			}
+		}
+	}
 	public void AddBorrow(Loan newborrow) {
 		try {
 			borrow_list.add(newborrow);
