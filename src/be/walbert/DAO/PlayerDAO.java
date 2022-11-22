@@ -87,8 +87,22 @@ public class PlayerDAO extends DAO<Player>{
 	}
 
 	@Override
-	public boolean update(Player obj) { 
-		return false;
+	public boolean update(Player newplayer) { 
+		try{
+			/*Requete pour mettre à jour les données dans la table Player*/
+			PreparedStatement ps = connect.prepareStatement("UPDATE Player SET credit = ? WHERE id_users = ?");
+			ps.setInt(1, newplayer.getCredits());
+			ps.setInt(2, newplayer.getId_users());
+			
+			ps.execute();	/*Exécuter la requête*/
+			ps.close(); 
+			 
+			return true;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
