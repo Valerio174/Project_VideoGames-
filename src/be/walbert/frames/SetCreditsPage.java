@@ -165,16 +165,15 @@ public class SetCreditsPage extends JFrame {
 		tf_NewCredits.setColumns(10);
 		
 		/*Ajout de l'evenement lors du click sur le bouton Set Credits*/
-		JButton btnNewButton = new JButton("Set Credits");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btn_SetCredits = new JButton("Set Credits");
+		btn_SetCredits.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(tf_NewCredits.getText().equals("")) {
 					lbl_FieldEmpty.setText("Field is empty !");
 				}
 				else {
-					videogame_selected.setCreditCost((Integer.parseInt(tf_NewCredits.getText())));
 					
-					if(videogame_selected.ModifyCredits()) {	/*Si la mise à jour des credits s'est faite correctement*/
+					if(videogame_selected.ModifyCredits(Integer.parseInt(tf_NewCredits.getText()))) {	/*Si la mise à jour des credits s'est faite correctement*/
 						AdministratorPage adminpage = new AdministratorPage(admin);
 						adminpage.setVisible(true);
 						adminpage.lbl_Success.setText("Great you have updated the credits !");
@@ -187,9 +186,9 @@ public class SetCreditsPage extends JFrame {
 				
 			}
 		});
-		btnNewButton.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		btnNewButton.setBounds(632, 557, 138, 41);
-		contentPane.add(btnNewButton);
+		btn_SetCredits.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
+		btn_SetCredits.setBounds(632, 557, 138, 41);
+		contentPane.add(btn_SetCredits);
 		
 	}
 }
