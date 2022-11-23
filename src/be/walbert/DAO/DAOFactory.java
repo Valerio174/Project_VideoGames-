@@ -2,6 +2,7 @@ package be.walbert.DAO;
 
 import java.sql.Connection;
 
+import be.walbert.classes.Booking;
 import be.walbert.classes.Copy;
 import be.walbert.classes.Loan;
 import be.walbert.classes.Player;
@@ -15,10 +16,10 @@ public class DAOFactory extends AbstractDAOFactory{
 //		return new AdministratorDAO(conn);
 //	}
 //	
-//	public DAO<Booking> getBookingDAO(){
-//		return new BookingDAO(conn);
-//	}
-//	
+	public DAO<Booking> getBookingDAO(){
+		return new BookingDAO(conn);
+	}
+	
 	public DAO<Copy> getCopyDAO(){
 		return new CopyDAO(conn);
 	}
