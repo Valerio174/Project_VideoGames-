@@ -127,7 +127,9 @@ public class Player extends User{
 		
 		return p.find(id_users);
 	}
-	
+	public boolean UpdatePlayer() {
+		return playerDAO.update(this);
+	}
 	public void AddBirthdayBonus() {}
 	
 	public void AddLender(Loan newloan) {
