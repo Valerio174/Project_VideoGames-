@@ -74,11 +74,8 @@ public class VideoGameDAO extends DAO<VideoGame>{
 			ps.execute();	/*Exécuter la requête*/
 			
 			ps.close(); 
-			if(createHistoryCredits(videogame)) {
-
-				return true;
-			}
-			return false;
+			
+			return true;
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -219,13 +216,14 @@ public class VideoGameDAO extends DAO<VideoGame>{
 		}
 	}
 	
-	public boolean createHistoryCredits(VideoGame videogame) {
+	public boolean createHistoryCredits(VideoGame videogame, int newCredits) {
 		try{
 			/*Requete pour insérer les données dans la table VideoGame*/
-			PreparedStatement ps = connect.prepareStatement("INSERT INTO HistoryCredits(modification_date, new_creditCost, id_videogame) VALUES(?,?,?)");
+			PreparedStatement ps = connect.prepareStatement("INSERT INTO HistoryCredits(modification_date, old_credits, new_creditCost, id_videogame) VALUES(?,?,?,?)");
 			ps.setDate(1, Date.valueOf(LocalDate.now()));
 			ps.setInt(2, videogame.getCreditCost());
-			ps.setInt(3, videogame.getId_videogame()); 
+			ps.setInt(3, newCredits);
+			ps.setInt(4, videogame.getId_videogame()); 
 			ps.execute();	/*Exécuter la requête*/
 			
 			ps.close();
