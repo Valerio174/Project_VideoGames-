@@ -138,8 +138,12 @@ public class VideoGame{
 	}
 	
 	 
-	public boolean ModifyCredits() {
+	public boolean ModifyCredits(int new_credits) {
+		VideoGameDAO vgDAO = (VideoGameDAO)(videogameDAO);
+		vgDAO.createHistoryCredits(this, new_credits);
 		
+		this.setCreditCost(new_credits);
+			
 		return videogameDAO.update(this);
 	}
 	
