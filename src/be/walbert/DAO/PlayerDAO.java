@@ -116,7 +116,7 @@ public class PlayerDAO extends DAO<Player>{
 				p.setCopy_list(GetAllCopy(p));
 				p.setBorrow_list(GetAllBorrows(p));
 				p.setLender_list(GetAllLoans(p));
-				p.setBooking_list(GetAllCopies(p));
+				//p.setBooking_list(GetAllBookings(p));
 				return p;
 			}
 			else
@@ -268,7 +268,7 @@ public class PlayerDAO extends DAO<Player>{
 		return all_loans;
 	}
 
-	public ArrayList<Booking> GetAllCopies(Player player){
+	public ArrayList<Booking> GetAllBookings(Player player){
 		ArrayList<Booking> all_bookings = new ArrayList<>();
 		
 		try {

@@ -69,8 +69,7 @@ public class UserDAO extends DAO<User>{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Users.id_users, Users.username, Users.password, Users.type, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
-							+ "FROM Users INNER JOIN Player ON Users.id_users = Player.id_users\r\n"
-							+ "WHERE Users.id_users="+id);
+							+ "FROM Users INNER JOIN Player ON Users.id_users = Player.id_users WHERE Users.id_users="+id);
 			if(result.first()){
 				if(result.getString("type").equals("Player")) {
 					Player newuser = playerDAO.find(result.getInt("id_users"));
