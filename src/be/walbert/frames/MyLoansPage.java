@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -120,7 +121,7 @@ public class MyLoansPage extends JFrame {
 			/*Attribuer noms des colonnes au tablemodel*/
 		tablemodel.setColumnIdentifiers(columnsnames);	
 	       for(Loan l: loans){
-	           Object[] datas = {l.getStartDate(), l.getStartDate(), l.getEndDate(), l.isOngoing(), l.getCopy().getGame().getName(),l.getCopy().getGame().getVersion(), l.getCopy().getGame().getConsole(), l.getBorrower().getPseudo()};
+	           Object[] datas = {l.getStartDate(), l.getEndDate(), l.isOngoing(), l.getCopy().getGame().getName(),l.getCopy().getGame().getVersion(), l.getCopy().getGame().getConsole(), l.getBorrower().getPseudo()};
 	           tablemodel.addRow(datas);
 	       }
 	        
@@ -147,17 +148,29 @@ public class MyLoansPage extends JFrame {
 	    btn_EndLoan.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		Loan loan_selected = loans.get(table.getSelectedRow());
+//        		if(loan_selected.isOngoing()!=false) {
+        			if(LocalDate.now().isBefore(loan_selected.getEndDate())) {
+         				JOptionPane.showMessageDialog(contentPane, "Not yet at the end date !" );
+            		}
+            		else {
+         				if(loan_selected.EndLoan()) {	//Mise a jour de la location dans la base de donnees
+               			 
+             				JOptionPane.showMessageDialog(contentPane, "GREAT. The loan is over ");
+                 			player.UpdateLoan(loan_selected);	//mise à jour de la location pour l'objet courant
+                			CatalogVideoGames catalog = new CatalogVideoGames(player);
+                			catalog.setVisible(true);
+                			dispose(); 			
+                		}
+                		else {
+                			JOptionPane.showMessageDialog(contentPane, "An error has been occured ! " );
+                		}
+            		}
+//       		}
+//        		else {
+//     				JOptionPane.showMessageDialog(contentPane, "Sorry the loan is already done !" );
+//
+//        		}
         		
-        		if(loan_selected.EndLoan()) {	//Mise a jour de la location dans la base de donnees
-         			JOptionPane.showMessageDialog(contentPane, "Loan ended ! " );
-         			player.UpdateLoan(loan_selected);	//mise à jour de la location pour l'objet courant
-        			CatalogVideoGames catalog = new CatalogVideoGames(player);
-        			catalog.setVisible(true);
-        			dispose();
-        		}
-        		else {
-        			JOptionPane.showMessageDialog(contentPane, "An error has been occured ! " );
-        		}
         		
         	}
         });
