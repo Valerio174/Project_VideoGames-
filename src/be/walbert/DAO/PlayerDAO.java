@@ -10,12 +10,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import be.walbert.classes.Administrator;
+import be.walbert.classes.Booking;
 import be.walbert.classes.Copy;
 import be.walbert.classes.Loan;
 import be.walbert.classes.Player;
 import be.walbert.classes.VideoGame;
 
 public class PlayerDAO extends DAO<Player>{
+ 	VideoGameDAO videogameDAO = new VideoGameDAO(connect);
+ 	
 	public PlayerDAO(Connection conn) {
 		super(conn);
 	}
@@ -113,6 +116,7 @@ public class PlayerDAO extends DAO<Player>{
 				p.setCopy_list(GetAllCopy(p));
 				p.setBorrow_list(GetAllBorrows(p));
 				p.setLender_list(GetAllLoans(p));
+				p.setBooking_list(GetAllCopies(p));
 				return p;
 			}
 			else
@@ -264,5 +268,24 @@ public class PlayerDAO extends DAO<Player>{
 		return all_loans;
 	}
 
-
+	public ArrayList<Booking> GetAllCopies(Player player){
+		ArrayList<Booking> all_bookings = new ArrayList<>();
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Booking.id_Booking, Booking.bookingDate, Booking.id_VideoGame, Booking.id_users, Booking.number_of_weeks\r\n"
+							+ "FROM Booking\r\n"
+							+ "WHERE Booking.id_users="+player.getId_users()); 
+			while(result.next()){
+				Booking new_booking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(),videogameDAO.find(result.getInt("id_VideoGame")) , this.find(result.getInt("id_users")) ,result.getInt("number_of_weeks"));
+				all_bookings.add(new_booking);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return all_bookings;
+	}
 }
