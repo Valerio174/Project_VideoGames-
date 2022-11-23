@@ -10,17 +10,21 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import be.walbert.classes.Booking;
 import be.walbert.classes.Copy;
 import be.walbert.classes.Player;
 import be.walbert.classes.User;
 import be.walbert.classes.VideoGame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -121,6 +125,17 @@ public class GamePage extends JFrame {
 		btn_LoanGame.setVisible(false);
 		
 		JButton btn_BookingGame = new JButton("Book game");
+		btn_BookingGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Booking new_booking = new Booking(LocalDate.now(), videogame_selected, player);
+				if(new_booking.CreateBooking()) {
+  	    		  	JOptionPane.showMessageDialog(contentPane, "Great, your booking has been added !");
+				}
+				else {
+					JOptionPane.showMessageDialog(contentPane, "Sorry, an error has been occured!");
+				}
+			}
+		});
 		btn_BookingGame.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_BookingGame.setBounds(534, 511, 137, 50);
 		contentPane.add(btn_BookingGame);
