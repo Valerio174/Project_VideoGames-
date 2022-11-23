@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import be.walbert.classes.Administrator;
 import be.walbert.classes.Copy;
 import be.walbert.classes.Loan;
 import be.walbert.classes.Player;
@@ -19,32 +20,7 @@ public class PlayerDAO extends DAO<Player>{
 		super(conn);
 	}
 
-	/*Trouver si un compte existe deja avec un username ou un pseudo donne*/
-	public boolean findAccount(Player newplayer) {
-		try{
-			ResultSet result = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT username FROM Users WHERE username = \"" + newplayer.getUsername() +"\"");
-			
-			ResultSet result2 = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT pseudo FROM Users u LEFT OUTER JOIN Player p ON u.id_users = p.id_users "
-							+ "WHERE pseudo = \"" + newplayer.getPseudo() +"\"");
-			
-			if(result.first() || result2.first()) {
-					return false;
-				}
-			else
-				return true;
-		
-		}
-		catch(SQLException e){
-			e.printStackTrace();
-		}
-		return false;
-		
-	}
-
+	/******Methodes communes (CRUD)*******/
 	@Override
 	public boolean create(Player newplayer) {
 		try{
@@ -82,8 +58,24 @@ public class PlayerDAO extends DAO<Player>{
 	}
 	
 	@Override
-	public boolean delete(Player obj) { 
-		return false;
+	public boolean delete(Player newplayer) { 
+		try{
+			/*Requete pour supprimer les données dans la table Player*/
+			PreparedStatement ps = connect.prepareStatement("DELETE FROM Player WHERE id_users=? ");
+			ps.setInt(1, newplayer.getId_users());
+			ps.execute();	/*Exécuter la requête*/
+			ps.close();
+			
+			PreparedStatement ps2 = connect.prepareStatement("DELETE FROM Users WHERE id_users=? ");
+			ps2.setInt(1, newplayer.getId_users());
+			ps2.execute();	/*Exécuter la 2e requête*/
+			ps2.close();
+			return true;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -133,6 +125,55 @@ public class PlayerDAO extends DAO<Player>{
 		
 	}
 	
+	@Override
+	public ArrayList<Player> findAll() {
+		ArrayList<Player> all_players = new ArrayList<>();
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Users.id_users, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
+							+ "FROM Users INNER JOIN Player ON Users.id_users = Player.id_users");
+			 
+			while(result.next()){
+				Player newplayer =  this.find(result.getInt("id_users"));
+				all_players.add(newplayer);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return all_players;
+	}
+	
+	/******METHODES PARTICULIERES POUR Player*******/
+	/*Trouver si un compte existe deja avec un username ou un pseudo donne*/
+	public boolean findAccount(Player newplayer) {
+		try{
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT username FROM Users WHERE username = \"" + newplayer.getUsername() +"\"");
+			
+			ResultSet result2 = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT pseudo FROM Users u LEFT OUTER JOIN Player p ON u.id_users = p.id_users "
+							+ "WHERE pseudo = \"" + newplayer.getPseudo() +"\"");
+			
+			if(result.first() || result2.first()) {
+					return false;
+				}
+			else
+				return true;
+		
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
+
 	public ArrayList<Copy> GetAllCopy(Player player){
 		ArrayList<Copy> all_copy = new ArrayList<>();
 		
@@ -222,6 +263,6 @@ public class PlayerDAO extends DAO<Player>{
 		
 		return all_loans;
 	}
-	
+
 
 }

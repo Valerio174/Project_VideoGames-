@@ -6,18 +6,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
+import be.walbert.classes.Administrator;
 import be.walbert.classes.Booking;
 import be.walbert.classes.Player;
 import be.walbert.classes.VideoGame;
 
 public class BookingDAO extends DAO<Booking> {
-	private PlayerDAO playerDAO;
-	private VideoGameDAO videogameDAO;
+	private PlayerDAO playerDAO = new PlayerDAO(connect);
+	private VideoGameDAO videogameDAO =  new VideoGameDAO(connect);
 	
 	public BookingDAO(Connection conn) {
 		super(conn); 
 	}
+	
+	/******Methodes communes (CRUD)*******/
 
 	@Override
 	public boolean create(Booking booking) {
@@ -41,7 +45,7 @@ public class BookingDAO extends DAO<Booking> {
 	@Override
 	public boolean delete(Booking booking) {
 		try{
-			/*Requete pour insérer les données dans la table Booking*/
+			/*Requete pour supprimer les données de la table Booking*/
 			PreparedStatement ps = connect.prepareStatement("DELETE FROM Booking WHERE id_Booking=? ");
 			ps.setInt(1, booking.getId_booking());
 			ps.execute();	/*Exécuter la requête*/
@@ -65,9 +69,10 @@ public class BookingDAO extends DAO<Booking> {
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("");
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking WHERE id_Booking ="+id);
+			
 			 if(result.first()) {
-				 Booking new_booking = new Booking(result.getInt("id_booking"), result.getDate("bookingDate").toLocalDate(), videogameDAO.find(result.getInt("id_VideoGame")), playerDAO.find(result.getInt("id_users")));
+				 Booking new_booking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(), videogameDAO.find(result.getInt("id_VideoGame")), playerDAO.find(result.getInt("id_users")));
 				 return new_booking;
 			 }
 		}
@@ -76,5 +81,28 @@ public class BookingDAO extends DAO<Booking> {
 		}
 		return null;
 	}
+
+	@Override
+	public ArrayList<Booking> findAll() {
+		ArrayList<Booking> all_bookings = new ArrayList<>();
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking");
+			 
+			while(result.next()){
+				Booking newbooking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(), videogameDAO.find(result.getInt("id_VideoGame")), playerDAO.find(result.getInt("id_users")));
+				all_bookings.add(newbooking);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return all_bookings;
+	}
+
+	/******METHODES PARTICULIERES POUR Booking*******/
 
 }

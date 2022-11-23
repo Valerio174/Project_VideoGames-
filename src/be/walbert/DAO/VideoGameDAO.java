@@ -17,27 +17,8 @@ public class VideoGameDAO extends DAO<VideoGame>{
 	public VideoGameDAO(Connection conn) {
 		super(conn); 
 	}
-
-	public ArrayList<VideoGame> findAll(){
-		ArrayList<VideoGame> all_videogames = new ArrayList<>();
-		
-		try {
-			ResultSet result = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT vg.id_VideoGame, vg.name, vg.creditCost, v.name_version, c.name_console\r\n"
-							+ "FROM ( VideoGame vg LEFT OUTER JOIN Version v ON vg.id_version = v.id_version ) LEFT OUTER JOIN Console c ON v.id_console= c.id_console");
-			while(result.next()){
-				VideoGame newvideogame = new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console"));
-				all_videogames.add(newvideogame);
-			}
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return all_videogames;
-		
-	}
+	
+	/******Methodes communes (CRUD)*******/
 	
 	@Override
 	public boolean create(VideoGame videogame) { 
@@ -59,8 +40,20 @@ public class VideoGameDAO extends DAO<VideoGame>{
 	}
 
 	@Override
-	public boolean delete(VideoGame obj) { 
-		return false;
+	public boolean delete(VideoGame videogame) { 
+		try{
+			/*Requete pour supprimer les données de la table Loan*/
+			PreparedStatement ps = connect.prepareStatement("DELETE FROM VideoGame WHERE id_VideoGame = ? ");
+			ps.setInt(1, videogame.getId_videogame());
+			ps.execute();	/*Exécuter la requête*/
+			
+			ps.close();
+			return true;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -85,19 +78,13 @@ public class VideoGameDAO extends DAO<VideoGame>{
 	
 	@Override
 	public VideoGame find(int id) { 
-		return null;
-	}
-	
-	public VideoGame GetVideoGame(String name, String version) {
-		ArrayList<VideoGame> all_videogames = new ArrayList<>();
-		
+
 		try {
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT VideoGame.id_VideoGame, VideoGame.name, VideoGame.creditCost, Console.name_console, Version.name_version\r\n"
 							+ "FROM Console INNER JOIN (Version INNER JOIN VideoGame ON Version.id_version = VideoGame.id_version) ON Console.id_console = Version.id_console\r\n"
-							+ "WHERE (((VideoGame.name)=\""+name+"\") AND ((Version.name_version)=\""+version+"\"));\r\n"
-							+ "");
+							+ "WHERE (((VideoGame.id_VideoGame)="+id);
 			if(result.first()) {
 				VideoGame game = new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console"));
 				return game;
@@ -109,7 +96,30 @@ public class VideoGameDAO extends DAO<VideoGame>{
 		
 		return null;
 	}
-
+	
+	@Override
+	public ArrayList<VideoGame> findAll(){
+		ArrayList<VideoGame> all_videogames = new ArrayList<>();
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT vg.id_VideoGame, vg.name, vg.creditCost, v.name_version, c.name_console\r\n"
+							+ "FROM ( VideoGame vg LEFT OUTER JOIN Version v ON vg.id_version = v.id_version ) LEFT OUTER JOIN Console c ON v.id_console= c.id_console");
+			while(result.next()){
+				VideoGame newvideogame = new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console"));
+				all_videogames.add(newvideogame);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return all_videogames;
+		
+	}
+	
+	/******METHODES PARTICULIERES POUR VideoGame*******/
 	public ArrayList<String> AllConsoles(){
 		ArrayList<String> all_consoles = new ArrayList<>();
 		
@@ -128,6 +138,7 @@ public class VideoGameDAO extends DAO<VideoGame>{
 		return all_consoles;
 		
 	}
+	
 	public ArrayList<String> AllVersion(String console){
 		ArrayList<String> all_versions = new ArrayList<>();
 		
@@ -148,7 +159,6 @@ public class VideoGameDAO extends DAO<VideoGame>{
 		return all_versions;
 		
 	}
-	
 	
 	public int GetVersion(String version) {
 		
@@ -199,6 +209,7 @@ public class VideoGameDAO extends DAO<VideoGame>{
 			return false;
 		}
 	}
+	
 	public boolean CreateVersion(String name_console, String name_version) {
 		try{
 			/*Requete pour insérer les données dans la table VideoGame*/

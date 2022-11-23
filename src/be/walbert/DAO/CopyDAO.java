@@ -128,4 +128,10 @@ public class CopyDAO extends DAO<Copy> {
 		return all_copy;
 		
 	}
+
+	@Override
+	public ArrayList<Copy> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
