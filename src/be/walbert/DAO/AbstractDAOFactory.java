@@ -1,5 +1,6 @@
 package be.walbert.DAO;
 
+import be.walbert.classes.Booking;
 import be.walbert.classes.Copy;
 import be.walbert.classes.Loan;
 import be.walbert.classes.Player;
@@ -12,8 +13,8 @@ public abstract class AbstractDAOFactory {
 
 //	public abstract DAO<Administrator> getAdministratorDAO();
 //	
-//	public abstract DAO<Booking> getBookingDAO();
-//		
+	public abstract DAO<Booking> getBookingDAO();
+
 	public abstract DAO<Copy> getCopyDAO();
 	
 	public abstract DAO<Loan> getLoanDAO();
