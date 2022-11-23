@@ -60,12 +60,12 @@ public abstract class User{
 		UserDAO user =(UserDAO)userDAO;
 		int success= -1;
 		
-		if(user.GetUser(this) != null) {
-			if(user.GetUser(this) instanceof Player) {
+		if(user.find(getId_users()) != null) {
+			if(user.find(getId_users()) instanceof Player) {
 				success = 1;
 				return success;
 			} 
-			if(user.GetUser(this) instanceof Administrator){
+			if(user.find(getId_users()) instanceof Administrator){
 				success = 0;
 				return success;
 			}
