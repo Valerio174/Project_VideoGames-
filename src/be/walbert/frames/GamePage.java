@@ -4,16 +4,12 @@ import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JPanel; 
+import javax.swing.border.EmptyBorder; 
 
 import be.walbert.classes.Booking;
 import be.walbert.classes.Copy;
-import be.walbert.classes.Player;
-import be.walbert.classes.User;
+import be.walbert.classes.Player; 
 import be.walbert.classes.VideoGame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,8 +20,7 @@ import java.awt.Image;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDate; 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -34,8 +29,7 @@ public class GamePage extends JFrame {
 
 	private JPanel contentPane;
 	private Image img = new ImageIcon(this.getClass().getResource("/ressources/icon_back.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-	private ArrayList<Copy> listcopy;
-	private JTable table;
+ 
 	/**
 	 * Launch the application.
 	 */
@@ -127,13 +121,9 @@ public class GamePage extends JFrame {
 		JButton btn_BookingGame = new JButton("Book game");
 		btn_BookingGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Booking new_booking = new Booking(LocalDate.now(), videogame_selected, player);
-				if(new_booking.CreateBooking()) {
-  	    		  	JOptionPane.showMessageDialog(contentPane, "Great, your booking has been added !");
-				}
-				else {
-					JOptionPane.showMessageDialog(contentPane, "Sorry, an error has been occured!");
-				}
+				 MakeBookingPage booking_page = new MakeBookingPage(videogame_selected, player);
+				 booking_page.setVisible(true);
+				 dispose();
 			}
 		});
 		btn_BookingGame.setFont(new Font("Tahoma", Font.PLAIN, 20));
