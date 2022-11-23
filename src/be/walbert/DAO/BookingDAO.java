@@ -27,10 +27,11 @@ public class BookingDAO extends DAO<Booking> {
 	public boolean create(Booking booking) {
 		try{
 			/*Requete pour insérer les données dans la table Booking*/
-			PreparedStatement ps = connect.prepareStatement("INSERT INTO Booking(bookingDate, id_VideoGame,id_users) VALUES(?,?,?)");
+			PreparedStatement ps = connect.prepareStatement("INSERT INTO Booking(bookingDate, id_VideoGame,id_users, number_of_weeks) VALUES(?,?,?,?)");
 			ps.setDate(1,  Date.valueOf(booking.getBookingDate()));
 			ps.setInt(2, booking.getGame().getId_videogame());  
 			ps.setInt(3,  booking.getPlayer().getId_users());
+			ps.setInt(4,  booking.getNumber_weeks());
 			ps.execute();	/*Exécuter la requête*/
 			
 			ps.close();
@@ -72,7 +73,7 @@ public class BookingDAO extends DAO<Booking> {
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking WHERE id_Booking ="+id);
 			
 			 if(result.first()) {
-				 Booking new_booking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(), videogameDAO.find(result.getInt("id_VideoGame")), playerDAO.find(result.getInt("id_users")));
+				 Booking new_booking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(), videogameDAO.find(result.getInt("id_VideoGame")), playerDAO.find(result.getInt("id_users")), result.getInt("number_of_weeks"));
 				 return new_booking;
 			 }
 		}
@@ -92,7 +93,7 @@ public class BookingDAO extends DAO<Booking> {
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking");
 			 
 			while(result.next()){
-				Booking newbooking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(), videogameDAO.find(result.getInt("id_VideoGame")), playerDAO.find(result.getInt("id_users")));
+				Booking newbooking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(), videogameDAO.find(result.getInt("id_VideoGame")), playerDAO.find(result.getInt("id_users")), result.getInt("number_of_weeks"));
 				all_bookings.add(newbooking);
 			}
 		} 
