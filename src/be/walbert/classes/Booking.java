@@ -14,13 +14,16 @@ public class Booking implements Serializable{
 	private LocalDate bookingDate;
 	private VideoGame game;
 	private Player player;
+	private int number_weeks;
 	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	DAO<Booking> bookingDAO = adf.getBookingDAO();
 	
 	/*Getters/Setters*/
+	
 	public int getId_booking() {
 		return id_booking;
 	}
+	
 	public void setId_booking(int id_booking) {
 		this.id_booking = id_booking;
 	}
@@ -44,17 +47,26 @@ public class Booking implements Serializable{
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
+	public int getNumber_weeks() {
+		return number_weeks;
+	}
+	public void setNumber_weeks(int number_weeks) {
+		this.number_weeks = number_weeks;
+	}
 	/*Constructeurs*/
-	public Booking(LocalDate bookingDate, VideoGame game, Player player) {
+	public Booking(LocalDate bookingDate, VideoGame game, Player player,int number_weeks) {
 		this.bookingDate = bookingDate;
 		this.game = game;
 		this.player = player;
+		this.number_weeks = number_weeks;
 	}	
-	public Booking(int id_booking, LocalDate bookingDate, VideoGame game, Player player) {
+	public Booking(int id_booking, LocalDate bookingDate, VideoGame game, Player player,int number_weeks) {
 		this.id_booking = id_booking;
 		this.bookingDate = bookingDate;
 		this.game = game;
 		this.player = player;
+		this.number_weeks = number_weeks;
+
 	}	
 	
 	public boolean CreateBooking() {
