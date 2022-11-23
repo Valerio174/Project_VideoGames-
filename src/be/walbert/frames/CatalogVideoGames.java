@@ -200,5 +200,17 @@ public class CatalogVideoGames extends JFrame {
 		btn_MyLoans.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btn_MyLoans.setBounds(860, 302, 135, 40);
 		contentPane.add(btn_MyLoans);
+		
+		JButton btn_MyBookings = new JButton("My Bookings");
+		btn_MyBookings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MyBookingsPage bookings_page = new MyBookingsPage(player);
+				bookings_page.setVisible(true);
+				dispose();
+			}
+		});
+		btn_MyBookings.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btn_MyBookings.setBounds(1010, 302, 135, 40);
+		contentPane.add(btn_MyBookings);
 	}
 }
