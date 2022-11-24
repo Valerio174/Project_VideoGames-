@@ -11,9 +11,9 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 
 import be.walbert.classes.VideoGame;
-
+ 
 public class VideoGameDAO extends DAO<VideoGame>{
-
+ 	
 	public VideoGameDAO(Connection conn) {
 		super(conn); 
 	}
@@ -78,23 +78,27 @@ public class VideoGameDAO extends DAO<VideoGame>{
 	
 	@Override
 	public VideoGame find(int id) { 
-
+		VideoGame game = new VideoGame();
 		try {
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT VideoGame.id_VideoGame, VideoGame.name, VideoGame.creditCost, Console.name_console, Version.name_version\r\n"
-							+ "FROM Console INNER JOIN (Version INNER JOIN VideoGame ON Version.id_version = VideoGame.id_version) ON Console.id_console = Version.id_console\r\n"
-							+ "WHERE VideoGame.id_VideoGame="+id);
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT VideoGame.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console\r\n"
+							+ "FROM (Console INNER JOIN Version ON Console.id_console = Version.id_console) INNER JOIN VideoGame ON Version.id_version = VideoGame.id_version WHERE id_VideoGame="+id);
 			if(result.first()) {
-				VideoGame game = new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console"));
-				return game;
+				game = new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console"));
+				result = this.connect.createStatement().executeQuery(
+						"SELECT VideoGame.id_VideoGame, Booking.id_Booking, Booking.bookingDate, Booking.id_users, Booking.number_of_weeks\r\n"
+						+ "FROM VideoGame INNER JOIN Booking ON VideoGame.id_VideoGame = Booking.id_VideoGame WHERE id_VideoGame="+id);
+				BookingDAO bookingDAO =new BookingDAO(this.connect);
+				while(result.next())
+					game.AddBooking(bookingDAO.find(result.getInt("id_Booking")));
 			}
 		} 
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return game;
 	}
 	
 	@Override

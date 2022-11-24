@@ -12,10 +12,9 @@ import be.walbert.classes.Administrator;
 import be.walbert.classes.Booking;
 import be.walbert.classes.Player;
 import be.walbert.classes.VideoGame;
-
+ 
 public class BookingDAO extends DAO<Booking> {
-	private PlayerDAO playerDAO = new PlayerDAO(connect);
-	private VideoGameDAO videogameDAO =  new VideoGameDAO(connect);
+	    
 	
 	public BookingDAO(Connection conn) {
 		super(conn); 
@@ -67,20 +66,24 @@ public class BookingDAO extends DAO<Booking> {
 
 	@Override
 	public Booking find(int id) {
+		Booking booking = new Booking();
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking WHERE id_Booking ="+id);
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Booking.id_Booking, Booking.bookingDate, Booking.number_of_weeks, Booking.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Booking.id_users, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
+							+ "FROM Console INNER JOIN (Version INNER JOIN (VideoGame INNER JOIN (Users INNER JOIN (Player INNER JOIN Booking ON Player.id_users = Booking.id_users) ON Users.id_users = Player.id_users) ON VideoGame.id_VideoGame = Booking.id_VideoGame) ON Version.id_version = VideoGame.id_version) ON Console.id_console = Version.id_console\r\n"
+							+ "WHERE Booking.id_Booking="+ id);
 			
 			 if(result.first()) {
-				 Booking new_booking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(), videogameDAO.find(result.getInt("id_VideoGame")), playerDAO.find(result.getInt("id_users")), result.getInt("number_of_weeks"));
-				 return new_booking;
+				  booking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(), new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console")), new Player(result.getInt("id_users"),result.getString("username"), result.getString("password"), result.getInt("credit"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(),
+							result.getDate("dateOfBirth").toLocalDate()), result.getInt("number_of_weeks"));
 			 }
 		}
 		catch(SQLException e){
 			e.printStackTrace();
 		}
-		return null;
+		return booking;
+		 
 	}
 
 	@Override
@@ -93,6 +96,8 @@ public class BookingDAO extends DAO<Booking> {
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking");
 			 
 			while(result.next()){
+				PlayerDAO playerDAO = new PlayerDAO(this.connect);
+				VideoGameDAO videogameDAO =  new VideoGameDAO(this.connect);
 				Booking newbooking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(), videogameDAO.find(result.getInt("id_VideoGame")), playerDAO.find(result.getInt("id_users")), result.getInt("number_of_weeks"));
 				all_bookings.add(newbooking);
 			}
@@ -105,5 +110,25 @@ public class BookingDAO extends DAO<Booking> {
 	}
 
 	/******METHODES PARTICULIERES POUR Booking*******/
-
+	public ArrayList<Booking> GetBookings(int id_videogame){
+		ArrayList<Booking> all_bookings = new ArrayList<>();
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking WHERE id_VideoGame="+id_videogame);
+			 
+			while(result.next()){
+				PlayerDAO playerDAO = new PlayerDAO(this.connect);
+				VideoGameDAO videogameDAO =  new VideoGameDAO(this.connect);
+				Booking newbooking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(), videogameDAO.find(result.getInt("id_VideoGame")), playerDAO.find(result.getInt("id_users")), result.getInt("number_of_weeks"));
+				all_bookings.add(newbooking);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return all_bookings;
+	}
 }

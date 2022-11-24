@@ -17,8 +17,6 @@ import be.walbert.classes.Player;
 import be.walbert.classes.VideoGame;
 
 public class PlayerDAO extends DAO<Player>{
- 	VideoGameDAO videogameDAO = new VideoGameDAO(connect);
- 	
 	public PlayerDAO(Connection conn) {
 		super(conn);
 	}
@@ -280,6 +278,7 @@ public class PlayerDAO extends DAO<Player>{
 							+ "FROM (Users INNER JOIN Player ON Users.id_users = Player.id_users) INNER JOIN Booking ON Player.id_users = Booking.id_users\r\n"
 							+ "WHERE Booking.id_users="+player.getId_users()); 
 			while(result.next()){
+				VideoGameDAO videogameDAO = new VideoGameDAO(this.connect);
 				Booking new_booking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(),videogameDAO.find(result.getInt("id_VideoGame")) , new Player(result.getInt("id_users"),result.getString("username"), result.getString("password"), result.getInt("credit"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(),
 						result.getDate("dateOfBirth").toLocalDate()) ,result.getInt("number_of_weeks"));
 				all_bookings.add(new_booking);

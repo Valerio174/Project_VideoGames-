@@ -14,9 +14,7 @@ import be.walbert.classes.User;
 import be.walbert.classes.VideoGame;
 
 public class UserDAO extends DAO<User>{
-	private PlayerDAO playerDAO = new PlayerDAO(connect);
-	private AdministratorDAO administratorDAO = new AdministratorDAO(connect);
-	
+ 	
 	public UserDAO(Connection conn) {
 		super(conn); 
 	}
@@ -72,10 +70,12 @@ public class UserDAO extends DAO<User>{
 							+ "FROM Users INNER JOIN Player ON Users.id_users = Player.id_users WHERE Users.id_users="+id);
 			if(result.first()){
 				if(result.getString("type").equals("Player")) {
+					PlayerDAO playerDAO = new PlayerDAO(this.connect);
 					Player newuser = playerDAO.find(result.getInt("id_users"));
 					return newuser;
 				}
 				else {
+					AdministratorDAO administratorDAO = new AdministratorDAO(this.connect);
 					Administrator newuser = administratorDAO.find(result.getInt("id_users"));
 					return newuser;
 				}
@@ -98,10 +98,12 @@ public class UserDAO extends DAO<User>{
 							+ "FROM Users INNER JOIN Player ON Users.id_users = Player.id_users\r\n");
 			while(result.next()){
 				if(result.getString("type")=="Player") {
+					PlayerDAO playerDAO = new PlayerDAO(this.connect);
 					Player newuser = playerDAO.find(result.getInt("id_users"));
 					all_users.add(newuser);
 				}
 				else {
+					AdministratorDAO administratorDAO = new AdministratorDAO(this.connect);
 					Administrator newuser = administratorDAO.find(result.getInt("id_users"));
 					all_users.add(newuser);
 				}
