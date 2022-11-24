@@ -54,6 +54,7 @@ public class Booking implements Serializable{
 		this.number_weeks = number_weeks;
 	}
 	/*Constructeurs*/
+	public Booking() {}
 	public Booking(LocalDate bookingDate, VideoGame game, Player player,int number_weeks) {
 		this.bookingDate = bookingDate;
 		this.game = game;
