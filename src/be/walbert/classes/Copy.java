@@ -63,6 +63,8 @@ public class Copy{
 	
 	/*Méthodes*/
 
+	public Copy() {
+ 	}
 	public boolean CreateCopy() {
 		return copyDAO.create(this);
 	}

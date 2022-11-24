@@ -65,6 +65,7 @@ public class Loan implements Serializable{
 		this.copy = copy;
 	}
 	/*Constructeurs*/
+	public Loan() {}
 	public Loan(int id_loan, LocalDate startDate, LocalDate endDate, boolean ongoing, Player borrower, Player lender, Copy copy) {
 		this.id_loan = id_loan;
 		this.startDate = startDate;
