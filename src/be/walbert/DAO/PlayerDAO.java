@@ -6,13 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
- import java.util.ArrayList;
-
-import be.walbert.classes.Booking;
-import be.walbert.classes.Copy;
-import be.walbert.classes.Loan;
+import java.util.ArrayList;
 import be.walbert.classes.Player;
-import be.walbert.classes.VideoGame;
+ 
  
 public class PlayerDAO extends DAO<Player>{
   	
