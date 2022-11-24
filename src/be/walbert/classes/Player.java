@@ -146,6 +146,13 @@ public class Player extends User{
 			}
 		}
 	}
+	public boolean CheckBookingAlreadyDone(int id_videogame) {
+		for (Booking booking : booking_list) {
+			if(booking.getGame().getId_videogame() == id_videogame)
+				return true;
+		}
+		return false;
+	}
 	public void AddBorrow(Loan newborrow) {
 		try {
 			borrow_list.add(newborrow);
