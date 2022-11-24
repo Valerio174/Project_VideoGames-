@@ -6,17 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.util.ArrayList;
+ import java.util.ArrayList;
 
-import be.walbert.classes.Administrator;
 import be.walbert.classes.Booking;
 import be.walbert.classes.Copy;
 import be.walbert.classes.Loan;
 import be.walbert.classes.Player;
 import be.walbert.classes.VideoGame;
-
+ 
 public class PlayerDAO extends DAO<Player>{
+  	
 	public PlayerDAO(Connection conn) {
 		super(conn);
 	}
@@ -100,33 +99,41 @@ public class PlayerDAO extends DAO<Player>{
 
 	@Override
 	public Player find(int id_users) { 
+		UserDAO userDAO = new UserDAO(this.connect);
+		Player p = (Player) userDAO.find(id_users);
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Users.id_users, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
-							+ "FROM Users INNER JOIN Player ON Users.id_users = Player.id_users\r\n"
-							+ "WHERE (((Users.id_users)=\""+id_users+"\"));\r\n"
-							+ "");
-			 
-			if(result.first()) {	
-				Player p = new Player(result.getInt("id_users"),result.getString("username"), result.getString("password"), result.getInt("credit"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(),
-						result.getDate("dateOfBirth").toLocalDate());
-			
-				p.setCopy_list(GetAllCopy(p));
-				p.setBorrow_list(GetAllBorrows(p));
-				p.setBooking_list(GetAllBookings(p));
-				p.setLender_list(GetAllLoans(p));
-
-				return p;
-			}
-			else
-				return null;
-		}
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Copy WHERE id_users_lender="+id_users);
+			CopyDAO copyDAO =new CopyDAO(this.connect);
+			while(result.next())
+				p.AddCopy(copyDAO.find(result.getInt("id_copy")));
+				LoanDAO loanDAO = new LoanDAO(this.connect);
+				result = this.connect.createStatement(
+						ResultSet.TYPE_SCROLL_INSENSITIVE,
+						ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Loan WHERE id_users_borrower="+id_users);
+			while(result.next())
+				p.AddBorrow(loanDAO.find(result.getInt("id_Loan")));
+				result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT *\r\n"
+							+ "FROM Copy INNER JOIN Loan ON Copy.id_copy = Loan.id_copy\r\n"
+							+ "WHERE Copy.id_users_lender="+id_users);
+			while(result.next())
+				p.AddLender(loanDAO.find(result.getInt("id_Loan")));
+				BookingDAO bookingDAO = new BookingDAO(this.connect);
+				result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking WHERE id_users ="+id_users);
+			while(result.next())
+				p.AddBooking(bookingDAO.find(result.getInt("id_Booking")));
+ 			
+		} 
 		catch(SQLException e){
 			e.printStackTrace();
 		}
-		return null;
-		
+		return p;
+	
 	}
 	
 	@Override
@@ -178,116 +185,5 @@ public class PlayerDAO extends DAO<Player>{
 		
 	}
 
-	public ArrayList<Copy> GetAllCopy(Player player){
-		ArrayList<Copy> all_copy = new ArrayList<>();
-		
-		try {
-			ResultSet result = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, VideoGame.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Copy.id_users_lender\r\n"
-							+ "FROM (Console INNER JOIN Version ON Console.id_console = Version.id_console) INNER JOIN (VideoGame INNER JOIN Copy ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version\r\n"
-							+ "WHERE (((Copy.id_users_lender)="+player.getId_users()+"));\r\n"
-							+ "");
-			while(result.next()){
-				Copy newcopy = new Copy(result.getInt("id_copy"),player, new VideoGame(result.getInt("id_VideoGame"),result.getString("name"), result.getInt("creditCost"), result.getString("name_version"), result.getString("name_console")));
-				all_copy.add(newcopy);
-			}
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return all_copy;
-	}
-	
-	public ArrayList<Loan> GetAllBorrows(Player borrower){
-		ArrayList<Loan> all_borrows = new ArrayList<>();
-		
-		try {
-			ResultSet result = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Loan.startDate, Loan.endDate, Loan.ongoing FROM Console INNER JOIN (Version INNER JOIN (VideoGame INNER JOIN (Users INNER JOIN (Player INNER JOIN "
-							+ "(Copy INNER JOIN Loan ON Copy.id_copy = Loan.id_copy) ON Player.id_users = Loan.id_users_borrower) "
-							+ "ON Users.id_users = Player.id_users) ON VideoGame.id_VideoGame = Copy.id_VideoGame) "
-							+ "ON Version.id_version = VideoGame.id_version) ON Console.id_console = Version.id_console WHERE id_users_borrower="+borrower.getId_users());
-			ResultSet result2 = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Copy.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Copy.id_users_lender, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
-							+ "FROM Users INNER JOIN ((Console INNER JOIN Version ON Console.id_console = Version.id_console) INNER JOIN (VideoGame INNER JOIN (Player INNER JOIN (Copy INNER JOIN Loan ON Copy.id_copy = Loan.id_copy) ON Player.id_users = Copy.id_users_lender) ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version) ON Users.id_users = Player.id_users\r\n"
-							+ "WHERE Loan.id_users_borrower ="+borrower.getId_users());
-			
-			while(result.next() && result2.next()){
-				Player lender = new Player(result2.getInt("id_users_lender"), result2.getString("username") , result2.getString("password"), result2.getInt("credit"), result2.getString("pseudo"), result2.getDate("registrationDate").toLocalDate(),
-						result2.getDate("dateOfBirth").toLocalDate());
-				Copy copy = new Copy(result2.getInt("id_copy"),lender,new VideoGame(result2.getInt("id_VideoGame"), result2.getString("name") ,  result2.getInt("creditCost"),  result2.getString("name_version"), result2.getString("name_console")));
-				Loan newloan = new Loan(result.getDate("startDate").toLocalDate(), result.getDate("endDate").toLocalDate(), result.getBoolean("ongoing"), borrower, lender, copy);
-				all_borrows.add(newloan);
-			}
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return all_borrows;
-	}
-	
-	public ArrayList<Loan> GetAllLoans(Player lender){
-		ArrayList<Loan> all_loans = new ArrayList<>();
-		
-		try {
-			ResultSet result = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Loan.id_loan, Loan.startDate, Loan.endDate, Loan.ongoing, Loan.id_copy,"
-							+ " Copy.id_users_lender, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, "
-							+ "Player.dateOfBirth, Copy.id_VideoGame, VideoGame.name, VideoGame.creditCost, "
-							+ "Version.name_version, Console.name_console\r\n"
-							+ "FROM Console INNER JOIN (Version INNER JOIN (VideoGame INNER JOIN "
-							+ "(Users INNER JOIN (Player INNER JOIN (Copy INNER JOIN Loan ON Copy.id_copy = Loan.id_copy) "
-							+ "ON Player.id_users = Copy.id_users_lender) ON Users.id_users = Player.id_users) "
-							+ "ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version)"
-							+ " ON Console.id_console = Version.id_console\r\n"
-							+ "WHERE (((Copy.id_users_lender)="+lender.getId_users()+"))");
-			ResultSet result2 = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Copy.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Copy.id_users_lender, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
-							+ "	FROM Users INNER JOIN ((Console INNER JOIN Version ON Console.id_console = Version.id_console) INNER JOIN (VideoGame INNER JOIN (Player INNER JOIN (Copy INNER JOIN Loan ON Copy.id_copy = Loan.id_copy) ON Player.id_users = Copy.id_users_lender) ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version) ON Users.id_users = Player.id_users\r\n"
-							+ "	WHERE Loan.id_users_borrower ="+lender.getId_users());
-			
-			while(result.next() && result2.next()){
-				Player borrower = new Player(result2.getInt("id_users_lender"), result2.getString("username") , result2.getString("password"), result2.getInt("credit"), result2.getString("pseudo"), result2.getDate("registrationDate").toLocalDate(),
-						result2.getDate("dateOfBirth").toLocalDate());
-				Copy copy = new Copy(result2.getInt("id_copy"),lender,new VideoGame(result2.getInt("id_VideoGame"), result2.getString("name") ,  result2.getInt("creditCost"),  result2.getString("name_version"), result2.getString("name_console")));
-				Loan newloan = new Loan(result.getInt("id_loan"), result.getDate("startDate").toLocalDate(), result.getDate("endDate").toLocalDate(), result.getBoolean("ongoing"), borrower, lender, copy);
-				all_loans.add(newloan);
-			}
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return all_loans;
-	}
 
-	public ArrayList<Booking> GetAllBookings(Player player){
-		ArrayList<Booking> all_bookings = new ArrayList<>();
-		
-		try {
-			ResultSet result = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Booking.id_Booking, Booking.bookingDate, Booking.id_VideoGame, Booking.id_users, Booking.number_of_weeks, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
-							+ "FROM (Users INNER JOIN Player ON Users.id_users = Player.id_users) INNER JOIN Booking ON Player.id_users = Booking.id_users\r\n"
-							+ "WHERE Booking.id_users="+player.getId_users()); 
-			while(result.next()){
-				VideoGameDAO videogameDAO = new VideoGameDAO(this.connect);
-				Booking new_booking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(),videogameDAO.find(result.getInt("id_VideoGame")) , new Player(result.getInt("id_users"),result.getString("username"), result.getString("password"), result.getInt("credit"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(),
-						result.getDate("dateOfBirth").toLocalDate()) ,result.getInt("number_of_weeks"));
-				all_bookings.add(new_booking);
-			}
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return all_bookings;
-	}
 }
