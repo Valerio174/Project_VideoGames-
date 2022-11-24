@@ -121,9 +121,16 @@ public class GamePage extends JFrame {
 		JButton btn_BookingGame = new JButton("Book game");
 		btn_BookingGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 MakeBookingPage booking_page = new MakeBookingPage(videogame_selected, player);
-				 booking_page.setVisible(true);
-				 dispose();
+				 if(!player.CheckBookingAlreadyDone(videogame_selected.getId_videogame())) {
+					 MakeBookingPage booking_page = new MakeBookingPage(videogame_selected, player);
+					 booking_page.setVisible(true);
+					 dispose();
+				 }
+				 else {
+   	    		  JOptionPane.showMessageDialog(contentPane, "Sorry, you cannot make a reservation because you already have one for this game");
+
+				 }
+				
 			}
 		});
 		btn_BookingGame.setFont(new Font("Tahoma", Font.PLAIN, 20));
