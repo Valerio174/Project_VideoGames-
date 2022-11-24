@@ -82,6 +82,7 @@ public class VideoGame{
 	}
 
 	/*Constructeurs*/
+	public VideoGame( ) {}
 	public VideoGame( int id_videogame, String name, int creditCost, String version, String console) {
 		this.id_videogame = id_videogame;
 		this.name=name;
@@ -173,6 +174,10 @@ public class VideoGame{
 		
 		return videogameDAO.create(this);
 
+	}
+	
+	public void SelectBooking() {
+		
 	}
 	@Override
 	public String toString() {
