@@ -94,19 +94,26 @@ public class Loan implements Serializable{
 		if(regular_days%7!=0) {
 			weeks = (regular_days/7)+1;
 		}
-		if(LocalDate.now().isAfter(endDate)) {
-			if(day_in_late%7!=0) {
-				weeks_in_late = (day_in_late/7)+1;
+		if(ongoing==true) {
+			if(LocalDate.now().isAfter(endDate)) {
+				if(day_in_late%7!=0) {
+					weeks_in_late = (day_in_late/7)+1;
+				}
+				total_creditCost= weeks*this.getCopy().getGame().getCreditCost()+(5*day_in_late)+(weeks_in_late*this.getCopy().getGame().getCreditCost());
+				this.borrower.setCredits(this.borrower.getCredits()-total_creditCost);
+				this.borrower.UpdatePlayer();
+				this.lender.setCredits(this.lender.getCredits()+total_creditCost);
+				this.lender.UpdatePlayer();
 			}
-			total_creditCost= weeks*this.getCopy().getGame().getCreditCost()+(5*day_in_late)+(weeks_in_late*this.getCopy().getGame().getCreditCost());
-			this.borrower.setCredits(this.borrower.getCredits()-total_creditCost);
-			this.borrower.UpdatePlayer();
-			this.lender.setCredits(this.lender.getCredits()+total_creditCost);
-			this.lender.UpdatePlayer();
+			else {
+				total_creditCost = weeks*this.getCopy().getGame().getCreditCost();
+				this.borrower.setCredits(this.borrower.getCredits()-total_creditCost);
+				this.borrower.UpdatePlayer();
+				this.lender.setCredits(this.lender.getCredits()+total_creditCost);
+				this.lender.UpdatePlayer();
+		 	}
 		}
-		else {
-			total_creditCost = weeks*this.getCopy().getGame().getCreditCost();
-	 	}
+		
 		
 	}
 	
