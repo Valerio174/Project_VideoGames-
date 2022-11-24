@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import be.walbert.classes.Administrator;
 import be.walbert.classes.Player;
 import be.walbert.classes.User;
-import be.walbert.classes.VideoGame;
 
 public class UserDAO extends DAO<User>{
- 	
+	private PlayerDAO playerDAO = new PlayerDAO(connect);
+	private AdministratorDAO administratorDAO = new AdministratorDAO(connect);
+	
 	public UserDAO(Connection conn) {
 		super(conn); 
 	}
@@ -70,13 +71,11 @@ public class UserDAO extends DAO<User>{
 							+ "FROM Users INNER JOIN Player ON Users.id_users = Player.id_users WHERE Users.id_users="+id);
 			if(result.first()){
 				if(result.getString("type").equals("Player")) {
-					PlayerDAO playerDAO = new PlayerDAO(this.connect);
-					Player newuser = playerDAO.find(result.getInt("id_users"));
+					Player newuser = new Player(result.getInt("id_users"), result.getString("username"), result.getString("password"), result.getInt("credit"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(), result.getDate("dateOfBirth").toLocalDate());
 					return newuser;
 				}
 				else {
-					AdministratorDAO administratorDAO = new AdministratorDAO(this.connect);
-					Administrator newuser = administratorDAO.find(result.getInt("id_users"));
+					Administrator newuser = new Administrator(result.getInt("id_users"), result.getString("username"), result.getString("password"));
 					return newuser;
 				}
 			}
@@ -98,12 +97,10 @@ public class UserDAO extends DAO<User>{
 							+ "FROM Users INNER JOIN Player ON Users.id_users = Player.id_users\r\n");
 			while(result.next()){
 				if(result.getString("type")=="Player") {
-					PlayerDAO playerDAO = new PlayerDAO(this.connect);
 					Player newuser = playerDAO.find(result.getInt("id_users"));
 					all_users.add(newuser);
 				}
 				else {
-					AdministratorDAO administratorDAO = new AdministratorDAO(this.connect);
 					Administrator newuser = administratorDAO.find(result.getInt("id_users"));
 					all_users.add(newuser);
 				}

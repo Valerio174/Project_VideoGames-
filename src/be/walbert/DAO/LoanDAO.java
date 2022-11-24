@@ -6,14 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
-import be.walbert.classes.Booking;
+import be.walbert.classes.Copy;
 import be.walbert.classes.Loan;
+import be.walbert.classes.Player;
+import be.walbert.classes.VideoGame;
 
 public class LoanDAO extends DAO<Loan>{
-	private PlayerDAO playerDAO = new PlayerDAO(connect);
-	private CopyDAO copyDAO = new CopyDAO(connect);;
+
 	
 	public LoanDAO(Connection conn) {
 		super(conn); 
@@ -80,19 +82,35 @@ public class LoanDAO extends DAO<Loan>{
 
 	@Override
 	public Loan find(int id) { 
+		Loan loan = new Loan();
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELEC* FROM Loan WHERE id_Loan=" + id);
-			 if(result.first()) {
-				 Loan new_loan = new Loan(result.getInt("id_Loan"), result.getDate("startDate").toLocalDate(),result.getDate("endDate").toLocalDate(), result.getBoolean("ongoing"),  playerDAO.find(result.getInt("id_users_borrower")), copyDAO.find(result.getInt("id_copy")).getOwner(), copyDAO.find(result.getInt("id_copy")));
- 				 return new_loan;
-			 }
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Loan.id_Loan, Loan.startDate, Loan.endDate, Loan.ongoing, Loan.id_copy, Copy.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Copy.id_users_lender, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
+							+ "FROM Users INNER JOIN (Player INNER JOIN (Console INNER JOIN (Version INNER JOIN (VideoGame INNER JOIN (Copy INNER JOIN Loan ON Copy.id_copy = Loan.id_copy) ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version) ON Console.id_console = Version.id_console) ON Player.id_users = Copy.id_users_lender) ON Users.id_users = Player.id_users\r\n"
+							+ "WHERE Loan.id_Loan="+id);
+			ResultSet result2 = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Loan.id_Loan, Loan.startDate, Loan.endDate, Loan.ongoing, Loan.id_users_borrower, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
+							+ "FROM Users INNER JOIN (Player INNER JOIN Loan ON Player.id_users = Loan.id_users_borrower) ON Users.id_users = Player.id_users\r\n"
+							+ "WHERE Loan.id_Loan="+id);
+			 
+			if(result.next() && result2.next()) {
+				 loan = new Loan(result.getInt("id_Loan"), result.getDate("startDate").toLocalDate(), result.getDate("endDate").toLocalDate(),result.getBoolean("ongoing"),
+						 new Player(result2.getInt("id_users_borrower"), result2.getString("username"), result2.getString("password"), result2.getInt("credit"), result2.getString("pseudo"), result2.getDate("registrationDate").toLocalDate(), result2.getDate("dateOfBirth").toLocalDate()), 
+						 
+						 new Player(result.getInt("id_users_lender"), result.getString("username"), result.getString("password"), result.getInt("credit"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(), result.getDate("dateOfBirth").toLocalDate()), 
+						 
+						 new Copy( result.getInt("id_copy"), 
+								 loan.getLender(), 
+								 new VideoGame(result.getInt("id_VideoGame"), result.getString("name"), result.getInt("creditCost"), result.getString("name_version"), result.getString("name_console"))));
+ 			 }
+ 			 
 		}
 		catch(SQLException e){
 			e.printStackTrace();
 		}
-		return null;
+		return loan;
 	}
 
 	@Override
@@ -105,6 +123,8 @@ public class LoanDAO extends DAO<Loan>{
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Loan");
 			 
 			while(result.next()){
+				 PlayerDAO playerDAO = new PlayerDAO(connect);
+				 CopyDAO copyDAO = new CopyDAO(connect);;
 				 Loan new_loan = new Loan(result.getInt("id_Loan"), result.getDate("startDate").toLocalDate(),result.getDate("endDate").toLocalDate(), result.getBoolean("ongoing"),  playerDAO.find(result.getInt("id_users_borrower")), copyDAO.find(result.getInt("id_copy")).getOwner(), copyDAO.find(result.getInt("id_copy")));
 				all_loans.add(new_loan);
 			}

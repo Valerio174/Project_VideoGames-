@@ -46,7 +46,27 @@ public class CopyDAO extends DAO<Copy> {
 
 	@Override
 	public Copy find(int id) { 
-		return null;
+		Copy copy = new Copy();
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Copy.id_VideoGame, Copy.id_users_lender, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
+							+ "FROM Users INNER JOIN (Player INNER JOIN (Console INNER JOIN (Version INNER JOIN (VideoGame INNER JOIN Copy ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version) ON Console.id_console = Version.id_console) ON Player.id_users = Copy.id_users_lender) ON Users.id_users = Player.id_users\r\n"
+							+ "WHERE Copy.id_copy ="+id);
+			
+			if(result.first()) {
+				copy = new Copy(result.getInt("id_copy"), new Player(result.getInt("id_users_lender"),result.getString("username"), 
+						result.getString("password"), result.getInt("credit"), result.getString("pseudo"), 
+						result.getDate("registrationDate").toLocalDate(),
+						result.getDate("dateOfBirth").toLocalDate()), 
+						new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console")));
+ 			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return copy;
 	}
 	
 	public ArrayList<Copy> findAllCopy(VideoGame videogame){
