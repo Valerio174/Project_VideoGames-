@@ -25,7 +25,7 @@ public class VideoGameDAO extends DAO<VideoGame>{
 			PreparedStatement ps = connect.prepareStatement("INSERT INTO VideoGame(name, creditCost,id_version) VALUES(?,?,?)");
 			ps.setString(1, videogame.getName() );
 			ps.setInt(2, videogame.getCreditCost()); 
-			ps.setInt(3, this.GetVersion(videogame.getVersion()));
+			ps.setString(3, videogame.getVersion());
 			ps.execute();	/*Exécuter la requête*/
 			
 			ps.close();

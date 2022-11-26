@@ -15,7 +15,8 @@ public class CopyDAO extends DAO<Copy> {
 	public CopyDAO(Connection conn) {
 		super(conn); 
 	}
-
+	
+	/******Methodes communes (CRUD)*******/
 	@Override
 	public boolean create(Copy copy) { 
 		try{
@@ -42,8 +43,8 @@ public class CopyDAO extends DAO<Copy> {
 	@Override
 	public boolean update(Copy obj) { 
 		return false;
-	}
-
+	}	
+	
 	@Override
 	public Copy find(int id) { 
 		Copy copy = new Copy();
@@ -69,31 +70,6 @@ public class CopyDAO extends DAO<Copy> {
 		return copy;
 	}
 	
-	public ArrayList<Copy> findAllCopy(VideoGame videogame){
-		ArrayList<Copy> list_copy = new ArrayList<>();
-		
-		try {
-			ResultSet result = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Copy.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Users.id_users, Users.Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
-							+ "FROM ((((Copy LEFT JOIN VideoGame ON Copy.id_VideoGame = VideoGame.id_VideoGame) "
-							+ "LEFT JOIN Version ON VideoGame.id_version = Version.id_version) "
-							+ "LEFT JOIN Console ON Version.id_console = Console.id_console) "
-							+ "LEFT JOIN Player ON Copy.id_users_lender = Player.id_users) "
-							+ "LEFT JOIN Users ON Player.id_users = Users.id_users WHERE Copy.id_VideoGame = " + videogame.getId_videogame());
-			while(result.next()){
-				Copy newcopy = new Copy(result.getInt("id_copy"), new Player(result.getInt("id_users"),result.getString("username"),result.getString("password"),
-						result.getInt("credit"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(),
-						result.getDate("dateOfBirth").toLocalDate()), videogame);
-				list_copy.add(newcopy);
-			}
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return list_copy;
-	}
 		
 	public ArrayList<Copy> CopyAvailable(VideoGame videogame, Player borrower) {
 		ArrayList<Copy> all_copy = new ArrayList<>();
@@ -151,6 +127,32 @@ public class CopyDAO extends DAO<Copy> {
 
 	@Override
 	public ArrayList<Copy> findAll() {
-		return null;
+		ArrayList<Copy> list_copy = new ArrayList<>();
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Copy.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Users.id_users, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
+							+ "FROM ((((Copy LEFT JOIN VideoGame ON Copy.id_VideoGame = VideoGame.id_VideoGame) "
+							+ "LEFT JOIN Version ON VideoGame.id_version = Version.id_version) "
+							+ "LEFT JOIN Console ON Version.id_console = Console.id_console) "
+							+ "LEFT JOIN Player ON Copy.id_users_lender = Player.id_users) "
+							+ "LEFT JOIN Users ON Player.id_users = Users.id_users ");
+			while(result.next()){
+				VideoGameDAO videoGameDAO = new VideoGameDAO(this.connect);
+				Copy newcopy = new Copy(result.getInt("id_copy"), new Player(result.getInt("id_users"),result.getString("username"),result.getString("password"),
+						result.getInt("credit"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(),
+						result.getDate("dateOfBirth").toLocalDate()), videoGameDAO.find(result.getInt("id_VideoGame")));
+				list_copy.add(newcopy);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list_copy;
 	}
+	
+	/******METHODES PARTICULIERES POUR Loan*******/
+
 }
