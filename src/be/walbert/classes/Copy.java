@@ -81,9 +81,8 @@ public class Copy{
 	}
 	
 	public void Borrow(Loan currentloan) {
-		DAO<Loan> loan = (LoanDAO)loanDAO;
-		
-		loan.create(currentloan);
+	 	
+		loanDAO.create(currentloan);
 		
 	}
 	@Override
