@@ -100,30 +100,35 @@ public class PlayerDAO extends DAO<Player>{
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Copy WHERE id_users_lender="+id_users);
-			CopyDAO copyDAO =new CopyDAO(this.connect);
-			while(result.next())
-				p.AddCopy(copyDAO.find(result.getInt("id_copy")));
-				LoanDAO loanDAO = new LoanDAO(this.connect);
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Player WHERE id_users="+id_users);
+			if(result.first()) {
 				result = this.connect.createStatement(
 						ResultSet.TYPE_SCROLL_INSENSITIVE,
-						ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Loan WHERE id_users_borrower="+id_users);
-			while(result.next())
-				p.AddBorrow(loanDAO.find(result.getInt("id_Loan")));
-				result = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT *\r\n"
-							+ "FROM Copy INNER JOIN Loan ON Copy.id_copy = Loan.id_copy\r\n"
-							+ "WHERE Copy.id_users_lender="+id_users);
-			while(result.next())
-				p.AddLender(loanDAO.find(result.getInt("id_Loan")));
-				BookingDAO bookingDAO = new BookingDAO(this.connect);
-				result = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking WHERE id_users ="+id_users);
-			while(result.next())
-				p.AddBooking(bookingDAO.find(result.getInt("id_Booking")));
- 			
+						ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Copy WHERE id_users_lender="+id_users);
+				CopyDAO copyDAO =new CopyDAO(this.connect);
+				while(result.next())
+					p.AddCopy(copyDAO.find(result.getInt("id_copy")));
+					LoanDAO loanDAO = new LoanDAO(this.connect);
+					result = this.connect.createStatement(
+							ResultSet.TYPE_SCROLL_INSENSITIVE,
+							ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Loan WHERE id_users_borrower="+id_users);
+				while(result.next())
+					p.AddBorrow(loanDAO.find(result.getInt("id_Loan")));
+					result = this.connect.createStatement(
+						ResultSet.TYPE_SCROLL_INSENSITIVE,
+						ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT *\r\n"
+								+ "FROM Copy INNER JOIN Loan ON Copy.id_copy = Loan.id_copy\r\n"
+								+ "WHERE Copy.id_users_lender="+id_users);
+				while(result.next())
+					p.AddLender(loanDAO.find(result.getInt("id_Loan")));
+					BookingDAO bookingDAO = new BookingDAO(this.connect);
+					result = this.connect.createStatement(
+						ResultSet.TYPE_SCROLL_INSENSITIVE,
+						ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking WHERE id_users ="+id_users);
+				while(result.next())
+					p.AddBooking(bookingDAO.find(result.getInt("id_Booking")));
+	 			
+			}
 		} 
 		catch(SQLException e){
 			e.printStackTrace();
