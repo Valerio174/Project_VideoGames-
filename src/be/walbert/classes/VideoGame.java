@@ -1,6 +1,7 @@
 
 package be.walbert.classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -9,7 +10,7 @@ import be.walbert.DAO.CopyDAO;
 import be.walbert.DAO.DAO;
 import be.walbert.DAO.VideoGameDAO;
 
-public class VideoGame{
+public class VideoGame implements Serializable{
 	private static final long serialVersionUID = 1120585213455777467L;
 	
 	/*Attributs*/
@@ -28,7 +29,6 @@ public class VideoGame{
 	public int getId_videogame() {
 		return id_videogame;
 	}
-
 	public void setId_videogame(int id_videogame) {
 		this.id_videogame = id_videogame;
 	}
@@ -36,7 +36,6 @@ public class VideoGame{
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -44,7 +43,6 @@ public class VideoGame{
 	public int getCreditCost() {
 		return creditCost;
 	}
-
 	public void setCreditCost(int creditCost) {
 		this.creditCost = creditCost;
 	}
@@ -52,7 +50,6 @@ public class VideoGame{
 	public String getConsole() {
 		return console;
 	}
-
 	public void setConsole(String console) {
 		this.console = console;
 	}
@@ -60,7 +57,6 @@ public class VideoGame{
 	public String getVersion() {
 		return version;
 	}
-
 	public void setVersion(String version) {
 		this.version = version;
 	}
@@ -68,7 +64,6 @@ public class VideoGame{
 	public ArrayList<Copy> getList_copy() {
 		return copy_list;
 	}
-
 	public void setList_copy(ArrayList<Copy> list_copy) {
 		this.copy_list = list_copy;
 	}
@@ -76,11 +71,10 @@ public class VideoGame{
 	public ArrayList<Booking> getBooking_list() {
 		return booking_list;
 	}
-
 	public void setBooking_list(ArrayList<Booking> booking_list) {
 		this.booking_list = booking_list;
 	}
-
+	
 	/*Constructeurs*/
 	public VideoGame( ) {}
 	public VideoGame( int id_videogame, String name, int creditCost, String version, String console) {
@@ -102,11 +96,6 @@ public class VideoGame{
 	}
 	
 	/*Méthodes*/
-	public static ArrayList<VideoGame> getAll(){
-		VideoGameDAO vgDAO = (VideoGameDAO)(videogameDAO);
-		return vgDAO.findAll();
-	}
- 
 	public void AddCopy(Copy newcopy) {
 		try {
 			copy_list.add(newcopy);
@@ -138,7 +127,41 @@ public class VideoGame{
 		return null;
 	}
 	
-	 
+	public Booking SelectBooking() {
+		if(booking_list.size() != 0) {
+			Booking temp = booking_list.get(0);
+			
+			for (int i = 1; i < booking_list.size(); i++) {
+				if(temp.getPlayer().getCredits() <booking_list.get(i).getPlayer().getCredits()) {
+					 temp = booking_list.get(i);
+				} 
+				else if(temp.getPlayer().getCredits() == booking_list.get(i).getPlayer().getCredits()) {
+					 if(temp.getBookingDate().isAfter(booking_list.get(i).getBookingDate())) {
+						 temp = booking_list.get(i);
+					 }
+					 else if(temp.getBookingDate().equals(booking_list.get(i).getBookingDate())) {
+						 if(temp.getPlayer().getRegistrationDate().isAfter(booking_list.get(i).getPlayer().getRegistrationDate())) {
+							 temp = booking_list.get(i);
+						 }
+						 else if(temp.getPlayer().getRegistrationDate().equals(booking_list.get(i).getPlayer().getRegistrationDate()))
+						 	 if(temp.getPlayer().getDateOfBirth().isAfter(booking_list.get(i).getPlayer().getDateOfBirth()))
+							 temp = booking_list.get(i);
+						 	 else if(temp.getPlayer().getDateOfBirth().equals(booking_list.get(i).getPlayer().getDateOfBirth())) {
+						 		 Random random = new Random();
+						 		 boolean random_int = random.nextBoolean();
+						 		 temp= random_int?temp:booking_list.get(i); 
+	 					 }
+					 }
+				}
+			}
+			return temp; 
+		}
+		else {
+			return null;
+		}
+		
+		
+	}
 	public boolean ModifyCredits(int new_credits) {
 		VideoGameDAO vgDAO = (VideoGameDAO)(videogameDAO);
 		vgDAO.createHistoryCredits(this, new_credits);
@@ -147,7 +170,14 @@ public class VideoGame{
 			
 		return videogameDAO.update(this);
 	}
+	public boolean CreateVideoGame() {
+		return videogameDAO.create(this);
+	}
 	
+	/*Méthodes statiques*/
+	public static ArrayList<VideoGame> getAll(){
+		return (ArrayList<VideoGame>)videogameDAO.findAll();
+	}
 	public static ArrayList<String> GetAllConsoles(){
 		VideoGameDAO videogame = (VideoGameDAO) videogameDAO;
 		
@@ -170,15 +200,7 @@ public class VideoGame{
 		
 		return videogame.CreateVersion(name_console, name_version)?true:false;
 	}
-	public boolean CreateVideoGame() {
-		
-		return videogameDAO.create(this);
 
-	}
-	
-	public void SelectBooking() {
-		
-	}
 	@Override
 	public String toString() {
 		return "Id_videogame=" + id_videogame + ", name=" + name + ", creditCost=" + creditCost
