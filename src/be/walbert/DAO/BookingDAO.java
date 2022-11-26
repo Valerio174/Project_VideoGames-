@@ -110,13 +110,13 @@ public class BookingDAO extends DAO<Booking> {
 	}
 
 	/******METHODES PARTICULIERES POUR Booking*******/
-	public ArrayList<Booking> GetBookings(int id_videogame){
+	public ArrayList<Booking> GetBookings(VideoGame videoGame){
 		ArrayList<Booking> all_bookings = new ArrayList<>();
 		
 		try {
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking WHERE id_VideoGame="+id_videogame);
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking WHERE id_VideoGame="+ videoGame.getId_videogame());
 			 
 			while(result.next()){
 				PlayerDAO playerDAO = new PlayerDAO(this.connect);
