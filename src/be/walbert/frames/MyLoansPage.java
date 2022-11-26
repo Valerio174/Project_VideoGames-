@@ -19,10 +19,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import be.walbert.classes.Booking;
 import be.walbert.classes.Copy;
 import be.walbert.classes.Loan;
 import be.walbert.classes.Player;
-import be.walbert.classes.VideoGame;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -148,30 +148,44 @@ public class MyLoansPage extends JFrame {
 	    btn_EndLoan.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		Loan loan_selected = loans.get(table.getSelectedRow());
-//        		if(loan_selected.isOngoing()!=false) {
+        		if(loan_selected.isOngoing()!=false) {
         			if(LocalDate.now().isBefore(loan_selected.getEndDate())) {
          				JOptionPane.showMessageDialog(contentPane, "Not yet at the end date !" );
             		}
             		else {
          				if(loan_selected.EndLoan()) {	//Mise a jour de la location dans la base de donnees
-               			 
-             				JOptionPane.showMessageDialog(contentPane, "GREAT. The loan is over ");
-                 			player.UpdateLoan(loan_selected);	//mise à jour de la location pour l'objet courant
-                			CatalogVideoGames catalog = new CatalogVideoGames(player);
-                			catalog.setVisible(true);
-                			dispose(); 			
+         					Booking new_booking = loan_selected.getCopy().getGame().SelectBooking(); 	//Recuperer une reservation pour ce jeux
+         					
+         					if( new_booking!= null) {
+                 				player.UpdateLoan(loan_selected);	//mise à jour de la location pour l'objet courant (pour l'affichage)
+                 				Loan new_loan = new Loan(LocalDate.now(), LocalDate.now().plusDays(new_booking.getNumber_weeks()*7), false, new_booking.getPlayer(), player, loan_selected.getCopy());
+                 				loan_selected.getCopy().Borrow(new_loan);
+                 				
+                 				if(new_booking.Delete()) {	//Supprimer la réservation de la DB
+                 					player.AddLender(new_loan);//mise à jour de la liste des locations pour l'objet courant (pour l'affichage)
+                 					JOptionPane.showMessageDialog(contentPane,  "Great, the loan is over. A booking has been chosen for you game for a new loan");
+                     				CatalogVideoGames catalog = new CatalogVideoGames(player);
+                        			catalog.setVisible(true);
+                        			dispose(); 	
+                 				}
+         					}
+         					else {	//Si il n'y a pas de reservation pour ce jeux
+             					JOptionPane.showMessageDialog(contentPane,  "Great, the loan has been ended and there are no bookings for this game for the moment ");
+                 				player.UpdateLoan(loan_selected);	//mise à jour de la location pour l'objet courant
+                    			CatalogVideoGames catalog = new CatalogVideoGames(player);
+                    			catalog.setVisible(true);
+                    			dispose(); 	
+         					}
                 		}
                 		else {
                 			JOptionPane.showMessageDialog(contentPane, "An error has been occured ! " );
                 		}
             		}
-//       		}
-//        		else {
-//     				JOptionPane.showMessageDialog(contentPane, "Sorry the loan is already done !" );
-//
-//        		}
-        		
-        		
+        		}
+        		else {
+     				JOptionPane.showMessageDialog(contentPane, "Sorry the loan is already done !" );
+
+        		}
         	}
         });
 	    
