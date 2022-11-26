@@ -151,7 +151,6 @@ public class CopyDAO extends DAO<Copy> {
 
 	@Override
 	public ArrayList<Copy> findAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
