@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -19,7 +20,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import be.walbert.classes.Booking;
 import be.walbert.classes.Copy;
+import be.walbert.classes.Loan;
 import be.walbert.classes.Player;
 import be.walbert.classes.VideoGame;
 import javax.swing.JButton;
@@ -150,24 +153,50 @@ public class AddCopyPage extends JFrame {
 	    	    	  btn_AddCopy.setVisible(true);
 	    	    	  VideoGame game_selected = videogames.get(table.getSelectedRow());
 	    	    	  Copy new_copy = new Copy(player,game_selected);
+	    	    	  
 	    	    	  btn_AddCopy.addActionListener(new ActionListener() {
-	    	          	public void actionPerformed(ActionEvent e) {
-	    	          		if(new_copy.CreateCopy()) {
-	    	          		  player.AddCopy(new_copy);
-	  	    	    		  JOptionPane.showMessageDialog(contentPane, "Great you have been added a new copy of the this game !");
-	  	    	    		  MyCopiesPage copiespage = new MyCopiesPage(player);
-	  	    	    		  copiespage.setVisible(true);
-	  	    	    		  dispose();
-	  	    	    	  }
-	  	    	    	  else {
-	  	    	    		  JOptionPane.showMessageDialog(contentPane, "Sorry, an error has been occured !");
+	    	    		 public void actionPerformed(ActionEvent e) {
+	    	          		if(new_copy.CreateCopy()) {	//Ajout de la Copy en DB
+	    	          			player.AddCopy(new_copy);		//Mettre à jour la liste des Copy du palyer (pour affichage)
+	    	          			Booking new_booking = new_copy.getGame().SelectBooking(); 	//Recuperer une reservation pour ce jeux
+	    	          			
+	    	          			if(new_booking!= null) {			//Si il y a une ou plusieurs reservation en attente pour ce jeux
+		                 			  Loan new_loan = new Loan(LocalDate.now(), LocalDate.now().plusDays(new_booking.getNumber_weeks()*7), false, new_booking.getPlayer(), player, new_copy);	//Creer une location avec cette copy du jeux, le player et les infos de la reservation	
+		    	          			  new_copy.Borrow(new_loan);		//Ajouter cette location créée dans la DB
+		    	          			
+		    	          			  if(new_booking.Delete()) {	//Supprimer la réservation de la DB
+	                 					player.AddLender(new_loan);//mise à jour de la liste des locations pour l'objet courant (pour l'affichage)
+	                        			JOptionPane.showMessageDialog(contentPane, "Great you have been added a new copy of the this game and a booking has been already choosen for you copy!");
+	      	  	    	    		  	MyCopiesPage copiespage = new MyCopiesPage(player);
+	      	  	    	    		  	copiespage.setVisible(true);
+	      	  	    	    		  	dispose();
+		    	          			}  
+		    	          			  else {
+		    	  	    	    		  JOptionPane.showMessageDialog(contentPane, "Sorry, an error has been occured during the deletion of the booking!");
 
-	  	    	    	  }
+		    	          			  }
+	    	          			}
+	    	          			else{
+		         					  JOptionPane.showMessageDialog(contentPane, "Great you have been added a new copy of the this game !");
+		  	  	    	    		  MyCopiesPage copiespage = new MyCopiesPage(player);
+		  	  	    	    		  copiespage.setVisible(true);
+		  	  	    	    		  dispose();
+		         				}
+	    	          		}
+	    	          		else {
+	  	    	    		  JOptionPane.showMessageDialog(contentPane, "Sorry, an error has been occured during the creation!");
+
+	    	          		}
 	    	          	}
 	    	          });
 	    	      }
 	    	}
 	    }); 
 		
+	    
+	    
+	    
+	    
+	    
 	}
 }
