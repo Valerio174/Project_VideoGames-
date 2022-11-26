@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import be.walbert.DAO.AbstractDAOFactory;
+import be.walbert.DAO.AdministratorDAO;
 import be.walbert.DAO.CopyDAO;
 import be.walbert.DAO.DAO;
 import be.walbert.DAO.VideoGameDAO;
@@ -176,31 +177,30 @@ public class VideoGame implements Serializable{
 	
 	/*Méthodes statiques*/
 	public static ArrayList<VideoGame> getAll(){
-		return (ArrayList<VideoGame>)videogameDAO.findAll();
+		return videogameDAO.findAll();
 	}
 	public static ArrayList<String> GetAllConsoles(){
-		VideoGameDAO videogame = (VideoGameDAO) videogameDAO;
+		VideoGameDAO admin = (VideoGameDAO) videogameDAO;
 		
-		return videogame.AllConsoles();
+		return admin.AllConsoles();
 		
 	}
 	public static ArrayList<String> GetAllVersions(String console){
-		VideoGameDAO videogame = (VideoGameDAO) videogameDAO;
+		VideoGameDAO admin = (VideoGameDAO) videogameDAO;
 		
-		return videogame.AllVersion(console);
+		return admin.AllVersion(console);
 		
 	}
 	public static boolean CreateConsole(String name_console) {
-		VideoGameDAO videogame = (VideoGameDAO) videogameDAO;
+		VideoGameDAO admin = (VideoGameDAO) videogameDAO;
 		
-		return videogame.CreateConsole(name_console)?true:false;
+		return admin.CreateConsole(name_console)?true:false;
 	}
 	public static boolean CreateVersion(String name_console, String name_version) {
-		VideoGameDAO videogame = (VideoGameDAO) videogameDAO;
+		VideoGameDAO admin = (VideoGameDAO) videogameDAO;
 		
-		return videogame.CreateVersion(name_console, name_version)?true:false;
+		return admin.CreateVersion(name_console, name_version)?true:false;
 	}
-
 	@Override
 	public String toString() {
 		return "Id_videogame=" + id_videogame + ", name=" + name + ", creditCost=" + creditCost
