@@ -95,14 +95,14 @@ public class LoanDAO extends DAO<Loan>{
 							+ "WHERE Loan.id_Loan="+id);
 			 
 			if(result.next() && result2.next()) {
+				VideoGameDAO videogameDAO = new VideoGameDAO(this.connect);
 				 loan = new Loan(result.getInt("id_Loan"), result.getDate("startDate").toLocalDate(), result.getDate("endDate").toLocalDate(),result.getBoolean("ongoing"),
 						 new Player(result2.getInt("id_users_borrower"), result2.getString("username"), result2.getString("password"), result2.getInt("credit"), result2.getString("pseudo"), result2.getDate("registrationDate").toLocalDate(), result2.getDate("dateOfBirth").toLocalDate()), 
 						 
 						 new Player(result.getInt("id_users_lender"), result.getString("username"), result.getString("password"), result.getInt("credit"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(), result.getDate("dateOfBirth").toLocalDate()), 
 						 
 						 new Copy( result.getInt("id_copy"), 
-								 loan.getLender(), 
-								 new VideoGame(result.getInt("id_VideoGame"), result.getString("name"), result.getInt("creditCost"), result.getString("name_version"), result.getString("name_console"))));
+								 loan.getLender(), videogameDAO.find(result.getInt("id_VideoGame"))));
  			 }
  			 
 		}
