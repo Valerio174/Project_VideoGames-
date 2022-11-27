@@ -56,8 +56,7 @@ public class Copy implements Serializable{
 	
 	/*Méthodes*/
 
-	public Copy() {
- 	}
+	public Copy() {}
 	public boolean CreateCopy() {
 		return copyDAO.create(this);
 	}
