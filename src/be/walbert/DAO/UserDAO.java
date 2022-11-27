@@ -126,14 +126,13 @@ public class UserDAO extends DAO<User>{
 							+ " AND password = \"" + password +"\"");
 			if(result.first())
 				if (result.getString("type").equals("Player")) {
-					Player player = new Player(result.getInt("id_users"), result.getString("username"),result.getString("password"),
-							result.getInt("credit"),result.getString("pseudo"),
-							result.getDate("registrationDate").toLocalDate(),
-							result.getDate("dateOfBirth").toLocalDate());
+					PlayerDAO playerDAO = new PlayerDAO(this.connect);
+					Player player = playerDAO.find(result.getInt("id_users"));
 					return player;
 				}
 				else {
-					Administrator admin = new Administrator(result.getInt("id_users"),result.getString("username"),result.getString("password"));
+					AdministratorDAO administratorDAO = new AdministratorDAO(this.connect);
+					Administrator admin = administratorDAO.find(result.getInt("id_users"));    
 					return admin;
 				}
 			else
