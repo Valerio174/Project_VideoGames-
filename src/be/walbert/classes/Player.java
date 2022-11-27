@@ -103,16 +103,6 @@ public class Player extends User implements Serializable{
 	} 
 
 	/*Méthodes*/
-	public boolean Login() {
-		
-		if(playerDAO.find(getId_users()) != null) {
-			if(playerDAO.find(getId_users()) instanceof Player) {
-				return true;
-			} 
-		}
-		
-		return false;
-	}
 	public boolean SignIn() {
 		
 		boolean success= playerDAO.create(this);

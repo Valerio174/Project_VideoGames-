@@ -135,21 +135,18 @@ public class LogInPage extends JFrame {
 				if(user != null) {
 					if(user instanceof Player) {
 							Player new_player = (Player)user;
-							if(new_player.Login()) {
 								CatalogVideoGames catalog = new CatalogVideoGames(new_player);
 								catalog.setVisible(true);
 								dispose(); //Efface 1ere fenêtre 
- 							}
  					}
+ 				
 					else {
 						if(user instanceof Administrator) {
-							Administrator new_administrator = (Administrator)user;
-							if(new_administrator.Login()) {
+								Administrator new_administrator = (Administrator)user;
 								AdministratorPage administratorPage = new AdministratorPage(new_administrator);
 								administratorPage.setVisible(true);
 								dispose(); //Efface 1ere fenêtre 
-							}
- 						}
+						}
 					}
 				}
 				else {

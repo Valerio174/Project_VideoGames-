@@ -58,5 +58,20 @@ public abstract class User implements Serializable{
 		}
 		return null;
 	}
-	public abstract boolean Login();	
+	public int Login(){
+		int success= -1;
+
+		if(userDAO.find(getId_users()) != null) {
+			if(userDAO.find(getId_users()) instanceof Player) {
+				success = 1;
+				return success;
+			} 
+			if(userDAO.find(getId_users()) instanceof Administrator){
+				success = 0;
+				return success;
+			}
+		}
+
+		return success;
+	}	
 }

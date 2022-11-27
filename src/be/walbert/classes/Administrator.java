@@ -20,18 +20,6 @@ public class Administrator extends User implements Serializable{
 	public Administrator(int id_users, String username, String password) {
 		super(id_users, username, password);
 	}
-
-
-	@Override
-	public boolean Login() {
-		if(administratorDAO.find(getId_users()) != null) {
-			if(administratorDAO.find(getId_users()) instanceof Administrator) {
-				return true;
-			} 
-		}
-		
-		return false;
-	}
 	
 	/*Méthodes*/
 
