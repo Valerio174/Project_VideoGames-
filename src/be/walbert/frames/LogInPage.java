@@ -133,15 +133,23 @@ public class LogInPage extends JFrame {
 				User user = User.GetUser(tf_username.getText(), tf_password.getText());
 				
 				if(user != null) {
-					if(user.Login() == 1) {
-							CatalogVideoGames catalog = new CatalogVideoGames(Player.GetPlayer(user.getId_users()));
-							catalog.setVisible(true);
-							dispose(); //Efface 1ere fenêtre 
-					}
+					if(user instanceof Player) {
+							Player new_player = (Player)user;
+							if(new_player.Login()) {
+								CatalogVideoGames catalog = new CatalogVideoGames(new_player);
+								catalog.setVisible(true);
+								dispose(); //Efface 1ere fenêtre 
+ 							}
+ 					}
 					else {
-						AdministratorPage administratorPage = new AdministratorPage(new Administrator(user.getId_users(), user.getUsername(),user.getPassword()));
-						administratorPage.setVisible(true);
-						dispose(); //Efface 1ere fenêtre 
+						if(user instanceof Administrator) {
+							Administrator new_administrator = (Administrator)user;
+							if(new_administrator.Login()) {
+								AdministratorPage administratorPage = new AdministratorPage(new_administrator);
+								administratorPage.setVisible(true);
+								dispose(); //Efface 1ere fenêtre 
+							}
+ 						}
 					}
 				}
 				else {

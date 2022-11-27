@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import be.walbert.DAO.AbstractDAOFactory;
 import be.walbert.DAO.DAO;
 import be.walbert.DAO.PlayerDAO;
+import be.walbert.DAO.UserDAO;
 
 public class Player extends User implements Serializable{
  	
@@ -102,6 +103,16 @@ public class Player extends User implements Serializable{
 	} 
 
 	/*Méthodes*/
+	public boolean Login() {
+		
+		if(playerDAO.find(getId_users()) != null) {
+			if(playerDAO.find(getId_users()) instanceof Player) {
+				return true;
+			} 
+		}
+		
+		return false;
+	}
 	public boolean SignIn() {
 		
 		boolean success= playerDAO.create(this);
@@ -123,10 +134,10 @@ public class Player extends User implements Serializable{
 		return false;
 
 	}
-	public static Player GetPlayer(int id_users) {
+	public Player GetPlayer(Player player) {
 		PlayerDAO p =(PlayerDAO)playerDAO;
 		
-		return p.find(id_users);
+		return p.find(player.getId_users());
 	}
 	public boolean UpdatePlayer() {
 		return playerDAO.update(this);
