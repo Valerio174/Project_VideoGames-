@@ -78,7 +78,7 @@ public class AdministratorPage extends JFrame {
 		lbl_WelcomeAdmin.setText("Welcome admin " + admin.getUsername());
 		
 		/*Liste des jeux videos*/
-		videogames = VideoGame.getAll();
+		videogames = VideoGame.GetAll();
 		
 			/*Noms des colonnes du tableau*/
 		String[] columnsnames = { "Name", "Console","Version","Credits"};

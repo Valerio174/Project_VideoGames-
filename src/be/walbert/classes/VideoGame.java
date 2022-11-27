@@ -175,7 +175,7 @@ public class VideoGame implements Serializable{
 	}
 	
 	/*Méthodes statiques*/
-	public static ArrayList<VideoGame> getAll(){
+	public static ArrayList<VideoGame> GetAll(){
 		return  videogameDAO.findAll();
 	}
 	public static ArrayList<String> GetAllConsoles(){

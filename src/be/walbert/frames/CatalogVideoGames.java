@@ -108,7 +108,7 @@ public class CatalogVideoGames extends JFrame {
 		contentPane.add(lbl_LogOut);
 		
 		/*Liste des jeux videos*/
-		videogames = VideoGame.getAll();
+		videogames = VideoGame.GetAll();
 		
 			/*Noms des colonnes du tableau*/
 		String[] columnsnames = { "Name", "Console","Version","Credits"};
