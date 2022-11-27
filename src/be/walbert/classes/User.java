@@ -1,11 +1,13 @@
 package be.walbert.classes;
 
+import java.io.Serializable;
+
 import be.walbert.DAO.AbstractDAOFactory;
 import be.walbert.DAO.DAO;
 import be.walbert.DAO.UserDAO;
 
-public abstract class User{
-	private static final long serialVersionUID = 1900585338455777467L;
+public abstract class User implements Serializable{
+	private static final long serialVersionUID = -3943080872431286010L;
 	
 	/*Attributs*/
 	private int id_users;

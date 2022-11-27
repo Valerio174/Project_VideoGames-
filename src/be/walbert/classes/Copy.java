@@ -1,19 +1,12 @@
-
 package be.walbert.classes;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import javax.swing.JOptionPane;
-
+import java.io.Serializable;
 import be.walbert.DAO.AbstractDAOFactory;
-import be.walbert.DAO.CopyDAO;
 import be.walbert.DAO.DAO;
-import be.walbert.DAO.LoanDAO; 
 
-public class Copy{
-	private static final long serialVersionUID = 1110485213455787467L;
-	
+public class Copy implements Serializable{
+ 	
+	private static final long serialVersionUID = 6781608518275076469L;
 	/*Attributs*/
 	private int id_copy;
 	private Player owner;

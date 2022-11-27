@@ -1,15 +1,16 @@
 package be.walbert.classes;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import be.walbert.DAO.AbstractDAOFactory;
-import be.walbert.DAO.CopyDAO;
 import be.walbert.DAO.DAO;
 import be.walbert.DAO.PlayerDAO;
 
-public class Player extends User{
-	private static final long serialVersionUID = 1920585118455777467L;
+public class Player extends User implements Serializable{
+ 	
+	private static final long serialVersionUID = -3257763287714633366L;
 	
 	/*Attributs*/
 	private int credits;
