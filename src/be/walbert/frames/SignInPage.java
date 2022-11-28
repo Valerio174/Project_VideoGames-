@@ -146,11 +146,11 @@ public class SignInPage extends JFrame {
 					else {
 						lbl_ErrorEmpty.setText("Great!");
 						
-						Player p = new Player(tf_Username.getText(),tf_Password.getText(),10,tf_Pseudo.getText(),
+						Player player = new Player(tf_Username.getText(),tf_Password.getText(),10,tf_Pseudo.getText(),
 						LocalDate.now(),tf_date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
-						if(p.CheckUsername()) {
-							if(p.SignIn()) {
+						if(player.CheckUsername()) {
+							if(player.SignIn()) {
 								HomePage homepage = new HomePage();
 								homepage.setVisible(true);
 								homepage.lbl_register_succed.setText("Great you have been registered !");
