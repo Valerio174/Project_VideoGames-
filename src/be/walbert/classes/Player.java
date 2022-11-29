@@ -124,15 +124,28 @@ public class Player extends User implements Serializable{
 		return false;
 
 	}
-	public Player GetPlayer(Player player) {
-		PlayerDAO p =(PlayerDAO)playerDAO;
-		
-		return p.find(player.getId_users());
-	}
+	
 	public boolean UpdatePlayer() {
 		return playerDAO.update(this);
 	}
+	
 	public void AddBirthdayBonus() {}
+	
+	public void UpdateLoan(Loan new_loan) {
+		for (Loan loan : lender_list) {
+			if (loan.getId_loan() == new_loan.getId_loan()) {
+				loan.setOngoing(false);
+			}
+		}
+	}
+	
+	public boolean CheckBookingAlreadyDone(VideoGame videogame) {
+		for (Booking booking : booking_list) {
+			if(booking.getGame().getId_videogame() == videogame.getId_videogame())
+				return true;
+		}
+		return false;
+	}
 	
 	public void AddLender(Loan newloan) {
 		try {
@@ -141,20 +154,7 @@ public class Player extends User implements Serializable{
 			 System.err.println(e.getMessage());
 		}
 	}
-	public void UpdateLoan(Loan new_loan) {
-		for (Loan loan : lender_list) {
-			if (loan.getId_loan() == new_loan.getId_loan()) {
-				loan.setOngoing(false);
-			}
-		}
-	}
-	public boolean CheckBookingAlreadyDone(int id_videogame) {
-		for (Booking booking : booking_list) {
-			if(booking.getGame().getId_videogame() == id_videogame)
-				return true;
-		}
-		return false;
-	}
+	
 	public void AddBorrow(Loan newborrow) {
 		try {
 			borrow_list.add(newborrow);
