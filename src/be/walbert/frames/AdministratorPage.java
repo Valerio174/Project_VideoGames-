@@ -15,10 +15,14 @@ import be.walbert.classes.Administrator;
 import be.walbert.classes.VideoGame;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
@@ -112,10 +116,18 @@ public class AdministratorPage extends JFrame {
 	    table.addMouseListener(new MouseAdapter() {
 	    	public void mouseClicked(MouseEvent e){
 	    	      if (e.getClickCount() == 2){ 
+	    	    	  DayOfWeek dayofweek = LocalDate.now().getDayOfWeek();
+    	    		  if(dayofweek == DayOfWeek.MONDAY) {
+
 	  					VideoGame game_selected = videogames.get(table.getSelectedRow());
 	    	    	  	SetCreditsPage creditspage = new SetCreditsPage(admin, game_selected);
 	  					creditspage.setVisible(true);
 	  					dispose();
+    	    		  }
+    	    		  else{
+	    	    		  JOptionPane.showMessageDialog(contentPane, "Sorry credit change only on Monday");
+
+    	    		  }
 	    	         }
 	    	      }
 	    });
