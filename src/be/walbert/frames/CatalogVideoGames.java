@@ -148,6 +148,7 @@ public class CatalogVideoGames extends JFrame {
 	    	      if (e.getClickCount() == 2){ 
 	    	    	  if(player.LoanAllowed()) {
 	 	  				VideoGame game_selected = videogames.get(table.getSelectedRow());
+	 	  				game_selected = game_selected.GetVideoGame();
 		    	      	GamePage gamepage= new GamePage( player,game_selected);
 		  				gamepage.setVisible(true);
 		  				dispose();
