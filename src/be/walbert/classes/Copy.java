@@ -60,6 +60,9 @@ public class Copy implements Serializable{
 	public boolean CreateCopy() {
 		return copyDAO.create(this);
 	}
+	public void ReleaseCopy() {
+		this.getLend().setOngoing(false);
+	}
 	public boolean IsAvailable() {
 		if(this.lend != null) {
 			if(this.lend.isOngoing() == false) {
