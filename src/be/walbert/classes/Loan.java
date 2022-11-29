@@ -94,13 +94,14 @@ public class Loan implements Serializable{
 		int weeks = regular_days/7;
 		int weeks_in_late= day_in_late/7;
 		int total_creditCost=0;
+		
 		if(regular_days%7!=0) {
-			weeks = (regular_days/7)+1;
+			weeks++;
 		}
 		if(ongoing==true) {
 			if(LocalDate.now().isAfter(endDate)) {
 				if(day_in_late%7!=0) {
-					weeks_in_late = (day_in_late/7)+1;
+					weeks_in_late++;
 				}
 				total_creditCost= weeks*this.getCopy().getGame().getCreditCost()+(5*day_in_late)+(weeks_in_late*this.getCopy().getGame().getCreditCost());
 				this.borrower.setCredits(this.borrower.getCredits()-total_creditCost);
@@ -116,8 +117,6 @@ public class Loan implements Serializable{
 				this.lender.UpdatePlayer();
 		 	}
 		}
-		
-		
 	}
 	
 
