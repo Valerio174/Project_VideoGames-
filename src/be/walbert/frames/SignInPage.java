@@ -36,6 +36,8 @@ import java.awt.TextField;
 import java.awt.Button;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class SignInPage extends JFrame {
@@ -45,6 +47,8 @@ public class SignInPage extends JFrame {
 	private JTextField tf_Pseudo;
 	private JTextField tf_Password;
 	private JDateChooser tf_date;
+	private Image img = new ImageIcon(this.getClass().getResource("/ressources/icon_back.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
 
 	/**
 	 * Launch the application.
@@ -76,6 +80,22 @@ public class SignInPage extends JFrame {
 		contentPane.setLayout(null);
 		     
 		Image background_signin_page = new ImageIcon(this.getClass().getResource("/ressources/Signin_background.jpg")).getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+		
+		/*Icon de retour (vers catalogue des jeux videos)*/
+		JLabel lbl_icon_back = new JLabel("");
+		
+		/*Ajout de l'evenement lors du click*/
+		lbl_icon_back.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				HomePage homepage = new HomePage();
+				homepage.setVisible(true);
+				dispose();
+			}
+		});
+		lbl_icon_back.setBounds(21, 572, 50, 50); 
+		lbl_icon_back.setIcon(new ImageIcon(img));
+		contentPane.add(lbl_icon_back);
 		
 		JLabel lbl_Password = new JLabel("Password");
 		lbl_Password.setFont(new Font("Segoe UI Black", Font.PLAIN, 20));
