@@ -83,21 +83,22 @@ public class VideoGameDAO extends DAO<VideoGame>{
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT VideoGame.id_VideoGame, VideoGame.name, VideoGame.creditCost, Console.name_console, Version.name_version\r\n"
 							+ "FROM Console INNER JOIN (Version INNER JOIN VideoGame ON Version.id_version = VideoGame.id_version) ON Console.id_console = Version.id_console\r\n"
 							+ "WHERE VideoGame.id_VideoGame="+id);
-//			CopyDAO copyDAO = new CopyDAO(this.connect);
+			CopyDAO copyDAO = new CopyDAO(this.connect);
 			if(result.first()) {
 				videogame = new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console"));
-//				result = this.connect.createStatement(
-//						ResultSet.TYPE_SCROLL_INSENSITIVE,
-//						ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Copy WHERE id_VideoGame="+id);
-// 				videogame.AddCopy(copyDAO.find(result.getInt("id_Copy")));
+				result = this.connect.createStatement(
+						ResultSet.TYPE_SCROLL_INSENSITIVE,
+						ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Copy WHERE id_VideoGame="+id);
+				while(result.next())
+				videogame.AddCopy(copyDAO.find(result.getInt("id_Copy")));
  				BookingDAO bookingDAO = new BookingDAO(this.connect);
  				result = this.connect.createStatement(
  						ResultSet.TYPE_SCROLL_INSENSITIVE,
  						ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking WHERE id_VideoGame="+id);
- 			while(result.next())
+ 				while(result.next())
  				videogame.AddBooking(bookingDAO.find(result.getInt("id_Booking")));
 			}
-			} 
+		} 
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
