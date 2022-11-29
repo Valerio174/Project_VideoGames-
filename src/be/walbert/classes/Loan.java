@@ -120,6 +120,7 @@ public class Loan implements Serializable{
 
 	public boolean EndLoan() {
 		this.CalculateBalance();
+		this.getCopy().ReleaseCopy();
 		return loanDAO.update(this);
 	}
 	
