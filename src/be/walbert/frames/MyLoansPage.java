@@ -148,6 +148,7 @@ public class MyLoansPage extends JFrame {
 	    btn_EndLoan.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		Loan loan_selected = loans.get(table.getSelectedRow());
+        		loan_selected = loan_selected.GetLoan();
         		if(loan_selected.isOngoing()!=false) {
         			if(LocalDate.now().isBefore(loan_selected.getEndDate())) {
          				JOptionPane.showMessageDialog(contentPane, "Not yet at the end date !" );
