@@ -23,7 +23,6 @@ public class VideoGame implements Serializable{
 	private ArrayList<Booking> booking_list;
 	static AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	static DAO<VideoGame> videogameDAO = adf.getVideoGameDAO();
-	DAO<Copy> copyDAO = adf.getCopyDAO();
 	
 	/*Getters/Setters*/
 	public int getId_videogame() {
@@ -96,6 +95,9 @@ public class VideoGame implements Serializable{
 	}
 	
 	/*Méthodes*/
+	public VideoGame GetVideoGame() {
+		return videogameDAO.find(this.getId_videogame());
+	}
 	public void AddCopy(Copy newcopy) {
 		try {
 			copy_list.add(newcopy);
@@ -111,17 +113,16 @@ public class VideoGame implements Serializable{
 		}
 	}
 
-	public Copy CopyAvailable(Player borrower) {
-		CopyDAO copy = (CopyDAO)copyDAO;
+	public Copy CopyAvailable(Player player) {
 		
-		if(copy.CopyAvailable(this,borrower).size() != 0) {
-		Random random = new Random();
-		int nb;
-		nb = random.nextInt(copy.CopyAvailable(this,borrower).size());
-				
-		Copy current_copy = copy.CopyAvailable(this,borrower).get(nb);
-			
-			return current_copy;
+		if(this.getList_copy().size() != 0) {
+			Random random = new Random();
+			int nb;
+			nb = random.nextInt(this.getList_copy().size());
+			if(this.getList_copy().get(nb).getOwner().getId_users() != player.getId_users()) {
+				Copy current_copy = this.getList_copy().get(nb);
+				return current_copy;
+			}
 		}
 			
 		return null;
