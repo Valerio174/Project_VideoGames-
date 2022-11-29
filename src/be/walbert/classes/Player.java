@@ -128,9 +128,7 @@ public class Player extends User implements Serializable{
 	public boolean UpdatePlayer() {
 		return playerDAO.update(this);
 	}
-	
-	public void AddBirthdayBonus() {}
-	
+		
 	public void UpdateLoan(Loan new_loan) {
 		for (Loan loan : lender_list) {
 			if (loan.getId_loan() == new_loan.getId_loan()) {
