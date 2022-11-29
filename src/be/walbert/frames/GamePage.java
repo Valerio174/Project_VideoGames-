@@ -121,7 +121,7 @@ public class GamePage extends JFrame {
 		JButton btn_BookingGame = new JButton("Book game");
 		btn_BookingGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 if(!player.CheckBookingAlreadyDone(videogame_selected.getId_videogame())) {
+				 if(!player.CheckBookingAlreadyDone(videogame_selected)) {
 					 MakeBookingPage booking_page = new MakeBookingPage(videogame_selected, player);
 					 booking_page.setVisible(true);
 					 dispose();
@@ -162,11 +162,17 @@ public class GamePage extends JFrame {
 		Copy current_copy = videogame_selected.CopyAvailable(player);
     	   
 		if(current_copy != null) {
-    	   lbl_Loan_Or_Book.setText("Great, you can loan a copy");
-    	   btn_LoanGame.setVisible(true);
+	    	   if(current_copy.IsAvailable()) {
+	    		   	lbl_Loan_Or_Book.setText("Great, you can loan a copy");
+	        	   	btn_LoanGame.setVisible(true);
+	    	  } 
+	    	   else {
+	   	    		lbl_Loan_Or_Book.setText("Sorry, copies available for this game but not available. Please, make booking ");
+	       	  		btn_BookingGame.setVisible(true);
+	    	   }
     	 }
     	 else {
-    	 	lbl_Loan_Or_Book.setText("Sorry there are no more copies. You can make a booking");
+	    	lbl_Loan_Or_Book.setText("Sorry, no copies for this game. You can make booking when a player will add a copy");
     	  	btn_BookingGame.setVisible(true);
     	  }		
     
