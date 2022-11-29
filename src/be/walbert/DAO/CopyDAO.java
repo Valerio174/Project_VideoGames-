@@ -15,6 +15,8 @@ public class CopyDAO extends DAO<Copy> {
 	public CopyDAO(Connection conn) {
 		super(conn); 
 	}
+	
+	/******Methodes communes (CRUD)*******/
 
 	@Override
 	public boolean create(Copy copy) { 
@@ -60,12 +62,12 @@ public class CopyDAO extends DAO<Copy> {
 						result.getDate("registrationDate").toLocalDate(),
 						result.getDate("dateOfBirth").toLocalDate()), 
 						new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console")));
- 			}
+				
+			}
 		} 
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return copy;
 	}
 	
