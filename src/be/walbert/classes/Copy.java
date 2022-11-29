@@ -60,16 +60,18 @@ public class Copy implements Serializable{
 	public boolean CreateCopy() {
 		return copyDAO.create(this);
 	}
-	public boolean IsAvailable(VideoGame game) {
-//		CopyDAO copy = (CopyDAO)copyDAO;
-//		 
-//		if(copy.CopyAvailable(game).size() == 0) {
-//			return false;
-//		}
-//		else {
-//			return true;
-//		}
-		return false;
+	public boolean IsAvailable() {
+		if(this.lend != null) {
+			if(this.lend.isOngoing() == false) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return true;
+		}
 	}
 	
 	public void Borrow(Loan currentloan) {
@@ -81,7 +83,5 @@ public class Copy implements Serializable{
 	public String toString() {
 		return "Copy [id_copy=" + id_copy + ", owner=" + owner.getPseudo() + ", game=" + game + ", lend=" + lend + "]";
 	}
-	
-	
 }
 
