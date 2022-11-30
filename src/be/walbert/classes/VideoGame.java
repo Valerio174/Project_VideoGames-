@@ -21,6 +21,7 @@ public class VideoGame implements Serializable{
 	private String version;
 	private ArrayList<Copy> copy_list;
 	private ArrayList<Booking> booking_list;
+	private ArrayList<HistoryCredits> historycredits_list;
 	static AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	static DAO<VideoGame> videogameDAO = adf.getVideoGameDAO();
 	
@@ -74,6 +75,12 @@ public class VideoGame implements Serializable{
 		this.booking_list = booking_list;
 	}
 	
+	public ArrayList<HistoryCredits> getHistorycredits_list() {
+		return historycredits_list;
+	}
+	public void setHistorycredits_list(ArrayList<HistoryCredits> historycredits_list) {
+		this.historycredits_list = historycredits_list;
+	}
 	/*Constructeurs*/
 	public VideoGame( ) {}
 	public VideoGame( int id_videogame, String name, int creditCost, String version, String console) {
@@ -84,6 +91,7 @@ public class VideoGame implements Serializable{
 		this.console=console;
 		this.copy_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
+		this.historycredits_list = new ArrayList<>();
 	}
 	public VideoGame(String name, int creditCost, String version, String console) {
 		this.name=name;
@@ -92,6 +100,7 @@ public class VideoGame implements Serializable{
 		this.console=console;
 		this.copy_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
+		this.historycredits_list = new ArrayList<>();
 	}
 	
 	/*Méthodes*/
@@ -112,7 +121,13 @@ public class VideoGame implements Serializable{
 			 System.err.println(e.getMessage());
 		}
 	}
-
+	public void AddHistoryCredits(HistoryCredits history) {
+		try {
+			historycredits_list.add(history);
+		} catch (Exception e) {
+			 System.err.println(e.getMessage());
+		}
+	}
 	public Copy CopyAvailable(Player player) {
 		
 		if(this.getList_copy().size() != 0) {
@@ -203,5 +218,4 @@ public class VideoGame implements Serializable{
 		return "Id_videogame=" + id_videogame + ", name=" + name + ", creditCost=" + creditCost
 				+ ", console=" + console + ", version=" + version;
 	}
-	
 }
