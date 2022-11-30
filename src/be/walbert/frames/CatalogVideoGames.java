@@ -38,6 +38,8 @@ import javax.swing.JTable;
 import java.awt.List;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -78,6 +80,11 @@ public class CatalogVideoGames extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		if(player.AddBirthdayBonus()) {
+			JOptionPane.showMessageDialog(contentPane, "Hey a bonus for your birthday: 2 credits");
+
+		}
 	 
 		JLabel lbl_Username = new JLabel("");
 		lbl_Username.setFont(new Font("Tahoma", Font.PLAIN, 25));
