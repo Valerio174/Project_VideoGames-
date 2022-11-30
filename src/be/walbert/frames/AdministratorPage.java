@@ -117,10 +117,11 @@ public class AdministratorPage extends JFrame {
 	    	public void mouseClicked(MouseEvent e){
 	    	      if (e.getClickCount() == 2){ 
 	    	    	  DayOfWeek dayofweek = LocalDate.now().getDayOfWeek();
-    	    		  if(dayofweek == DayOfWeek.MONDAY) {
+    	    		  if(dayofweek == DayOfWeek.WEDNESDAY) {
 
 	  					VideoGame game_selected = videogames.get(table.getSelectedRow());
-	    	    	  	SetCreditsPage creditspage = new SetCreditsPage(admin, game_selected);
+	  					game_selected = game_selected.GetVideoGame();
+	  					SetCreditsPage creditspage = new SetCreditsPage(admin, game_selected);
 	  					creditspage.setVisible(true);
 	  					dispose();
     	    		  }
