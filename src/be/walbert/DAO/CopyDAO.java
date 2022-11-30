@@ -52,13 +52,14 @@ public class CopyDAO extends DAO<Copy> {
 		try {
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Copy.id_VideoGame, Copy.id_users_lender, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Copy.id_VideoGame, Copy.id_users_lender, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Users.username, Users.password, Player.credit, Player.pseudo, Player.birthday_bonus, Player.registrationDate, Player.dateOfBirth\r\n"
 							+ "FROM Users INNER JOIN (Player INNER JOIN (Console INNER JOIN (Version INNER JOIN (VideoGame INNER JOIN Copy ON VideoGame.id_VideoGame = Copy.id_VideoGame) ON Version.id_version = VideoGame.id_version) ON Console.id_console = Version.id_console) ON Player.id_users = Copy.id_users_lender) ON Users.id_users = Player.id_users\r\n"
 							+ "WHERE Copy.id_copy ="+id);
 			
 			if(result.first()) {
 				copy = new Copy(result.getInt("id_copy"), new Player(result.getInt("id_users_lender"),result.getString("username"), 
-						result.getString("password"), result.getInt("credit"), result.getString("pseudo"), 
+						result.getString("password"), result.getInt("credit"), result.getString("pseudo"),
+						result.getBoolean("birthday_bonus"),
 						result.getDate("registrationDate").toLocalDate(),
 						result.getDate("dateOfBirth").toLocalDate()), 
 						new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console")));
@@ -77,7 +78,7 @@ public class CopyDAO extends DAO<Copy> {
 		try {
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Copy.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Users.id_users, Users.Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Copy.id_copy, Copy.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Users.id_users, Users.Users.username, Users.password, Player.credit, Player.pseudo, Player.birthday_bonus, Player.registrationDate, Player.dateOfBirth\r\n"
 							+ "FROM ((((Copy LEFT JOIN VideoGame ON Copy.id_VideoGame = VideoGame.id_VideoGame) "
 							+ "LEFT JOIN Version ON VideoGame.id_version = Version.id_version) "
 							+ "LEFT JOIN Console ON Version.id_console = Console.id_console) "
@@ -86,7 +87,7 @@ public class CopyDAO extends DAO<Copy> {
 			while(result.next()){
 				VideoGameDAO videogameDAO = new VideoGameDAO(this.connect);
 				Copy newcopy = new Copy(result.getInt("id_copy"), new Player(result.getInt("id_users"),result.getString("username"),result.getString("password"),
-						result.getInt("credit"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(),
+						result.getInt("credit"), result.getString("pseudo"), result.getBoolean("birthday_bonus"),result.getDate("registrationDate").toLocalDate(),
 						result.getDate("dateOfBirth").toLocalDate()), videogameDAO.find(result.getInt("id_VideoGame")));
 				list_copy.add(newcopy);
 			}

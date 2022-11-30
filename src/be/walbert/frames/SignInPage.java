@@ -166,7 +166,7 @@ public class SignInPage extends JFrame {
 					else {
 						lbl_ErrorEmpty.setText("Great!");
 						
-						Player player = new Player(tf_Username.getText(),tf_Password.getText(),10,tf_Pseudo.getText(),
+						Player player = new Player(tf_Username.getText(),tf_Password.getText(),10,tf_Pseudo.getText(), false,
 						LocalDate.now(),tf_date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
 						if(player.CheckUsername()) {

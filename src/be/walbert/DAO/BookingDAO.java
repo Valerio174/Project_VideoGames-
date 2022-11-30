@@ -70,12 +70,12 @@ public class BookingDAO extends DAO<Booking> {
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Booking.id_Booking, Booking.bookingDate, Booking.number_of_weeks, Booking.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Booking.id_users, Users.username, Users.password, Player.credit, Player.pseudo, Player.registrationDate, Player.dateOfBirth\r\n"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT Booking.id_Booking, Booking.bookingDate, Booking.number_of_weeks, Booking.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console, Booking.id_users, Users.username, Users.password, Player.credit, Player.pseudo, Player.birthday_bonus, Player.registrationDate, Player.dateOfBirth\r\n"
 							+ "FROM Console INNER JOIN (Version INNER JOIN (VideoGame INNER JOIN (Users INNER JOIN (Player INNER JOIN Booking ON Player.id_users = Booking.id_users) ON Users.id_users = Player.id_users) ON VideoGame.id_VideoGame = Booking.id_VideoGame) ON Version.id_version = VideoGame.id_version) ON Console.id_console = Version.id_console\r\n"
 							+ "WHERE Booking.id_Booking="+ id);
 			
 			 if(result.first()) {
-				  booking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(), new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console")), new Player(result.getInt("id_users"),result.getString("username"), result.getString("password"), result.getInt("credit"), result.getString("pseudo"), result.getDate("registrationDate").toLocalDate(),
+				  booking = new Booking(result.getInt("id_Booking"), result.getDate("bookingDate").toLocalDate(), new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console")), new Player(result.getInt("id_users"),result.getString("username"), result.getString("password"), result.getInt("credit"), result.getString("pseudo"), result.getBoolean("birthday_bonus"), result.getDate("registrationDate").toLocalDate(),
 							result.getDate("dateOfBirth").toLocalDate()), result.getInt("number_of_weeks"));
 			 }
 		}
