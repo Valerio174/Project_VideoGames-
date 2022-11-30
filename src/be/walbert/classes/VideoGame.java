@@ -163,16 +163,12 @@ public class VideoGame implements Serializable{
 		
 		
 	}
-	public boolean ModifyCredits(int new_credits) {
-		VideoGameDAO vgDAO = (VideoGameDAO)(videogameDAO);
-		vgDAO.createHistoryCredits(this, new_credits);
-		
-		this.setCreditCost(new_credits);
-			
-		return videogameDAO.update(this);
-	}
+	 
 	public boolean CreateVideoGame() {
 		return videogameDAO.create(this);
+	}
+	public boolean UpdateGame() {
+		return videogameDAO.update(this);
 	}
 	
 	/*Méthodes statiques*/
