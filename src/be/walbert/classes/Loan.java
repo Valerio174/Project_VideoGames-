@@ -88,6 +88,7 @@ public class Loan implements Serializable{
 	public Loan GetLoan() {
 		return loanDAO.find(this.getId_loan());
 	}
+	
 	public void CalculateBalance() {
 		int regular_days = (int) (ChronoUnit.DAYS.between(startDate, endDate));
 		int day_in_late= (int) (ChronoUnit.DAYS.between(endDate, LocalDate.now()));
@@ -119,7 +120,6 @@ public class Loan implements Serializable{
 		}
 	}
 	
-
 	public boolean EndLoan() {
 		this.CalculateBalance();
 		this.getCopy().ReleaseCopy(this);
