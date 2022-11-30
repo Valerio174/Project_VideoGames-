@@ -5,6 +5,7 @@ import java.sql.Connection;
 import be.walbert.classes.Administrator;
 import be.walbert.classes.Booking;
 import be.walbert.classes.Copy;
+import be.walbert.classes.HistoryCredits;
 import be.walbert.classes.Loan;
 import be.walbert.classes.Player;
 import be.walbert.classes.User;
@@ -25,18 +26,21 @@ public class DAOFactory extends AbstractDAOFactory{
 		return new CopyDAO(conn);
 	}
 	
+	public DAO<HistoryCredits> getHistoryCredits() {
+		return new HistoryCreditsDAO(conn);
+	}
 	public DAO<Loan> getLoanDAO(){
 		return new LoanDAO(conn);
 	}
 	
 	public DAO<Player> getPlayerDAO(){
 		return new PlayerDAO(conn);
-}	
+	}	
 	public DAO<User> getUserDAO(){
 		return new UserDAO(conn);
 	}
 	public DAO<VideoGame> getVideoGameDAO(){
 		return new VideoGameDAO(conn);
-}
+	}
 	
 }
