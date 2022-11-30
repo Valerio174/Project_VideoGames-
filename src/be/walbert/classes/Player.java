@@ -52,7 +52,7 @@ public class Player extends User implements Serializable{
 		this.dateOfBirth = dateOfBirth;
 	}
 	
-	public boolean isBirthday_bonus() {
+	public boolean GetBirthday_bonus() {
 		return birthday_bonus;
 	}
 	public void setBirthday_bonus(boolean birthday_bonus) {
@@ -97,7 +97,7 @@ public class Player extends User implements Serializable{
 		this.booking_list = new ArrayList<>();
 		this.copy_list = new ArrayList<>();
 	}
-	public Player(  String username, String password, int credits, String pseudo, boolean birthday_bonus, LocalDate registrationDate,
+	public Player( String username, String password, int credits, String pseudo, boolean birthday_bonus, LocalDate registrationDate,
 			LocalDate dateOfBirth) {
 		super( username, password);
 		this.credits = credits;
@@ -112,6 +112,27 @@ public class Player extends User implements Serializable{
 	} 
 
 	/*Méthodes*/
+	public boolean AddBirthdayBonus(){
+ 		LocalDate birthday = LocalDate.of(LocalDate.now().getYear(),
+				this.getDateOfBirth().getMonth() , 
+				this.getDateOfBirth().getDayOfMonth());
+		
+		LocalDate first_day_of_year = LocalDate.of(LocalDate.now().getYear(),1, 1);
+		LocalDate last_day_of_year = LocalDate.of(LocalDate.now().getYear(),12 , 31);
+		
+		if(LocalDate.now().isAfter(first_day_of_year) && LocalDate.now().isBefore(birthday)) {
+			this.setBirthday_bonus(false);
+		}
+		else if(LocalDate.now().isBefore(last_day_of_year) || LocalDate.now().equals(birthday)){
+			if(this.GetBirthday_bonus()==false) {
+				this.credits+=2;
+				this.setBirthday_bonus(true);
+				this.UpdatePlayer();
+				return true;
+ 			}
+		}
+		return false;
+	}
 	public boolean SignIn() {
 		
 		boolean success= playerDAO.create(this);
