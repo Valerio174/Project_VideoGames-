@@ -11,6 +11,7 @@ import be.walbert.classes.Copy;
 import be.walbert.classes.HistoryCredits;
 import be.walbert.classes.Loan;
 import be.walbert.classes.Player;
+import be.walbert.classes.VideoGame;
  
 public class HistoryCreditsDAO extends DAO<HistoryCredits>{
 
@@ -18,6 +19,7 @@ public class HistoryCreditsDAO extends DAO<HistoryCredits>{
 		super(conn);
 	}
 
+	/******Methodes communes (CRUD)*******/
 	@Override
 	public boolean create(HistoryCredits historycredits) {
 		try{
@@ -65,12 +67,14 @@ public class HistoryCreditsDAO extends DAO<HistoryCredits>{
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM HistoryCredit WHERE id_history="+id);
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT HistoryCredits.id_history, HistoryCredits.modification_date, HistoryCredits.old_creditCost, HistoryCredits.new_creditCost, VideoGame.id_VideoGame, VideoGame.name, VideoGame.creditCost, Version.name_version, Console.name_console\r\n"
+							+ "FROM Console INNER JOIN (Version INNER JOIN (VideoGame INNER JOIN HistoryCredits ON VideoGame.id_VideoGame = HistoryCredits.id_videogame) ON Version.id_version = VideoGame.id_version) ON Console.id_console = Version.id_console\r\n"
+							+ "WHERE HistoryCredits.id_history="+id);
 			 
 			if(result.next()) {
-				VideoGameDAO videogameDAO = new VideoGameDAO(this.connect);
 				history = new HistoryCredits(result.getInt("id_history"), result.getDate("modification_date").toLocalDate(), 
-						result.getInt("old_creditCost"), result.getInt("new_creditCost"),videogameDAO.find(result.getInt("id_videogame")));
+						result.getInt("old_creditCost"), result.getInt("new_creditCost"),
+						 new VideoGame(result.getInt("id_VideoGame"),result.getString("name"),result.getInt("creditCost"),result.getString("name_version"),result.getString("name_console")));
  			 }
  			 
 		}
@@ -102,4 +106,7 @@ public class HistoryCreditsDAO extends DAO<HistoryCredits>{
 		
 		return all_historycredits;	
 	}
+	
+	/******METHODES PARTICULIERES POUR HistoryCredits*******/
+	 
 }

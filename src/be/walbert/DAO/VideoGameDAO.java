@@ -97,6 +97,12 @@ public class VideoGameDAO extends DAO<VideoGame>{
  						ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Booking WHERE id_VideoGame="+id);
  				while(result.next())
  				videogame.AddBooking(bookingDAO.find(result.getInt("id_Booking")));
+ 				HistoryCreditsDAO historycreditsDAO = new HistoryCreditsDAO(this.connect);
+ 				result = this.connect.createStatement(
+ 						ResultSet.TYPE_SCROLL_INSENSITIVE,
+ 						ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM HistoryCredits WHERE id_videogame="+id);
+ 				while(result.next())
+ 				videogame.AddHistoryCredits(historycreditsDAO.find(result.getInt("id_history")));	
 			}
 		} 
 		catch (SQLException e) {
