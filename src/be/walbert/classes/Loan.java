@@ -89,7 +89,7 @@ public class Loan implements Serializable{
 		return loanDAO.find(this.getId_loan());
 	}
 	
-	public void CalculateBalance() {
+	public int CalculateBalance() {
 		int regular_days = (int) (ChronoUnit.DAYS.between(startDate, endDate));
 		int day_in_late= (int) (ChronoUnit.DAYS.between(endDate, LocalDate.now()));
 		int weeks = regular_days/7;
@@ -100,25 +100,39 @@ public class Loan implements Serializable{
 			weeks++;
 		}
 		if(ongoing==true) {
-			if(LocalDate.now().isAfter(endDate)) {
-				if(day_in_late%7!=0) {
+				if(regular_days%7==0 && day_in_late%7!=0) {
 					weeks_in_late++;
 				}
-				total_creditCost= weeks*this.getCopy().getGame().getCreditCost()+(5*day_in_late)+(weeks_in_late*this.getCopy().getGame().getCreditCost());
+				for (int i = 0; i < this.getCopy().getGame().getHistorycredits_list().size(); i++) {
+					if(this.getCopy().getGame().getHistorycredits_list().get(i).getModification_date().isAfter(this.startDate) && this.getCopy().getGame().getHistorycredits_list().get(i).getModification_date().isBefore(LocalDate.now()) && this.getCopy().getGame().getHistorycredits_list().get(i).getModification_date().plusDays(7).isBefore(endDate)) {
+						if(i==0) {
+							total_creditCost+= this.getCopy().getGame().getHistorycredits_list().get(i).getOld_creditCost();
+							weeks--;
+							total_creditCost+= this.getCopy().getGame().getHistorycredits_list().get(i).getNew_creditCost();
+							weeks--;
+						}
+						else {
+							total_creditCost+= this.getCopy().getGame().getHistorycredits_list().get(i).getNew_creditCost();
+							weeks--;
+						}
+					}
+					if(this.getCopy().getGame().getHistorycredits_list().get(i).getModification_date().isAfter(this.startDate) && this.getCopy().getGame().getHistorycredits_list().get(i).getModification_date().isBefore(LocalDate.now()) && this.getCopy().getGame().getHistorycredits_list().get(i).getModification_date().plusDays(7).isAfter(endDate)) {
+
+						total_creditCost+= this.getCopy().getGame().getHistorycredits_list().get(i).getNew_creditCost();
+						weeks_in_late--;
+					}
+					if(LocalDate.now().isAfter(endDate)) {
+						
+					}
+				}
+				total_creditCost+= weeks*this.getCopy().getGame().getCreditCost()+(5*day_in_late)+(weeks_in_late*this.getCopy().getGame().getCreditCost());
 				this.borrower.setCredits(this.borrower.getCredits()-total_creditCost);
 				this.borrower.UpdatePlayer();
 				this.lender.setCredits(this.lender.getCredits()+total_creditCost);
 				this.lender.UpdatePlayer();
 			}
-			else {
-				total_creditCost = weeks*this.getCopy().getGame().getCreditCost();
-				this.borrower.setCredits(this.borrower.getCredits()-total_creditCost);
-				this.borrower.UpdatePlayer();
-				this.lender.setCredits(this.lender.getCredits()+total_creditCost);
-				this.lender.UpdatePlayer();
-		 	}
+		return total_creditCost;
 		}
-	}
 	
 	public boolean EndLoan() {
 		this.CalculateBalance();
