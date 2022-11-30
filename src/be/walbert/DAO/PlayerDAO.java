@@ -78,9 +78,10 @@ public class PlayerDAO extends DAO<Player>{
 	public boolean update(Player newplayer) { 
 		try{
 			/*Requete pour mettre à jour les données dans la table Player*/
-			PreparedStatement ps = connect.prepareStatement("UPDATE Player SET credit = ? WHERE id_users = ?");
+			PreparedStatement ps = connect.prepareStatement("UPDATE Player SET credit = ?, birthday_bonus = ? WHERE id_users = ?");
 			ps.setInt(1, newplayer.getCredits());
-			ps.setInt(2, newplayer.getId_users());
+			ps.setBoolean(2, newplayer.GetBirthday_bonus());
+			ps.setInt(3, newplayer.getId_users());
 			
 			ps.execute();	/*Exécuter la requête*/
 			ps.close(); 
