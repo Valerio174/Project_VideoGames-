@@ -18,6 +18,7 @@ public class Player extends User implements Serializable{
 	private String pseudo;
 	private LocalDate registrationDate;
 	private LocalDate dateOfBirth;
+	private boolean birthday_bonus;
 	private ArrayList<Loan> lender_list;
 	private ArrayList<Loan> borrow_list;
 	private ArrayList<Copy> copy_list;
@@ -51,6 +52,12 @@ public class Player extends User implements Serializable{
 		this.dateOfBirth = dateOfBirth;
 	}
 	
+	public boolean isBirthday_bonus() {
+		return birthday_bonus;
+	}
+	public void setBirthday_bonus(boolean birthday_bonus) {
+		this.birthday_bonus = birthday_bonus;
+	}
 	public ArrayList<Loan> getBorrow_list() {
 		return borrow_list;
 	}
@@ -77,25 +84,27 @@ public class Player extends User implements Serializable{
 	}
 	
 	/*Constructeurs*/
-	public Player(int id_users, String username, String password, int credits, String pseudo, LocalDate registrationDate,
+	public Player(int id_users, String username, String password, int credits, String pseudo, boolean birthday_bonus, LocalDate registrationDate,
 			LocalDate dateOfBirth) {
 		super(id_users, username, password);
 		this.credits = credits;
 		this.pseudo = pseudo;
 		this.registrationDate = registrationDate;
 		this.dateOfBirth = dateOfBirth;
+		this.birthday_bonus = birthday_bonus;
 		this.lender_list = new ArrayList<>();
 		this.borrow_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
 		this.copy_list = new ArrayList<>();
 	}
-	public Player(  String username, String password, int credits, String pseudo, LocalDate registrationDate,
+	public Player(  String username, String password, int credits, String pseudo, boolean birthday_bonus, LocalDate registrationDate,
 			LocalDate dateOfBirth) {
 		super( username, password);
 		this.credits = credits;
 		this.pseudo = pseudo;
 		this.registrationDate = registrationDate;
 		this.dateOfBirth = dateOfBirth;
+		this.birthday_bonus = birthday_bonus;
 		this.lender_list = new ArrayList<>();
 		this.borrow_list = new ArrayList<>();
 		this.booking_list = new ArrayList<>();
