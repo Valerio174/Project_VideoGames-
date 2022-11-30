@@ -8,12 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import be.walbert.classes.Administrator;
+import be.walbert.classes.HistoryCredits;
 import be.walbert.classes.VideoGame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -172,8 +174,11 @@ public class SetCreditsPage extends JFrame {
 					lbl_FieldEmpty.setText("Field is empty !");
 				}
 				else {
-					
-					if(videogame_selected.ModifyCredits(Integer.parseInt(tf_NewCredits.getText()))) {	/*Si la mise à jour des credits s'est faite correctement*/
+					HistoryCredits history = new HistoryCredits(LocalDate.now(), videogame_selected.getCreditCost(),Integer.parseInt(tf_NewCredits.getText()) ,
+							videogame_selected);
+					if(history.ModifyCredits()) {	/*Si la mise à jour des credits s'est faite correctement*/
+						videogame_selected.setCreditCost(history.getNew_creditCost());
+						videogame_selected.UpdateGame();
 						AdministratorPage adminpage = new AdministratorPage(admin);
 						adminpage.setVisible(true);
 						adminpage.lbl_Success.setText("Great you have updated the credits !");
