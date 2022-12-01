@@ -51,7 +51,7 @@ public class LoanPage extends JFrame {
 	 */
 	public LoanPage(Player player, Copy current_copy) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1247, 678);
+		setBounds(30, 30, 592, 570);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -62,7 +62,7 @@ public class LoanPage extends JFrame {
 		JLabel lbl_TitleLoan = new JLabel("Make a loan");
 		lbl_TitleLoan.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_TitleLoan.setFont(new Font("Segoe UI Black", Font.ITALIC, 35));
-		lbl_TitleLoan.setBounds(31, 11, 989, 100);
+		lbl_TitleLoan.setBounds(30, 30, 602, 100);
 		contentPane.add(lbl_TitleLoan);
 		
 		JLabel lblDescriptionOfThe = new JLabel("Description of the copy:");
@@ -74,19 +74,19 @@ public class LoanPage extends JFrame {
 		JLabel lbl_Game = new JLabel("Game:");
 		lbl_Game.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_Game.setFont(new Font("Segoe UI Semibold", Font.ITALIC, 20));
-		lbl_Game.setBounds(250, 194, 513, 61);
+		lbl_Game.setBounds(31, 189, 513, 61);
 		contentPane.add(lbl_Game);
 		
 		JLabel lbl_Lender = new JLabel("Lender:");
 		lbl_Lender.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_Lender.setFont(new Font("Segoe UI Semibold", Font.ITALIC, 20));
-		lbl_Lender.setBounds(814, 194, 409, 61);
+		lbl_Lender.setBounds(30, 310, 409, 61);
 		contentPane.add(lbl_Lender);
 		
 		JLabel lbl_Credits = new JLabel("Credits:");
 		lbl_Credits.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_Credits.setFont(new Font("Segoe UI Semibold", Font.ITALIC, 20));
-		lbl_Credits.setBounds(31, 262, 194, 61);
+		lbl_Credits.setBounds(31, 249, 194, 61);
 		contentPane.add(lbl_Credits);
 		
 		/*Attributions des valeurs de la copy choisie*/
@@ -95,24 +95,24 @@ public class LoanPage extends JFrame {
 		lbl_Credits.setText(lbl_Credits.getText() + " " + current_copy.getGame().getCreditCost());
 		
 		JDateChooser tf_enddate = new JDateChooser();
-		tf_enddate.setBounds(232, 405, 161, 34);
+		tf_enddate.setBounds(174, 436, 161, 34);
 		contentPane.add(tf_enddate);
 		
 		JLabel lbl_TitleChooseDate = new JLabel("Choose the dates:");
 		lbl_TitleChooseDate.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_TitleChooseDate.setFont(new Font("Segoe UI Semibold", Font.ITALIC, 25));
-		lbl_TitleChooseDate.setBounds(31, 317, 295, 61);
+		lbl_TitleChooseDate.setBounds(31, 362, 295, 61);
 		contentPane.add(lbl_TitleChooseDate);
 		
 		JLabel lbl_EndDate = new JLabel("End Date:");
 		lbl_EndDate.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_EndDate.setFont(new Font("Segoe UI Semibold", Font.ITALIC, 20));
-		lbl_EndDate.setBounds(31, 403, 169, 36);
+		lbl_EndDate.setBounds(31, 434, 137, 36);
 		contentPane.add(lbl_EndDate);
 		
 		JLabel lbl_ErrorEmpty = new JLabel("");
 		lbl_ErrorEmpty.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbl_ErrorEmpty.setBounds(53, 536, 418, 29);
+		lbl_ErrorEmpty.setBounds(30, 499, 418, 29);
 		contentPane.add(lbl_ErrorEmpty);
 		
 		JButton btn_SendLoan = new JButton("Send Loan");
@@ -144,7 +144,7 @@ public class LoanPage extends JFrame {
 			}
 		});
 		btn_SendLoan.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_SendLoan.setBounds(232, 508, 137, 34);
+		btn_SendLoan.setBounds(393, 436, 137, 34);
 		contentPane.add(btn_SendLoan); 
 		
 	}

@@ -59,7 +59,7 @@ public class AddGamePage extends JFrame {
 	 */
 	public AddGamePage(Administrator admin) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1136, 723);
+		setBounds(30, 30, 1136, 723);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

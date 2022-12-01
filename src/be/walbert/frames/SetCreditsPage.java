@@ -55,7 +55,7 @@ public class SetCreditsPage extends JFrame {
 	 */
 	public SetCreditsPage(Administrator admin, VideoGame videogame_selected) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1129, 714);
+		setBounds(30, 30, 676, 609);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -74,7 +74,7 @@ public class SetCreditsPage extends JFrame {
 				dispose();
 			}
 		});
-		lbl_icon_back.setBounds(21, 589, 50, 50); 
+		lbl_icon_back.setBounds(21, 507, 50, 50); 
 		lbl_icon_back.setIcon(new ImageIcon(img));
 		contentPane.add(lbl_icon_back);
 		
@@ -82,13 +82,13 @@ public class SetCreditsPage extends JFrame {
 		JLabel lbl_TitleModify = new JLabel("Modify credits of a game");
 		lbl_TitleModify.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_TitleModify.setFont(new Font("Segoe UI Black", Font.PLAIN, 25));
-		lbl_TitleModify.setBounds(349, 11, 395, 97);
+		lbl_TitleModify.setBounds(86, 11, 395, 97);
 		contentPane.add(lbl_TitleModify);
 		
 		JLabel lbl_LogOut = new JLabel("Log Out");
 		lbl_LogOut.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_LogOut.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbl_LogOut.setBounds(1022, 11, 99, 50);
+		lbl_LogOut.setBounds(502, 0, 99, 50);
 		contentPane.add(lbl_LogOut);
 		
 		/*Bouton deconnexion(Log Out)*/
@@ -103,49 +103,49 @@ public class SetCreditsPage extends JFrame {
 				dispose();
 			}
 		});
-		lbl_icon_logout.setBounds(1051, 48, 70, 90); 
+		lbl_icon_logout.setBounds(528, 40, 70, 90); 
 		lbl_icon_logout.setIcon(new ImageIcon(icon_logout));
 		contentPane.add(lbl_icon_logout);
 		
 		JLabel lbl_Name = new JLabel("Name: ");
 		lbl_Name.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		lbl_Name.setBounds(60, 141, 684, 41);
+		lbl_Name.setBounds(21, 141, 593, 41);
 		lbl_Name.setText(lbl_Name.getText() + videogame_selected.getName());
 		contentPane.add(lbl_Name);
 		
 		JLabel lbl_Console = new JLabel("Console: ");
 		lbl_Console.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		lbl_Console.setBounds(60, 235, 684, 41);
+		lbl_Console.setBounds(21, 217, 593, 41);
 		lbl_Console.setText(lbl_Console.getText() + videogame_selected.getConsole());
 		contentPane.add(lbl_Console);
 		
 		JLabel lbl_Version = new JLabel("Version: ");
 		lbl_Version.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		lbl_Version.setBounds(60, 334, 684, 41);
+		lbl_Version.setBounds(21, 299, 593, 41);
 		lbl_Version.setText(lbl_Version.getText() + videogame_selected.getVersion());
 		contentPane.add(lbl_Version);
 		
 		JLabel lbl_CurrentCredits = new JLabel("Current credits: ");
 		lbl_CurrentCredits.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		lbl_CurrentCredits.setBounds(60, 447, 273, 41);
+		lbl_CurrentCredits.setBounds(21, 383, 216, 41);
 		lbl_CurrentCredits.setText(lbl_CurrentCredits.getText() + videogame_selected.getCreditCost());
 		contentPane.add(lbl_CurrentCredits);
 		
 		JLabel lbl_CurrentCredits_1 = new JLabel("New credits  (min 1/max 5):");
 		lbl_CurrentCredits_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		lbl_CurrentCredits_1.setBounds(349, 447, 267, 41);
+		lbl_CurrentCredits_1.setBounds(251, 383, 267, 41);
 		contentPane.add(lbl_CurrentCredits_1);
 		
 		JLabel lbl_FieldEmpty = new JLabel("");
 		lbl_FieldEmpty.setForeground(new Color(166, 0, 0));
 		lbl_FieldEmpty.setFont(new Font("Segoe UI Semibold", Font.ITALIC, 20));
-		lbl_FieldEmpty.setBounds(796, 452, 175, 41);
+		lbl_FieldEmpty.setBounds(373, 299, 225, 41);
 		contentPane.add(lbl_FieldEmpty);
 		
 		JLabel lbl_ErrorUpdate = new JLabel("");
 		lbl_ErrorUpdate.setFont(new Font("Segoe UI Semibold", Font.ITALIC, 20));
 		lbl_ErrorUpdate.setForeground(new Color(166, 0, 0));
-		lbl_ErrorUpdate.setBounds(60, 625, 371, 41);
+		lbl_ErrorUpdate.setBounds(21, 452, 371, 41);
 		contentPane.add(lbl_ErrorUpdate);
 		
 		tf_NewCredits = new JTextField();
@@ -162,7 +162,7 @@ public class SetCreditsPage extends JFrame {
 				}
 			}
 		});
-		tf_NewCredits.setBounds(632, 452, 112, 41);
+		tf_NewCredits.setBounds(528, 385, 112, 41);
 		contentPane.add(tf_NewCredits);
 		tf_NewCredits.setColumns(10);
 		
@@ -192,7 +192,7 @@ public class SetCreditsPage extends JFrame {
 			}
 		});
 		btn_SetCredits.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		btn_SetCredits.setBounds(632, 557, 138, 41);
+		btn_SetCredits.setBounds(502, 452, 138, 41);
 		contentPane.add(btn_SetCredits);
 		
 	}

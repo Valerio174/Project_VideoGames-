@@ -58,7 +58,7 @@ public class AddCopyPage extends JFrame {
 	 */
 	public AddCopyPage(Player player) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1176, 690);
+		setBounds(30, 30, 859, 599);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -78,7 +78,7 @@ public class AddCopyPage extends JFrame {
 				dispose();
 			}
 		});
-		lbl_icon_back.setBounds(20, 592, 50, 50); 
+		lbl_icon_back.setBounds(10, 498, 50, 50); 
 		lbl_icon_back.setIcon(new ImageIcon(icon_back));
 		contentPane.add(lbl_icon_back);
 		
@@ -94,14 +94,14 @@ public class AddCopyPage extends JFrame {
 				dispose();
 			}
 		});
-		lbl_icon_logout.setBounds(1051, 48, 70, 90); 
+		lbl_icon_logout.setBounds(757, 54, 70, 90); 
 		lbl_icon_logout.setIcon(new ImageIcon(icon_logout));
 		contentPane.add(lbl_icon_logout);
 		
 		JLabel lbl_LogOut = new JLabel("Log Out");
 		lbl_LogOut.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_LogOut.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbl_LogOut.setBounds(1022, 11, 99, 50);
+		lbl_LogOut.setBounds(733, 11, 99, 50);
 		contentPane.add(lbl_LogOut);
 		
 		/*Liste des jeux videos*/
@@ -127,7 +127,7 @@ public class AddCopyPage extends JFrame {
 	       /*Creation du curseur du JTable*/
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setSize(780, 332);
-        scrollPane.setLocation(47, 180);
+        scrollPane.setLocation(47, 155);
         contentPane.add(scrollPane);
         
         	/*Creation du JTable*/
@@ -136,13 +136,13 @@ public class AddCopyPage extends JFrame {
         
         JLabel lbl_TitleAddCopy = new JLabel("Please choose a game to add a copy:");
         lbl_TitleAddCopy.setFont(new Font("Segoe UI Semibold", Font.ITALIC, 18));
-        lbl_TitleAddCopy.setBounds(47, 139, 463, 30);
+        lbl_TitleAddCopy.setBounds(47, 83, 463, 30);
         contentPane.add(lbl_TitleAddCopy);
         
         JButton btn_AddCopy = new JButton("Add a copy");
         
         btn_AddCopy.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 18));
-        btn_AddCopy.setBounds(859, 482, 147, 30);
+        btn_AddCopy.setBounds(680, 510, 147, 30);
         btn_AddCopy.setVisible(false);
         contentPane.add(btn_AddCopy);
         

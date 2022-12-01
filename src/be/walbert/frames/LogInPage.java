@@ -60,7 +60,7 @@ public class LogInPage extends JFrame {
 	 */
 	public LogInPage() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1230, 758);
+		setBounds(30, 30, 1199, 562);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(40, 40, 40));
 		contentPane.setForeground(new Color(0, 0, 0));
@@ -71,7 +71,7 @@ public class LogInPage extends JFrame {
 		
 		/*Image de couverture (3 consoles)*/
 		JLabel lbl_image_HomePage_Consoles = new JLabel("");
-		lbl_image_HomePage_Consoles.setBounds(0, 0, 644, 472); 
+		lbl_image_HomePage_Consoles.setBounds(0, 0, 644, 340); 
 		lbl_image_HomePage_Consoles.setIcon(new ImageIcon(img));
 		contentPane.add(lbl_image_HomePage_Consoles);
 		
@@ -82,7 +82,7 @@ public class LogInPage extends JFrame {
 		lbl_home_page_title_Welcome.setForeground(new Color(255, 255, 255));
 		lbl_home_page_title_Welcome.setFont(new Font("Sitka Small", Font.BOLD, 45));
 		lbl_home_page_title_Welcome.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_home_page_title_Welcome.setBounds(0, 472, 644, 88);
+		lbl_home_page_title_Welcome.setBounds(0, 349, 644, 88);
 		contentPane.add(lbl_home_page_title_Welcome);
 		
 		/*Ajout du panel de couleur*/
@@ -95,20 +95,20 @@ public class LogInPage extends JFrame {
 		/*Label de username*/
 		JLabel lbl_username = new JLabel("Username :");
 		lbl_username.setFont(new Font("Sitka Small", Font.BOLD, 25));
-		lbl_username.setBounds(26, 225, 156, 34);
+		lbl_username.setBounds(26, 150, 156, 34);
 		panel.add(lbl_username);
 		
 		/*Label de password*/
 		JLabel lbl_password = new JLabel("Password :");
 		lbl_password.setToolTipText("");
 		lbl_password.setFont(new Font("Sitka Small", Font.BOLD, 25));
-		lbl_password.setBounds(26, 372, 156, 34);
+		lbl_password.setBounds(26, 244, 156, 34);
 		panel.add(lbl_password);
 		
 		/*Saisie du username*/
 		tf_username = new JTextField();
 		tf_username.setFont(new Font("Sitka Small", Font.PLAIN, 25));
-		tf_username.setBounds(256, 225, 246, 34);
+		tf_username.setBounds(256, 150, 246, 34);
 		panel.add(tf_username);
 		tf_username.setColumns(10);
 		
@@ -116,7 +116,7 @@ public class LogInPage extends JFrame {
 		tf_password = new JPasswordField();
 		tf_password.setFont(new Font("Sitka Small", Font.PLAIN, 25));
 		tf_password.setColumns(10);
-		tf_password.setBounds(256, 372, 246, 34);
+		tf_password.setBounds(256, 244, 246, 34);
 		panel.add(tf_password);
 		
 		/*Zone d'affichage*/
@@ -158,7 +158,7 @@ public class LogInPage extends JFrame {
 		btn_Login.setForeground(new Color(255, 255, 255));
 		btn_Login.setBackground(new Color(92, 92, 92));
 		btn_Login.setFont(new Font("Sitka Small", Font.PLAIN, 25));
-		btn_Login.setBounds(256, 522, 246, 48);
+		btn_Login.setBounds(256, 339, 246, 48);
 		panel.add(btn_Login);
 		
 		/*Bouton Back pour retourner vers la Home Page*/
@@ -173,12 +173,8 @@ public class LogInPage extends JFrame {
 		btn_BackHome.setForeground(Color.WHITE);
 		btn_BackHome.setFont(new Font("Sitka Small", Font.PLAIN, 25));
 		btn_BackHome.setBackground(new Color(147, 0, 0));
-		btn_BackHome.setBounds(26, 638, 142, 48);
+		btn_BackHome.setBounds(26, 368, 142, 48);
 		panel.add(btn_BackHome);
-		
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(554, 0, 17, 721);
-		panel.add(scrollBar);
 		
 		/*Label sous-titre "on"*/
 		JLabel lbl_home_page_title_Welcome2 = new JLabel("on");
@@ -186,7 +182,7 @@ public class LogInPage extends JFrame {
 		lbl_home_page_title_Welcome2.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_home_page_title_Welcome2.setFont(new Font("Sitka Small", Font.PLAIN, 30));
 		lbl_home_page_title_Welcome2.setForeground(new Color(255, 255, 255));
-		lbl_home_page_title_Welcome2.setBounds(0, 558, 644, 38);
+		lbl_home_page_title_Welcome2.setBounds(0, 427, 644, 38);
 		contentPane.add(lbl_home_page_title_Welcome2);
 		
 		/*Label Video Games Loan Website*/
@@ -196,7 +192,7 @@ public class LogInPage extends JFrame {
 		lbl_home_page_title_Welcome3.setForeground(Color.WHITE);
 		lbl_home_page_title_Welcome3.setFont(new Font("Sitka Small", Font.BOLD | Font.ITALIC, 35));
 		lbl_home_page_title_Welcome3.setBackground(SystemColor.menu);
-		lbl_home_page_title_Welcome3.setBounds(0, 607, 644, 88);
+		lbl_home_page_title_Welcome3.setBounds(0, 458, 644, 88);
 		contentPane.add(lbl_home_page_title_Welcome3);
 		
 	}

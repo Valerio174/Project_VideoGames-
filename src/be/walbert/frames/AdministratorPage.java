@@ -61,7 +61,7 @@ public class AdministratorPage extends JFrame {
 	public AdministratorPage(Administrator admin) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1145, 738);
+		setBounds(30, 30, 1058, 676);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -138,14 +138,14 @@ public class AdministratorPage extends JFrame {
 				dispose();
 			}
 		});
-		lbl_icon_logout.setBounds(1051, 48, 70, 90); 
+		lbl_icon_logout.setBounds(943, 63, 70, 90); 
 		lbl_icon_logout.setIcon(new ImageIcon(icon_logout));
 		contentPane.add(lbl_icon_logout);
 		
 		JLabel lbl_LogOut = new JLabel("Log Out");
 		lbl_LogOut.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_LogOut.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbl_LogOut.setBounds(1022, 11, 99, 50);
+		lbl_LogOut.setBounds(924, 11, 99, 50);
 		contentPane.add(lbl_LogOut);
 		
 		JLabel lbl_WelcomeAdmin_1 = new JLabel("Please choose game to modify his credits:");
@@ -163,13 +163,13 @@ public class AdministratorPage extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewButton.setBounds(913, 270, 160, 33);
+		btnNewButton.setBounds(862, 253, 160, 33);
 		contentPane.add(btnNewButton);
 		
 		lbl_Success = new JLabel("");
 		lbl_Success.setFont(new Font("Segoe UI Black", Font.ITALIC, 20));
 		lbl_Success.setForeground(new Color(0, 128, 0));
-		lbl_Success.setBounds(45, 601, 780, 71);
+		lbl_Success.setBounds(45, 543, 780, 71);
 		contentPane.add(lbl_Success);
 		
 		JButton btn_AddConsole = new JButton("Add Console");
@@ -181,7 +181,7 @@ public class AdministratorPage extends JFrame {
 			}
 		});
 		btn_AddConsole.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_AddConsole.setBounds(913, 344, 160, 33);
+		btn_AddConsole.setBounds(862, 337, 160, 33);
 		contentPane.add(btn_AddConsole);
 		
 		JButton btn_AddVersion = new JButton("Add Version");
@@ -193,13 +193,13 @@ public class AdministratorPage extends JFrame {
 			}
 		});
 		btn_AddVersion.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_AddVersion.setBounds(913, 419, 160, 33);
+		btn_AddVersion.setBounds(862, 422, 160, 33);
 		contentPane.add(btn_AddVersion);
 		
 		JLabel lbl_background = new JLabel("");
 		lbl_background.setIcon(new ImageIcon(background_admin_page));
 		lbl_background.setBackground(new Color(255, 128, 128));
-		lbl_background.setBounds(10, 11, this.getWidth(), this.getHeight());
+		lbl_background.setBounds(10, 11, 1111, 690);
 		contentPane.add(lbl_background);
 	}
 }

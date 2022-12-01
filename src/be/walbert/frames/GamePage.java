@@ -52,7 +52,7 @@ public class GamePage extends JFrame {
 	 */
 	public GamePage(Player player, VideoGame videogame_selected) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 1079, 694); 
+		setBounds(30, 30, 673, 576); 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -71,7 +71,7 @@ public class GamePage extends JFrame {
 				dispose();
 			}
 		});
-		lbl_icon_back.setBounds(21, 572, 50, 50); 
+		lbl_icon_back.setBounds(10, 481, 50, 50); 
 		lbl_icon_back.setIcon(new ImageIcon(img));
 		contentPane.add(lbl_icon_back);
 		
@@ -79,7 +79,7 @@ public class GamePage extends JFrame {
 		JLabel lbl_TitleDescription = new JLabel("Description of the game");
 		lbl_TitleDescription.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_TitleDescription.setFont(new Font("Segoe UI Black", Font.ITALIC, 35));
-		lbl_TitleDescription.setBounds(31, 11, 989, 100);
+		lbl_TitleDescription.setBounds(24, 2, 619, 100);
 		contentPane.add(lbl_TitleDescription);
 		
 		JLabel lbl_TitleName = new JLabel("Name:");
@@ -114,7 +114,7 @@ public class GamePage extends JFrame {
 		
 		JButton btn_LoanGame = new JButton("Loan game");
 		btn_LoanGame.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_LoanGame.setBounds(341, 511, 148, 50);
+		btn_LoanGame.setBounds(148, 409, 148, 50);
 		contentPane.add(btn_LoanGame);
 		btn_LoanGame.setVisible(false);
 		
@@ -134,7 +134,7 @@ public class GamePage extends JFrame {
 			}
 		});
 		btn_BookingGame.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_BookingGame.setBounds(534, 511, 137, 50);
+		btn_BookingGame.setBounds(370, 409, 137, 50);
 		contentPane.add(btn_BookingGame);
 		btn_BookingGame.setVisible(false);
 		
@@ -151,13 +151,8 @@ public class GamePage extends JFrame {
 		
 		JLabel lbl_Loan_Or_Book = new JLabel("");
 		lbl_Loan_Or_Book.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		lbl_Loan_Or_Book.setBounds(21, 396, 633, 38);
+		lbl_Loan_Or_Book.setBounds(10, 331, 633, 50);
 		contentPane.add(lbl_Loan_Or_Book);
-		
-		JLabel lbl_test = new JLabel("");
-		lbl_test.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		lbl_test.setBounds(21, 498, 999, 38);
-		contentPane.add(lbl_test);
 		
 		Copy current_copy = videogame_selected.CopyAvailable(player);
     	   

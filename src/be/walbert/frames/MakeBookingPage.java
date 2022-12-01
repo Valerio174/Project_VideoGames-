@@ -54,7 +54,7 @@ public class MakeBookingPage extends JFrame {
 	 */
 	public MakeBookingPage(VideoGame videogame_selected, Player player) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1148, 736);
+		setBounds(30, 30, 716, 449);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -72,7 +72,7 @@ public class MakeBookingPage extends JFrame {
 				dispose();
 			}
 		});
-		lbl_icon_back.setBounds(21, 620, 50, 50); 
+		lbl_icon_back.setBounds(21, 339, 50, 50); 
 		lbl_icon_back.setIcon(new ImageIcon(img));
 		contentPane.add(lbl_icon_back);
 		
@@ -89,24 +89,24 @@ public class MakeBookingPage extends JFrame {
 			}
 		});
 		contentPane.setLayout(null);
-		lbl_icon_logout.setBounds(1031, 38, 64, 64); 
+		lbl_icon_logout.setBounds(615, 42, 64, 64); 
 		lbl_icon_logout.setIcon(new ImageIcon(icon_logout));
 		contentPane.add(lbl_icon_logout);
 		
 		JLabel lbl_LogOut = new JLabel("Log Out");
 		lbl_LogOut.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_LogOut.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbl_LogOut.setBounds(1025, 11, 70, 25);
+		lbl_LogOut.setBounds(609, 11, 70, 25);
 		contentPane.add(lbl_LogOut);
 		
 		JLabel lbl_TitleMakeBooking = new JLabel("Please indicate the number of weeks you want to loan:\r\n\r\n");
 		lbl_TitleMakeBooking.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		lbl_TitleMakeBooking.setBounds(46, 69, 532, 64);
+		lbl_TitleMakeBooking.setBounds(21, 69, 532, 64);
 		contentPane.add(lbl_TitleMakeBooking);
 		
 		JLabel lbl_NumberofWeeks = new JLabel("Number of weeks (max 5 weeks):");
 		lbl_NumberofWeeks.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 18));
-		lbl_NumberofWeeks.setBounds(46, 197, 280, 50);
+		lbl_NumberofWeeks.setBounds(21, 197, 280, 50);
 		contentPane.add(lbl_NumberofWeeks);
 		
 		tf_NumberofWeeks = new JTextField();
@@ -123,7 +123,7 @@ public class MakeBookingPage extends JFrame {
 				}
 			}
 		});
-		tf_NumberofWeeks.setBounds(356, 203, 112, 41);
+		tf_NumberofWeeks.setBounds(332, 203, 112, 41);
 		contentPane.add(tf_NumberofWeeks);
 		tf_NumberofWeeks.setColumns(10);
 		

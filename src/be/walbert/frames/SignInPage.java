@@ -72,7 +72,7 @@ public class SignInPage extends JFrame {
 	public SignInPage() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1193, 711);
+		setBounds(30, 30, 883, 676);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -144,7 +144,7 @@ public class SignInPage extends JFrame {
 		
 		JLabel lbl_ErrorEmpty = new JLabel("");
 		lbl_ErrorEmpty.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbl_ErrorEmpty.setBounds(53, 536, 418, 29);
+		lbl_ErrorEmpty.setBounds(53, 515, 418, 50);
 		contentPane.add(lbl_ErrorEmpty);
 		
 		JButton btnNewButton = new JButton("Sign In");

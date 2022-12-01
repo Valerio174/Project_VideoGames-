@@ -74,7 +74,7 @@ public class CatalogVideoGames extends JFrame {
 	 */
 	public CatalogVideoGames(Player player) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 1169, 765); 
+		setBounds(30, 30, 1035, 546); 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -88,7 +88,7 @@ public class CatalogVideoGames extends JFrame {
 	 
 		JLabel lbl_Username = new JLabel("");
 		lbl_Username.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lbl_Username.setBounds(47, 33, 1074, 49);
+		lbl_Username.setBounds(0, 0, 1074, 49);
 		contentPane.add(lbl_Username);
 		lbl_Username.setText("Welcome on the catalog of VideoGames " + player.getUsername() + " you have " + player.getCredits()+" credits");
 		
@@ -104,14 +104,14 @@ public class CatalogVideoGames extends JFrame {
 				dispose();
 			}
 		});
-		lbl_icon_logout.setBounds(1051, 48, 70, 90); 
+		lbl_icon_logout.setBounds(878, 40, 70, 90); 
 		lbl_icon_logout.setIcon(new ImageIcon(icon_logout));
 		contentPane.add(lbl_icon_logout);
 		
 		JLabel lbl_LogOut = new JLabel("Log Out");
 		lbl_LogOut.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_LogOut.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbl_LogOut.setBounds(1022, 11, 99, 50);
+		lbl_LogOut.setBounds(860, 11, 99, 40);
 		contentPane.add(lbl_LogOut);
 		
 		/*Liste des jeux videos*/
@@ -136,8 +136,8 @@ public class CatalogVideoGames extends JFrame {
 	        
 	       /*Creation du curseur du JTable*/
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setSize(780, 284);
-        scrollPane.setLocation(47, 180);
+        scrollPane.setSize(786, 247);
+        scrollPane.setLocation(20, 134);
         contentPane.add(scrollPane);
         
         	/*Creation du JTable*/
@@ -170,7 +170,7 @@ public class CatalogVideoGames extends JFrame {
 	    lbl_register_succed = new JLabel("");
 		lbl_register_succed.setFont(new Font("Segoe UI Black", Font.ITALIC, 25));
 		lbl_register_succed.setForeground(new Color(0, 128, 0));
-		lbl_register_succed.setBounds(25, 541, 802, 71);
+		lbl_register_succed.setBounds(47, 425, 802, 71);
 		contentPane.add(lbl_register_succed);
 		
 		JButton btn_MyCopies = new JButton("My Copies");
@@ -182,7 +182,7 @@ public class CatalogVideoGames extends JFrame {
 			}
 		});
 		btn_MyCopies.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btn_MyCopies.setBounds(860, 209, 127, 40);
+		btn_MyCopies.setBounds(849, 134, 135, 40);
 		contentPane.add(btn_MyCopies);
 		
 		JButton btn_MyBorrows = new JButton("My Borrows");
@@ -194,7 +194,7 @@ public class CatalogVideoGames extends JFrame {
 			}
 		});
 		btn_MyBorrows.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btn_MyBorrows.setBounds(1010, 209, 135, 40);
+		btn_MyBorrows.setBounds(849, 206, 135, 40);
 		contentPane.add(btn_MyBorrows);
 		
 		JButton btn_MyLoans = new JButton("My Loans");
@@ -206,7 +206,7 @@ public class CatalogVideoGames extends JFrame {
 			}
 		});
 		btn_MyLoans.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btn_MyLoans.setBounds(860, 302, 135, 40);
+		btn_MyLoans.setBounds(849, 281, 135, 40);
 		contentPane.add(btn_MyLoans);
 		
 		JButton btn_MyBookings = new JButton("My Bookings");
@@ -218,7 +218,7 @@ public class CatalogVideoGames extends JFrame {
 			}
 		});
 		btn_MyBookings.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btn_MyBookings.setBounds(1010, 302, 135, 40);
+		btn_MyBookings.setBounds(849, 354, 135, 40);
 		contentPane.add(btn_MyBookings);
 	}
 }

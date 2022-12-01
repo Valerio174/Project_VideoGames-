@@ -54,7 +54,7 @@ public class AddVersionPage extends JFrame {
 	 */
 	public AddVersionPage(Administrator admin) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1171, 712);
+		setBounds(30, 30, 1171, 712);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

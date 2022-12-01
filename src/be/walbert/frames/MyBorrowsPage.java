@@ -48,7 +48,7 @@ public class MyBorrowsPage extends JFrame {
 	 */
 	public MyBorrowsPage(Player player) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1180, 735);
+		setBounds(30, 30, 767, 532);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -66,7 +66,7 @@ public class MyBorrowsPage extends JFrame {
 				dispose();
 			}
 		});
-		lbl_icon_back.setBounds(21, 620, 50, 50); 
+		lbl_icon_back.setBounds(22, 424, 50, 50); 
 		lbl_icon_back.setIcon(new ImageIcon(icon_back));
 		contentPane.add(lbl_icon_back);
 		
@@ -82,14 +82,14 @@ public class MyBorrowsPage extends JFrame {
 				dispose();
 			}
 		});
-		lbl_icon_logout.setBounds(1051, 48, 70, 90); 
+		lbl_icon_logout.setBounds(653, 34, 70, 90); 
 		lbl_icon_logout.setIcon(new ImageIcon(icon_logout));
 		contentPane.add(lbl_icon_logout);
 		
 		JLabel lbl_LogOut = new JLabel("Log Out");
 		lbl_LogOut.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_LogOut.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbl_LogOut.setBounds(1022, 11, 99, 50);
+		lbl_LogOut.setBounds(633, 0, 99, 50);
 		contentPane.add(lbl_LogOut);
 		
 			/*Noms des colonnes du tableau*/

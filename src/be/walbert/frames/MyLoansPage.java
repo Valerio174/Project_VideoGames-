@@ -56,7 +56,7 @@ public class MyLoansPage extends JFrame {
 	 */
 	public MyLoansPage(Player player) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1231, 771);
+		setBounds(30, 30, 756, 532);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -74,7 +74,7 @@ public class MyLoansPage extends JFrame {
 				dispose();
 			}
 		});
-		lbl_icon_back.setBounds(21, 620, 50, 50); 
+		lbl_icon_back.setBounds(22, 416, 50, 50); 
 		lbl_icon_back.setIcon(new ImageIcon(icon_back));
 		contentPane.add(lbl_icon_back);
 		
@@ -90,19 +90,19 @@ public class MyLoansPage extends JFrame {
 				dispose();
 			}
 		});
-		lbl_icon_logout.setBounds(1051, 48, 70, 90); 
+		lbl_icon_logout.setBounds(597, 34, 70, 90); 
 		lbl_icon_logout.setIcon(new ImageIcon(icon_logout));
 		contentPane.add(lbl_icon_logout);
 		
 		JLabel lbl_LogOut = new JLabel("Log Out");
 		lbl_LogOut.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_LogOut.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbl_LogOut.setBounds(1022, 11, 99, 50);
+		lbl_LogOut.setBounds(575, 0, 99, 50);
 		contentPane.add(lbl_LogOut);
 		
         JButton btn_EndLoan = new JButton("End Loan");
         btn_EndLoan.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-        btn_EndLoan.setBounds(630, 342, 121, 29);
+        btn_EndLoan.setBounds(597, 336, 121, 29);
         btn_EndLoan.setVisible(false);
         contentPane.add(btn_EndLoan);
         
