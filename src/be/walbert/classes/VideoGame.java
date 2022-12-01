@@ -129,15 +129,21 @@ public class VideoGame implements Serializable{
 		}
 	}
 	public Copy CopyAvailable(Player player) {
-		
+		Copy current_copy = new Copy();
 		if(this.getList_copy().size() != 0) {
-			Random random = new Random();
-			int nb;
-			nb = random.nextInt(this.getList_copy().size());
-			if(this.getList_copy().get(nb).getOwner().getId_users() != player.getId_users()) {
-				Copy current_copy = this.getList_copy().get(nb);
-				return current_copy;
+			
+			do {
+				Random random = new Random();
+				int nb;
+				nb = random.nextInt(this.getList_copy().size());
+				
+				if(this.getList_copy().get(nb).getOwner().getId_users() != player.getId_users()) {
+					current_copy = this.getList_copy().get(nb);
+				}
 			}
+			while(!current_copy.IsAvailable());
+			return current_copy;
+
 		}
 			
 		return null;
