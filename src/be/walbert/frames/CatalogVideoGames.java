@@ -90,7 +90,7 @@ public class CatalogVideoGames extends JFrame {
 		lbl_Username.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lbl_Username.setBounds(47, 33, 1074, 49);
 		contentPane.add(lbl_Username);
-		lbl_Username.setText("Welcome on the catalog of VideoGames " + player.getUsername());
+		lbl_Username.setText("Welcome on the catalog of VideoGames " + player.getUsername() + " you have " + player.getCredits()+" credits");
 		
 		/*Bouton deconnexion(Log Out)*/
 		JLabel lbl_icon_logout = new JLabel("");
