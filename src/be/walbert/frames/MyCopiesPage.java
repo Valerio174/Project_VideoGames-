@@ -136,7 +136,7 @@ public class MyCopiesPage extends JFrame {
         	}
         });
         btn_AddCopy.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
-        btn_AddCopy.setBounds(502, 378, 129, 29);
+        btn_AddCopy.setBounds(502, 378, 153, 29);
         contentPane.add(btn_AddCopy);
         
 	}
