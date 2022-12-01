@@ -176,7 +176,7 @@ public class AdministratorPage extends JFrame {
 		lbl_Success = new JLabel("");
 		lbl_Success.setFont(new Font("Segoe UI Black", Font.ITALIC, 20));
 		lbl_Success.setForeground(new Color(0, 128, 0));
-		lbl_Success.setBounds(45, 601, 580, 71);
+		lbl_Success.setBounds(45, 601, 780, 71);
 		contentPane.add(lbl_Success);
 		
 		JButton btn_AddConsole = new JButton("Add Console");
