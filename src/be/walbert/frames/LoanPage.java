@@ -30,7 +30,6 @@ import java.awt.event.ActionEvent;
 public class LoanPage extends JFrame {
 
 	private JPanel contentPane;
-	private Image img = new ImageIcon(this.getClass().getResource("/ressources/icon_back.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 	/**
 	 * Launch the application.
 	 */
@@ -59,21 +58,6 @@ public class LoanPage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		/*Icon de retour (vers catalogue des jeux videos)*/
-		JLabel lbl_icon_back = new JLabel("");
-		
-		/*Ajout de l'evenement lors du click*/
-		lbl_icon_back.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				GamePage gamepage = new GamePage( player, current_copy.getGame());
-				gamepage.setVisible(true);
-				dispose();
-			}
-		});
-		lbl_icon_back.setBounds(21, 572, 50, 50); 
-		lbl_icon_back.setIcon(new ImageIcon(img));
-		contentPane.add(lbl_icon_back);
 		
 		JLabel lbl_TitleLoan = new JLabel("Make a loan");
 		lbl_TitleLoan.setHorizontalAlignment(SwingConstants.CENTER);

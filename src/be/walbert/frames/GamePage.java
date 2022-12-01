@@ -162,17 +162,11 @@ public class GamePage extends JFrame {
 		Copy current_copy = videogame_selected.CopyAvailable(player);
     	   
 		if(current_copy != null) {
-	    	   if(current_copy.IsAvailable()) {
 	    		   	lbl_Loan_Or_Book.setText("Great, you can loan a copy");
 	        	   	btn_LoanGame.setVisible(true);
-	    	  } 
-	    	   else {
-	   	    		lbl_Loan_Or_Book.setText("Sorry, copies available for this game but not available. Please, make booking ");
-	       	  		btn_BookingGame.setVisible(true);
-	    	   }
     	 }
     	 else {
-	    	lbl_Loan_Or_Book.setText("Sorry, no copies for this game. You can make booking when a player will add a copy");
+	    	lbl_Loan_Or_Book.setText("Sorry, no copies for this game. You can make booking");
     	  	btn_BookingGame.setVisible(true);
     	  }		
     
