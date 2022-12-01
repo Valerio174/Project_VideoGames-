@@ -87,12 +87,6 @@ public class LoanPage extends JFrame {
 		lblDescriptionOfThe.setBounds(31, 122, 295, 61);
 		contentPane.add(lblDescriptionOfThe);
 		
-		JLabel lbl_IdCopy = new JLabel("Id copy:");
-		lbl_IdCopy.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_IdCopy.setFont(new Font("Segoe UI Semibold", Font.ITALIC, 20));
-		lbl_IdCopy.setBounds(31, 194, 194, 61);
-		contentPane.add(lbl_IdCopy);
-		
 		JLabel lbl_Game = new JLabel("Game:");
 		lbl_Game.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_Game.setFont(new Font("Segoe UI Semibold", Font.ITALIC, 20));
@@ -112,7 +106,6 @@ public class LoanPage extends JFrame {
 		contentPane.add(lbl_Credits);
 		
 		/*Attributions des valeurs de la copy choisie*/
-		lbl_IdCopy.setText(lbl_IdCopy.getText() + " " + current_copy.getId_copy());
 		lbl_Game.setText(lbl_Game.getText() + " " + current_copy.getGame().getName());
 		lbl_Lender.setText(lbl_Lender.getText() + " " + current_copy.getOwner().getPseudo());
 		lbl_Credits.setText(lbl_Credits.getText() + " " + current_copy.getGame().getCreditCost());
