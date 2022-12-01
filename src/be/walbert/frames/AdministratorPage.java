@@ -116,19 +116,12 @@ public class AdministratorPage extends JFrame {
 	    table.addMouseListener(new MouseAdapter() {
 	    	public void mouseClicked(MouseEvent e){
 	    	      if (e.getClickCount() == 2){ 
-	    	    	  DayOfWeek dayofweek = LocalDate.now().getDayOfWeek();
-    	    		  if(dayofweek == DayOfWeek.WEDNESDAY) {
 
 	  					VideoGame game_selected = videogames.get(table.getSelectedRow());
 	  					game_selected = game_selected.GetVideoGame();
 	  					SetCreditsPage creditspage = new SetCreditsPage(admin, game_selected);
 	  					creditspage.setVisible(true);
 	  					dispose();
-    	    		  }
-    	    		  else{
-	    	    		  JOptionPane.showMessageDialog(contentPane, "Sorry credit change only on Monday");
-
-    	    		  }
 	    	         }
 	    	      }
 	    });
